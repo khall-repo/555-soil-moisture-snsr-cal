@@ -48,7 +48,8 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "cinttypes": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "map": "cpp"
     },
     "terminal.integrated.shell.windows": "cmd.exe",
     "C_Cpp.default.compilerPath": "/usr/bin/gcc"
