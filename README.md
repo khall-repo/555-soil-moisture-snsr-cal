@@ -9,7 +9,7 @@ files, until I can get ahold of some actual hardware to do this with.
 Binary is only compiled for AMD64 at this time, it will not run on your RPi,
 yet.
 
-## Disclaimer
+## Disclaimer 1 of 2
 This software is provided "as is", without warranty of any kind, express or
 implied, including but not limited to the warranties of merchantability,
 fitness for a particular purpose, and noninfringement. In no event shall the
@@ -18,5 +18,12 @@ liability, whether in an action of contract, tort, or otherwise, arising from,
 out of, or in connection with the software or the use or other dealings in the
 software.
 ## Use at your own risk.
+
+## Disclaimer 2 of 2
+This software is not intended for public use, but feel free to clone this
+project and use it as you please. Do not expect any support from the author,
+please do not ask. I am writing this for a personal friend to use, and once
+it works well enough for him to use, that is where my effort will end with
+this project.
 
 (C)2025 Keith Hall
