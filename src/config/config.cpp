@@ -40,7 +40,8 @@ int Config_Section::read_config_section(void)
 
     std::string key;
     std::string value;
-    std::string::size_type pos = line.find("=");
+    //std::string::size_type pos = line.find("=");
+    pos = line.find("=");
     if(pos != std::string::npos) {
       key = line.substr(0, pos);
       value = line.substr(pos + 1);
@@ -95,7 +96,8 @@ int Config::read_config_file(void)
     }
 
     std::string section;
-    std::string::size_type pos = line.find("[");
+    //std::string::size_type pos = line.find("[");
+    pos = line.find("[");
     if(pos != std::string::npos) {
       section = line.substr(pos + 1);
       pos = section.find("]");

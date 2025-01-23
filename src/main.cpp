@@ -6,16 +6,17 @@
  * we've decided on calling them ST units (IYKYK).
  */
 #include <iostream>
+#include <wiringPi.h>
 #include "config.h"
 #include "struct.h"
 #include "cal.h"
 #include "test-values.h"
 
-extern Param_t param;
+extern Param_t param; // Import from struct.cpp
 
 /**
  * @brief Populate the sensor_raw array with test values
- * @param none
+ * @param none  
  * @return none
  */
 void get_raw_test_readings(void)
@@ -91,6 +92,8 @@ int main(int argc, char const *argv[])
   (void)argc; // not used yet
   (void)argv; // not used yet
 
+  wiringPiSetup();
+
   init_param();
   if(test_values_init()){
     std::cerr << "Error reading test values" << '\n';
@@ -100,8 +103,9 @@ int main(int argc, char const *argv[])
   get_raw_test_cal_readings();
   get_raw_test_readings();
 
-  cal_test();
-  pv_test();
+  capture_zero_raw(0);
+  //cal_test();
+  //pv_test();
   
   return 0;
 }

@@ -6,6 +6,7 @@
 #include <iostream>
 #include "config.h"
 #include "struct.h"
+#include "cal.h"
 
 // Import from struct.cpp
 extern Param_t param;

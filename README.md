@@ -6,8 +6,10 @@ multiplexer HAT.
 
 01-19-2025 Very much under construction. Just reading values from a couple text
 files, until I can get ahold of some actual hardware to do this with.
-Binary is only compiled for AMD64 at this time, it will not run on your RPi,
-yet.
+
+01-22-2025
+Binary is now compiled on the intended target architecture ARM64. Directory
+has been restructured.
 
 ## Disclaimer 1 of 2
 This software is provided "as is", without warranty of any kind, express or
