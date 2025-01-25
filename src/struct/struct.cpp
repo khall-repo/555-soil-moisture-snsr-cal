@@ -17,6 +17,8 @@ Param_t param;
 void init_param()
 {
   for(int i = 0; i < NUM_SENSORS; i++) {
+    param.sensor_min_scale[i] = 0.0;
+    param.sensor_full_scale[i] = 0.0;
     param.sensor_raw[i] = 0.0;
     param.sensor_pv[i] = 0.0;
     param.sensor_cal1_raw[i] = 0.0;
@@ -25,5 +27,6 @@ void init_param()
     param.sensor_cal2_pv[i] = CAL2_PV;
     param.sensor_slope[i] = 0.0;
     param.sensor_offset[i] = 0.0;
+    param.hi_alarm = 0.0;`
   }
 }

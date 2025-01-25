@@ -8,9 +8,11 @@
 #include <iostream>
 #include <wiringPi.h>
 #include "config.h"
+#include "config-file.h"
 #include "struct.h"
 #include "cal.h"
 #include "test-values.h"
+
 
 extern Param_t param; // Import from struct.cpp
 
@@ -94,6 +96,12 @@ int main(int argc, char const *argv[])
 
   wiringPiSetup();
 
+  Config_File *config = new Config_File();
+  if(config->read_config_file() != 0) {
+    std::cerr << "Error reading config file" << '\n';
+    return -1;
+  }
+
   init_param();
   if(test_values_init()){
     std::cerr << "Error reading test values" << '\n';
@@ -103,9 +111,8 @@ int main(int argc, char const *argv[])
   get_raw_test_cal_readings();
   get_raw_test_readings();
 
-  capture_zero_raw(0);
-  //cal_test();
-  //pv_test();
+  cal_test();
+  pv_test();
   
   return 0;
 }

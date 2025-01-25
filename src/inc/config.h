@@ -19,33 +19,14 @@
 #define TEST_CAL_RAW_VALUES_FILE_PATH     "test-cal-raw-values.txt"
 #define TEST_READING_RAW_VALUES_FILE_PATH "test-reading-raw-values.txt"
 
-#define CAL1_PV (double)0      // PV min scale and also the zero point
-#define CAL2_PV (double)100.0  // PV max scale and also the span point
+// this stuff is for the config file but too lazy to put it in there right now.
+// I worked at work all day.
+// lucky I even put spaces here to make it look pretty.
+#define MIN_SCALE  (double)0.0
+#define FULL_SCALE (double)100.0
+#define CAL1_PV    (double)0      // zero cal point
+#define CAL2_PV    (double)100.0  // span cal point for test
 
-class Config_Section {
-  friend class Config;
-  public:
-    Config_Section();
-    ~Config_Section();
-    int read_config_section(void);
-    std::string get_config_section_value(std::string key);
-  private:
-    
-    int num_elements; // I think I only need this for debug
-    std::ifstream config_section;
-    std::map<std::string, std::string> config_value_map;
-};
 
-class Config {
-  public:
-    Config();
-    ~Config();
-    int read_config_file(void);
-    std::string get_config_value(std::string section, std::string key);
-  private:
-    std::ifstream config_file;
-    int num_sections; // I think I only need this for debug
-    std::map<std::string, std::map<std::string, std::string>> config_section_map;
-};
 
 #endif
