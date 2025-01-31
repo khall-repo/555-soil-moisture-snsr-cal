@@ -7,6 +7,9 @@
 #ifndef CONFIG_FILE_H
 #define CONFIG_FILE_H
 
+#include <fstream>
+#include <map>
+
 class Config_Section {
   friend class Config_File;
   public:

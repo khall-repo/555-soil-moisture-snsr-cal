@@ -2,206 +2,206 @@
 
 IMainWindow imain_window;
 
-// get imain_window.col_header_label0
-const char *get_col_header_label0(void)
+// get imain_window.col_header_sensor_raw
+const char *get_col_header_sensor_raw(void)
 {
-  return imain_window.col_header_label0;
+  return imain_window.col_header_sensor_raw;
 }
 
-// get imain_window.col_header_label1
-const char *get_col_header_label1(void)
+// get imain_window.col_header_sensor_pv
+const char *get_col_header_sensor_pv(void)
 {
-  return imain_window.col_header_label1;
+  return imain_window.col_header_sensor_pv;
 }
 
-// get imain_window.data_display_label0
-const char *get_data_display_label0(void)
+// get imain_window.data_display_label_sensor_raw0
+const char *get_data_display_label_sensor_raw0(void)
 {
-  return imain_window.data_display_label0;
+  return imain_window.data_display_label_sensor_raw0;
 }
 
-// get imain_window.data_display_label1
-const char *get_data_display_label1(void)
+// get imain_window.data_display_label_sensor_raw1
+const char *get_data_display_label_sensor_raw1(void)
 {
-  return imain_window.data_display_label1;
+  return imain_window.data_display_label_sensor_raw1;
 }
 
-// get imain_window.data_display_label2
-const char *get_data_display_label2(void)
+// get imain_window.data_display_label_sensor_raw2
+const char *get_data_display_label_sensor_raw2(void)
 {
-  return imain_window.data_display_label2;
+  return imain_window.data_display_label_sensor_raw2;
 }
 
-// get imain_window.data_display_label3
-const char *get_data_display_label3(void)
+// get imain_window.data_display_label_sensor_raw3
+const char *get_data_display_label_sensor_raw3(void)
 {
-  return imain_window.data_display_label3;
+  return imain_window.data_display_label_sensor_raw3;
 }
 
-// get imain_window.data_display_label4
-const char *get_data_display_label4(void)
+// get imain_window.data_display_label_sensor_raw4
+const char *get_data_display_label_sensor_raw4(void)
 {
-  return imain_window.data_display_label4;
+  return imain_window.data_display_label_sensor_raw4;
 }
 
-// get imain_window.data_display_label5
-const char *get_data_display_label5(void)
+// get imain_window.data_display_label_sensor_raw5
+const char *get_data_display_label_sensor_raw5(void)
 {
-  return imain_window.data_display_label5;
+  return imain_window.data_display_label_sensor_raw5;
 }
 
-// get imain_window.data_display_label6
-const char *get_data_display_label6(void)
+// get imain_window.data_display_label_sensor_raw6
+const char *get_data_display_label_sensor_raw6(void)
 {
-  return imain_window.data_display_label6;
+  return imain_window.data_display_label_sensor_raw6;
 }
 
-// get imain_window.data_display_label7
-const char *get_data_display_label7(void)
+// get imain_window.data_display_label_sensor_raw7
+const char *get_data_display_label_sensor_raw7(void)
 {
-  return imain_window.data_display_label7;
+  return imain_window.data_display_label_sensor_raw7;
 }
 
-// get imain_window.data_display_label8
-const char *get_data_display_label8(void)
+// get imain_window.data_display_label_sensor_pv0
+const char *get_data_display_label_sensor_pv0(void)
 {
-  return imain_window.data_display_label8;
+  return imain_window.data_display_label_sensor_pv0;
 }
 
-// get imain_window.data_display_label9
-const char *get_data_display_label9(void)
+// get imain_window.data_display_label_sensor_pv1
+const char *get_data_display_label_sensor_pv1(void)
 {
-  return imain_window.data_display_label9;
+  return imain_window.data_display_label_sensor_pv1;
 }
 
-// get imain_window.data_display_label10
-const char *get_data_display_label10(void)
+// get imain_window.data_display_label_sensor_pv2
+const char *get_data_display_label_sensor_pv2(void)
 {
-  return imain_window.data_display_label10;
+  return imain_window.data_display_label_sensor_pv2;
 }
 
-// get imain_window.data_display_label11
-const char *get_data_display_label11(void)
+// get imain_window.data_display_label_sensor_pv3
+const char *get_data_display_label_sensor_pv3(void)
 {
-  return imain_window.data_display_label11;
+  return imain_window.data_display_label_sensor_pv3;
 }
 
-// get imain_window.data_display_label12
-const char *get_data_display_label12(void)
+// get imain_window.data_display_label_sensor_pv4
+const char *get_data_display_label_sensor_pv4(void)
 {
-  return imain_window.data_display_label12;
+  return imain_window.data_display_label_sensor_pv4;
 }
 
-// get imain_window.data_display_label13
-const char *get_data_display_label13(void)
+// get imain_window.data_display_label_sensor_pv5
+const char *get_data_display_label_sensor_pv5(void)
 {
-  return imain_window.data_display_label13;
+  return imain_window.data_display_label_sensor_pv5;
 }
 
-// get imain_window.data_display_label14
-const char *get_data_display_label14(void)
+// get imain_window.data_display_label_sensor_pv6
+const char *get_data_display_label_sensor_pv6(void)
 {
-  return imain_window.data_display_label14;
+  return imain_window.data_display_label_sensor_pv6;
 }
 
-// get imain_window.data_display_label15 
-const char *get_data_display_label15(void)
+// get imain_window.data_display_label_sensor_pv7 
+const char *get_data_display_label_sensor_pv7(void)
 {
-  return imain_window.data_display_label15;
+  return imain_window.data_display_label_sensor_pv7;
 }
 
-// set imain_window.data_display_label0
-void set_data_display_label0(const char *text)
+// set imain_window.data_display_label_sensor_raw0
+void set_data_display_label_sensor_raw0(const char *text)
 {
-  imain_window.data_display_label0 = text;
+  imain_window.data_display_label_sensor_raw0 = text;
 }
 
-// set imain_window.data_display_label1
-void set_data_display_label1(const char *text)
+// set imain_window.data_display_label_sensor_raw1
+void set_data_display_label_sensor_raw1(const char *text)
 {
-  imain_window.data_display_label1 = text;
+  imain_window.data_display_label_sensor_raw1 = text;
 }
 
-// set imain_window.data_display_label2
-void set_data_display_label2(const char *text)
+// set imain_window.data_display_label_sensor_raw2
+void set_data_display_label_sensor_raw2(const char *text)
 {
-  imain_window.data_display_label2 = text;
+  imain_window.data_display_label_sensor_raw2 = text;
 }
 
-// set imain_window.data_display_label3
-void set_data_display_label3(const char *text)
+// set imain_window.data_display_label_sensor_raw3
+void set_data_display_label_sensor_raw3(const char *text)
 {
-  imain_window.data_display_label3 = text;
+  imain_window.data_display_label_sensor_raw3 = text;
 }
 
-// set imain_window.data_display_label4
-void set_data_display_label4(const char *text)
+// set imain_window.data_display_label_sensor_raw4
+void set_data_display_label_sensor_raw4(const char *text)
 {
-  imain_window.data_display_label4 = text;
+  imain_window.data_display_label_sensor_raw4 = text;
 }
 
-// set imain_window.data_display_label5
-void set_data_display_label5(const char *text)
+// set imain_window.data_display_label_sensor_raw5
+void set_data_display_label_sensor_raw5(const char *text)
 {
-  imain_window.data_display_label5 = text;
+  imain_window.data_display_label_sensor_raw5 = text;
 }
 
-// set imain_window.data_display_label6
-void set_data_display_label6(const char *text)
+// set imain_window.data_display_label_sensor_raw6
+void set_data_display_label_sensor_raw6(const char *text)
 {
-  imain_window.data_display_label6 = text;
+  imain_window.data_display_label_sensor_raw6 = text;
 }
 
-// set imain_window.data_display_label7
-void set_data_display_label7(const char *text)
+// set imain_window.data_display_label_sensor_raw7
+void set_data_display_label_sensor_raw7(const char *text)
 {
-  imain_window.data_display_label7 = text;
+  imain_window.data_display_label_sensor_raw7 = text;
 }
 
-// set imain_window.data_display_label8
-void set_data_display_label8(const char *text)
+// set imain_window.data_display_label_sensor_pv0
+void set_data_display_label_sensor_pv0(const char *text)
 {
-  imain_window.data_display_label8 = text;
+  imain_window.data_display_label_sensor_pv0 = text;
 }
 
-// set imain_window.data_display_label9
-void set_data_display_label9(const char *text)
+// set imain_window.data_display_label_sensor_pv1
+void set_data_display_label_sensor_pv1(const char *text)
 {
-  imain_window.data_display_label9 = text;
+  imain_window.data_display_label_sensor_pv1 = text;
 }
 
-// set imain_window.data_display_label10
-void set_data_display_label10(const char *text)
+// set imain_window.data_display_label_sensor_pv2
+void set_data_display_label_sensor_pv2(const char *text)
 {
-  imain_window.data_display_label10 = text;
+  imain_window.data_display_label_sensor_pv2 = text;
 }
 
-// set imain_window.data_display_label11
-void set_data_display_label11(const char *text)
+// set imain_window.data_display_label_sensor_pv3
+void set_data_display_label_sensor_pv3(const char *text)
 {
-  imain_window.data_display_label11 = text;
+  imain_window.data_display_label_sensor_pv3 = text;
 }
 
-// set imain_window.data_display_label12
-void set_data_display_label12(const char *text)
+// set imain_window.data_display_label_sensor_pv4
+void set_data_display_label_sensor_pv4(const char *text)
 {
-  imain_window.data_display_label12 = text;
+  imain_window.data_display_label_sensor_pv4 = text;
 }
 
-// set imain_window.data_display_label13
-void set_data_display_label13(const char *text)
+// set imain_window.data_display_label_sensor_pv5
+void set_data_display_label_sensor_pv5(const char *text)
 {
-  imain_window.data_display_label13 = text;
+  imain_window.data_display_label_sensor_pv5 = text;
 }
 
-// set imain_window.data_display_label14
-void set_data_display_label14(const char *text)
+// set imain_window.data_display_label_sensor_pv6
+void set_data_display_label_sensor_pv6(const char *text)
 {
-  imain_window.data_display_label14 = text;
+  imain_window.data_display_label_sensor_pv6 = text;
 }
 
-// set imain_window.data_display_label15
-void set_data_display_label15(const char *text)
+// set imain_window.data_display_label_sensor_pv7
+void set_data_display_label_sensor_pv7(const char *text)
 {
-  imain_window.data_display_label15 = text;
+  imain_window.data_display_label_sensor_pv7 = text;
 }

@@ -5,82 +5,82 @@
 
 typedef struct _INainWindow
 {
-  const char *col_header_label0;
-  const char *col_header_label1;
+  const char *col_header_sensor_raw;
+  const char *col_header_sensor_pv;
 
-  const char *data_display_label0;
-  const char *data_display_label1;
-  const char *data_display_label2;
-  const char *data_display_label3;
-  const char *data_display_label4;
-  const char *data_display_label5;
-  const char *data_display_label6;
-  const char *data_display_label7;
-  const char *data_display_label8;
-  const char *data_display_label9;
-  const char *data_display_label10;
-  const char *data_display_label11;
-  const char *data_display_label12;
-  const char *data_display_label13;
-  const char *data_display_label14;
-  const char *data_display_label15;
+  const char *data_display_label_sensor_raw0;
+  const char *data_display_label_sensor_raw1;
+  const char *data_display_label_sensor_raw2;
+  const char *data_display_label_sensor_raw3;
+  const char *data_display_label_sensor_raw4;
+  const char *data_display_label_sensor_raw5;
+  const char *data_display_label_sensor_raw6;
+  const char *data_display_label_sensor_raw7;
+  const char *data_display_label_sensor_pv0;
+  const char *data_display_label_sensor_pv1;
+  const char *data_display_label_sensor_pv2;
+  const char *data_display_label_sensor_pv3;
+  const char *data_display_label_sensor_pv4;
+  const char *data_display_label_sensor_pv5;
+  const char *data_display_label_sensor_pv6;
+  const char *data_display_label_sensor_pv7;
   
   bool button0; // bottom button
 
-  bool button1; // first column of buttons
-  bool button2;
-  bool button3;
-  bool button4;
-  bool button5;
-  bool button6;
-  bool button7;
-  bool button8;
+  bool button_zero0; // first column of buttons
+  bool button_zero1;
+  bool button_zero2;
+  bool button_zero3;
+  bool button_zero4;
+  bool button_zero5;
+  bool button_zero6;
+  bool button_zero7;
 
-  bool button9; // second column of buttons
-  bool button10;
-  bool button11;
-  bool button12;
-  bool button13;
-  bool button14;
-  bool button15;
-  bool button16;
+  bool button_span0; // second column of buttons
+  bool button_span1;
+  bool button_span2;
+  bool button_span3;
+  bool button_span4;
+  bool button_span5;
+  bool button_span6;
+  bool button_span7;
 
 } IMainWindow;
 
-const char *get_col_header_label0(void);
-const char *get_col_header_label1(void);
-const char *get_data_display_label0(void);
-const char *get_data_display_label1(void);
-const char *get_data_display_label2(void);
-const char *get_data_display_label3(void);
-const char *get_data_display_label4(void);
-const char *get_data_display_label5(void);
-const char *get_data_display_label6(void);
-const char *get_data_display_label7(void);
-const char *get_data_display_label8(void);
-const char *get_data_display_label9(void);
-const char *get_data_display_label10(void);
-const char *get_data_display_label11(void);
-const char *get_data_display_label12(void);
-const char *get_data_display_label13(void);
-const char *get_data_display_label14(void);
-const char *get_data_display_label15(void);
+const char *get_col_header_sensor_raw(void);
+const char *get_col_header_sensor_pv(void);
+const char *get_data_display_label_sensor_raw0(void);
+const char *get_data_display_label_sensor_raw1(void);
+const char *get_data_display_label_sensor_raw2(void);
+const char *get_data_display_label_sensor_raw3(void);
+const char *get_data_display_label_sensor_raw4(void);
+const char *get_data_display_label_sensor_raw5(void);
+const char *get_data_display_label_sensor_raw6(void);
+const char *get_data_display_label_sensor_raw7(void);
+const char *get_data_display_label_sensor_pv0(void);
+const char *get_data_display_label_sensor_pv1(void);
+const char *get_data_display_label_sensor_pv2(void);
+const char *get_data_display_label_sensor_pv3(void);
+const char *get_data_display_label_sensor_pv4(void);
+const char *get_data_display_label_sensor_pv5(void);
+const char *get_data_display_label_sensor_pv6(void);
+const char *get_data_display_label_sensor_pv7(void);
 
-void set_data_display_label0(const char *text);
-void set_data_display_label1(const char *text);
-void set_data_display_label2(const char *text);
-void set_data_display_label3(const char *text);
-void set_data_display_label4(const char *text);
-void set_data_display_label5(const char *text);
-void set_data_display_label6(const char *text);
-void set_data_display_label7(const char *text);
-void set_data_display_label8(const char *text);
-void set_data_display_label9(const char *text);
-void set_data_display_label10(const char *text);
-void set_data_display_label11(const char *text);
-void set_data_display_label12(const char *text);
-void set_data_display_label13(const char *text);
-void set_data_display_label14(const char *text);
-void set_data_display_label15(const char *text);
+void set_data_display_label_sensor_raw0(const char *text);
+void set_data_display_label_sensor_raw1(const char *text);
+void set_data_display_label_sensor_raw2(const char *text);
+void set_data_display_label_sensor_raw3(const char *text);
+void set_data_display_label_sensor_raw4(const char *text);
+void set_data_display_label_sensor_raw5(const char *text);
+void set_data_display_label_sensor_raw6(const char *text);
+void set_data_display_label_sensor_raw7(const char *text);
+void set_data_display_label_sensor_pv0(const char *text);
+void set_data_display_label_sensor_pv1(const char *text);
+void set_data_display_label_sensor_pv2(const char *text);
+void set_data_display_label_sensor_pv3(const char *text);
+void set_data_display_label_sensor_pv4(const char *text);
+void set_data_display_label_sensor_pv5(const char *text);
+void set_data_display_label_sensor_pv6(const char *text);
+void set_data_display_label_sensor_pv7(const char *text);
 
 #endif

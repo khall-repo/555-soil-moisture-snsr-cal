@@ -1,5 +1,5 @@
 /**
- * @file struct.cpp
+ * @file struct.h
  * @brief Data structures for the 555 soil moisture sensor calibration
  * @par (C) 2025 Keith Hall
  */

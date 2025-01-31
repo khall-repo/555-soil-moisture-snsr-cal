@@ -10,22 +10,22 @@
 // before we start writing to the labels. 
 void init_main_window_data_disp_text(void)
 {
-  set_data_display_label0("Data Display 0");
-  set_data_display_label1("Data Display 1");
-  set_data_display_label2("Data Display 2");
-  set_data_display_label3("Data Display 3");
-  set_data_display_label4("Data Display 4");
-  set_data_display_label5("Data Display 5");
-  set_data_display_label6("Data Display 6");
-  set_data_display_label7("Data Display 7");
-  set_data_display_label8("Data Display 8");
-  set_data_display_label9("Data Display 9");
-  set_data_display_label10("Data Display 10");
-  set_data_display_label11("Data Display 11");
-  set_data_display_label12("Data Display 12");
-  set_data_display_label13("Data Display 13");
-  set_data_display_label14("Data Display 14");
-  set_data_display_label15("Data Display 15");
+  set_data_display_label_sensor_raw0("Data Display 0");
+  set_data_display_label_sensor_raw1("Data Display 1");
+  set_data_display_label_sensor_raw2("Data Display 2");
+  set_data_display_label_sensor_raw3("Data Display 3");
+  set_data_display_label_sensor_raw4("Data Display 4");
+  set_data_display_label_sensor_raw5("Data Display 5");
+  set_data_display_label_sensor_raw6("Data Display 6");
+  set_data_display_label_sensor_raw7("Data Display 7");
+  set_data_display_label_sensor_pv0("Data Display 8");
+  set_data_display_label_sensor_pv1("Data Display 9");
+  set_data_display_label_sensor_pv2("Data Display 10");
+  set_data_display_label_sensor_pv3("Data Display 11");
+  set_data_display_label_sensor_pv4("Data Display 12");
+  set_data_display_label_sensor_pv5("Data Display 13");
+  set_data_display_label_sensor_pv6("Data Display 14");
+  set_data_display_label_sensor_pv7("Data Display 15");
 }
 
 int run_gui_application(int argc, char *argv[])

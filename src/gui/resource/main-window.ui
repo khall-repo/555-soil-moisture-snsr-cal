@@ -14,10 +14,10 @@
         <property name="column-spacing">12</property>
 <!-- ********************** Data Display Labels *************************** -->
 <!-- *************************** Column 0 ********************************* -->
-        <!-- Leftmost column - Row 0, Col 0 - col_header_label0 -->
+        <!-- Leftmost column - Row 0, Col 0 - col_header_sensor_raw -->
         <child>
-          <object class="GtkLabel" id="col_header_label0">
-            <property name="label">col_header_label0</property>
+          <object class="GtkLabel" id="col_header_sensor_raw">
+            <property name="label">Sensor Raw</property>
             <property name="hexpand">true</property> 
             <property name="vexpand">false</property>
             <layout>
@@ -26,7 +26,7 @@
             </layout>
           </object>
         </child>
-        <!-- Leftmost column - Row 1, Col 0 - data_display_label0 -->
+        <!-- Leftmost column - Row 1, Col 0 - data_display_label_sensor_raw0 -->
         <child>
           <object class="GtkFrame" id="label_frame0"> <!--Box around the label-->
             <layout>
@@ -34,15 +34,15 @@
                 <property name="column">0</property>
             </layout>
             <child>
-              <object class="GtkLabel" id="data_display_label0"> <!--The label itself-->
-                <property name="label">data_display_label0</property> <!--Label text displayed-->
+              <object class="GtkLabel" id="data_display_label_sensor_raw0"> <!--The label itself-->
+                <property name="label">data_display_label_sensor_raw0</property> <!--Label text displayed-->
                 <property name="hexpand">true</property> 
                 <property name="vexpand">false</property>
               </object>
             </child>
           </object>
         </child>
-        <!-- Leftmost column - Row 2, Col 0 - data_display_label1 -->
+        <!-- Leftmost column - Row 2, Col 0 - data_display_label_sensor_raw1 -->
         <child>
           <object class="GtkFrame" id="label_frame1">
             <layout>
@@ -50,15 +50,15 @@
                 <property name="column">0</property>
             </layout>
             <child>
-              <object class="GtkLabel" id="data_display_label1">
-                <property name="label">data_display_label1</property>
+              <object class="GtkLabel" id="data_display_label_sensor_raw1">
+                <property name="label">data_display_label_sensor_raw1</property>
                 <property name="hexpand">true</property> 
                 <property name="vexpand">false</property>
               </object>
             </child>
           </object>
         </child>
-        <!-- Leftmost column - Row 3, Col 0 - data_display_label2 -->
+        <!-- Leftmost column - Row 3, Col 0 - data_display_label_sensor_raw2 -->
         <child>
           <object class="GtkFrame" id="label_frame2">
             <layout>
@@ -66,15 +66,15 @@
                 <property name="column">0</property>
             </layout>
             <child>
-              <object class="GtkLabel" id="data_display_label2">
-                <property name="label">data_display_label2</property>
+              <object class="GtkLabel" id="data_display_label_sensor_raw2">
+                <property name="label">data_display_label_sensor_raw2</property>
                 <property name="hexpand">true</property> 
                 <property name="vexpand">false</property>
               </object>
             </child>
           </object>
         </child>
-        <!-- Leftmost column - Row 4, Col 0 - data_display_label3 -->
+        <!-- Leftmost column - Row 4, Col 0 - data_display_label_sensor_raw3 -->
         <child>
           <object class="GtkFrame" id="label_frame3">
             <layout>
@@ -82,15 +82,15 @@
                 <property name="column">0</property>
             </layout>
             <child>
-              <object class="GtkLabel" id="data_display_label3">
-                <property name="label">data_display_label3</property>
+              <object class="GtkLabel" id="data_display_label_sensor_raw3">
+                <property name="label">data_display_label_sensor_raw3</property>
                 <property name="hexpand">true</property> 
                 <property name="vexpand">false</property>
               </object>
             </child>
           </object>
         </child>
-        <!-- Leftmost column - Row 5, Col 0 - data_display_label4 -->
+        <!-- Leftmost column - Row 5, Col 0 - data_display_label_sensor_raw4 -->
         <child>
           <object class="GtkFrame" id="label_frame4"> <!--Box around the label-->
             <layout>
@@ -98,15 +98,15 @@
                 <property name="column">0</property>
             </layout>
             <child>
-              <object class="GtkLabel" id="data_display_label4"> <!--The label itself-->
-                <property name="label">data_display_label4</property> <!--Label text displayed-->
+              <object class="GtkLabel" id="data_display_label_sensor_raw4"> <!--The label itself-->
+                <property name="label">data_display_label_sensor_raw4</property> <!--Label text displayed-->
                 <property name="hexpand">true</property> 
                 <property name="vexpand">false</property>
               </object>
             </child>
           </object>
         </child>
-        <!-- Leftmost column - Row 6, Col 0 - data_display_label5 -->
+        <!-- Leftmost column - Row 6, Col 0 - data_display_label_sensor_raw5 -->
         <child>
           <object class="GtkFrame" id="label_frame5">
             <layout>
@@ -114,15 +114,15 @@
                 <property name="column">0</property>
             </layout>
             <child>
-              <object class="GtkLabel" id="data_display_label5">
-                <property name="label">data_display_label5</property>
+              <object class="GtkLabel" id="data_display_label_sensor_raw5">
+                <property name="label">data_display_label_sensor_raw5</property>
                 <property name="hexpand">true</property> 
                 <property name="vexpand">false</property>
               </object>
             </child>
           </object>
         </child>
-        <!-- Leftmost column - Row 7, Col 0 - data_display_label6 -->
+        <!-- Leftmost column - Row 7, Col 0 - data_display_label_sensor_raw6 -->
         <child>
           <object class="GtkFrame" id="label_frame6">
             <layout>
@@ -130,15 +130,15 @@
                 <property name="column">0</property>
             </layout>
             <child>
-              <object class="GtkLabel" id="data_display_label6">
-                <property name="label">data_display_label6</property>
+              <object class="GtkLabel" id="data_display_label_sensor_raw6">
+                <property name="label">data_display_label_sensor_raw6</property>
                 <property name="hexpand">true</property> 
                 <property name="vexpand">false</property>
               </object>
             </child>
           </object>
         </child>
-        <!-- Leftmost column - Row 8, Col 0 - data_display_label7 -->
+        <!-- Leftmost column - Row 8, Col 0 - data_display_label_sensor_raw7 -->
         <child>
           <object class="GtkFrame" id="label_frame7">
             <layout>
@@ -146,8 +146,8 @@
                 <property name="column">0</property>
             </layout>
             <child>
-              <object class="GtkLabel" id="data_display_label7">
-                <property name="label">data_display_label7</property>
+              <object class="GtkLabel" id="data_display_label_sensor_raw7">
+                <property name="label">data_display_label_sensor_raw7</property>
                 <property name="hexpand">true</property> 
                 <property name="vexpand">false</property>
               </object>
@@ -155,10 +155,10 @@
           </object>
         </child>
 <!-- *************************** Column 1 ********************************* -->
-        <!-- Row 0, Col 1 - col_header_label1 -->
+        <!-- Row 0, Col 1 - col_header_sensor_pv -->
         <child>
-          <object class="GtkLabel" id="col_header_label1">
-            <property name="label">col_header_label1</property>
+          <object class="GtkLabel" id="col_header_sensor_pv">
+            <property name="label">Sensor PV</property>
             <property name="hexpand">true</property> 
             <property name="vexpand">false</property>
             <layout>
@@ -167,7 +167,7 @@
             </layout>
           </object>
         </child>
-        <!-- Row 1, Col 1 - data_display_label8 -->
+        <!-- Row 1, Col 1 - data_display_label_sensor_pv0 -->
         <child>
           <object class="GtkFrame" id="label_frame8">
             <layout>
@@ -175,15 +175,15 @@
                 <property name="column">1</property>
             </layout>
             <child>
-              <object class="GtkLabel" id="data_display_label8">
-                <property name="label">data_display_label8</property>
+              <object class="GtkLabel" id="data_display_label_sensor_pv0">
+                <property name="label">data_display_label_sensor_pv0</property>
                 <property name="hexpand">true</property> 
                 <property name="vexpand">false</property>
               </object>
             </child>
           </object>
         </child>
-        <!-- Row 2, Col 1 - data_display_label9 -->
+        <!-- Row 2, Col 1 - data_display_label_sensor_pv1 -->
         <child>
           <object class="GtkFrame" id="label_frame9">
             <layout>
@@ -191,15 +191,15 @@
                 <property name="column">1</property>
             </layout>
             <child>
-              <object class="GtkLabel" id="data_display_label9">
-                <property name="label">data_display_label9</property>
+              <object class="GtkLabel" id="data_display_label_sensor_pv1">
+                <property name="label">data_display_label_sensor_pv1</property>
                 <property name="hexpand">true</property> 
                 <property name="vexpand">false</property>
               </object>
             </child>
           </object>
         </child>
-        <!-- Row 3, Col 1 - data_display_label10 -->
+        <!-- Row 3, Col 1 - data_display_label_sensor_pv2 -->
         <child>
           <object class="GtkFrame" id="label_frame10">
             <layout>
@@ -207,15 +207,15 @@
                 <property name="column">1</property>
             </layout>
             <child>
-              <object class="GtkLabel" id="data_display_label10">
-                <property name="label">data_display_label10</property>
+              <object class="GtkLabel" id="data_display_label_sensor_pv2">
+                <property name="label">data_display_label_sensor_pv2</property>
                 <property name="hexpand">true</property> 
                 <property name="vexpand">false</property>
               </object>
             </child>
           </object>
         </child>
-        <!-- Row 4, Col 1 - data_display_label11 -->
+        <!-- Row 4, Col 1 - data_display_label_sensor_pv3 -->
         <child>
           <object class="GtkFrame" id="label_frame11">
             <layout>
@@ -223,15 +223,15 @@
                 <property name="column">1</property>
             </layout>
             <child>
-              <object class="GtkLabel" id="data_display_label11">
-                <property name="label">data_display_label11</property>
+              <object class="GtkLabel" id="data_display_label_sensor_pv3">
+                <property name="label">data_display_label_sensor_pv3</property>
                 <property name="hexpand">true</property> 
                 <property name="vexpand">false</property>
               </object>
             </child>
           </object>
         </child>
-        <!-- Row 5, Col 1 - data_display_label12 -->
+        <!-- Row 5, Col 1 - data_display_label_sensor_pv4 -->
         <child>
           <object class="GtkFrame" id="label_frame12">
             <layout>
@@ -239,15 +239,15 @@
                 <property name="column">1</property>
             </layout>
             <child>
-              <object class="GtkLabel" id="data_display_label12">
-                <property name="label">data_display_label12</property>
+              <object class="GtkLabel" id="data_display_label_sensor_pv4">
+                <property name="label">data_display_label_sensor_pv4</property>
                 <property name="hexpand">true</property> 
                 <property name="vexpand">false</property>
               </object>
             </child>
           </object>
         </child>
-        <!-- Row 6, Col 1 - data_display_label13 -->
+        <!-- Row 6, Col 1 - data_display_label_sensor13 -->
         <child>
           <object class="GtkFrame" id="label_frame13">
             <layout>
@@ -255,15 +255,15 @@
                 <property name="column">1</property>
             </layout>
             <child>
-              <object class="GtkLabel" id="data_display_label13">
-                <property name="label">data_display_label13</property>
+              <object class="GtkLabel" id="data_display_label_sensor_pv5">
+                <property name="label">data_display_label_sensor_pv5</property>
                 <property name="hexpand">true</property> 
                 <property name="vexpand">false</property>
               </object>
             </child>
           </object>
         </child>
-        <!-- Row 7, Col 1 - data_display_label14 -->
+        <!-- Row 7, Col 1 - data_display_label_sensor14 -->
         <child>
           <object class="GtkFrame" id="label_frame14">
             <layout>
@@ -271,15 +271,15 @@
                 <property name="column">1</property>
             </layout>
             <child>
-              <object class="GtkLabel" id="data_display_label14">
-                <property name="label">data_display_label14</property>
+              <object class="GtkLabel" id="data_display_label_sensor_pv6">
+                <property name="label">data_display_label_sensor_pv6</property>
                 <property name="hexpand">true</property> 
                 <property name="vexpand">false</property>
               </object>
             </child>
           </object>
         </child>
-        <!-- Row 8, Col 1 - data_display_label15 -->
+        <!-- Row 8, Col 1 - data_display_label_sensor_pv7 -->
         <child>
           <object class="GtkFrame" id="label_frame15">
             <layout>
@@ -287,8 +287,8 @@
                 <property name="column">1</property>
             </layout>
             <child>
-              <object class="GtkLabel" id="data_display_label15">
-                <property name="label">data_display_label15</property>
+              <object class="GtkLabel" id="data_display_label_sensor_pv7">
+                <property name="label">data_display_label_sensor_pv7</property>
                 <property name="hexpand">true</property> 
                 <property name="vexpand">false</property>
               </object>
@@ -298,8 +298,8 @@
 <!-- *************************** Buttons ********************************** -->        
 <!-- *************************** Column 2 ********************************* -->
         <child>
-          <object class="GtkButton" id="button1">
-            <property name="label">button1</property>
+          <object class="GtkButton" id="button_zero0">
+            <property name="label">button_zero0</property>
             <layout>
               <property name="row">1</property>
               <property name="column">2</property>
@@ -307,8 +307,8 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="button2">
-            <property name="label">button2</property>
+          <object class="GtkButton" id="button_zero1">
+            <property name="label">button_zero1</property>
             <layout>
               <property name="row">2</property>
               <property name="column">2</property>
@@ -316,8 +316,8 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="button3">
-            <property name="label">button3</property>
+          <object class="GtkButton" id="button_zero2">
+            <property name="label">button_zero2</property>
             <layout>
               <property name="row">3</property>
               <property name="column">2</property>
@@ -325,8 +325,8 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="button4">
-            <property name="label">button4</property>
+          <object class="GtkButton" id="button_zero3">
+            <property name="label">button_zero3</property>
             <layout>
               <property name="row">4</property>
               <property name="column">2</property>
@@ -334,8 +334,8 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="button5">
-            <property name="label">button5</property>
+          <object class="GtkButton" id="button_zero4">
+            <property name="label">button_zero4</property>
             <layout>
               <property name="row">5</property>
               <property name="column">2</property>
@@ -343,8 +343,8 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="button6">
-            <property name="label">button6</property>
+          <object class="GtkButton" id="button_zero5">
+            <property name="label">button_zero5</property>
             <layout>
               <property name="row">6</property>
               <property name="column">2</property>
@@ -352,8 +352,8 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="button7">
-            <property name="label">button7</property>
+          <object class="GtkButton" id="button_zero6">
+            <property name="label">button_zero6</property>
             <layout>
               <property name="row">7</property>
               <property name="column">2</property>
@@ -361,8 +361,8 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="button8">
-            <property name="label">button8</property>
+          <object class="GtkButton" id="button_zero7">
+            <property name="label">button_zero7</property>
             <layout>
               <property name="row">8</property>
               <property name="column">2</property>
@@ -371,8 +371,8 @@
         </child>
 <!-- *************************** Column 3 ********************************* -->
         <child>
-          <object class="GtkButton" id="button9">
-            <property name="label">button9</property>
+          <object class="GtkButton" id="button_span0">
+            <property name="label">button_span0</property>
             <layout>
               <property name="row">1</property>
               <property name="column">3</property>
@@ -380,8 +380,8 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="button10">
-            <property name="label">button10</property>
+          <object class="GtkButton" id="button_span1">
+            <property name="label">button_span1</property>
             <layout>
               <property name="row">2</property>
               <property name="column">3</property>
@@ -389,8 +389,8 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="button11">
-            <property name="label">button11</property>
+          <object class="GtkButton" id="button_span2">
+            <property name="label">button_span2</property>
             <layout>
               <property name="row">3</property>
               <property name="column">3</property>
@@ -398,8 +398,8 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="button12">
-            <property name="label">button12</property>
+          <object class="GtkButton" id="button_span3">
+            <property name="label">button_span3</property>
             <layout>
               <property name="row">4</property>
               <property name="column">3</property>
@@ -407,8 +407,8 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="button13">
-            <property name="label">button13</property>
+          <object class="GtkButton" id="button_span4">
+            <property name="label">button_span4</property>
             <layout>
               <property name="row">5</property>
               <property name="column">3</property>
@@ -416,8 +416,8 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="button14">
-            <property name="label">button14</property>
+          <object class="GtkButton" id="button_span5">
+            <property name="label">button_span5</property>
             <layout>
               <property name="row">6</property>
               <property name="column">3</property>
@@ -425,8 +425,8 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="button15">
-            <property name="label">button15</property>
+          <object class="GtkButton" id="button_span6">
+            <property name="label">button_span6</property>
             <layout>
               <property name="row">7</property>
               <property name="column">3</property>
@@ -434,8 +434,8 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="button16">
-            <property name="label">button16</property>
+          <object class="GtkButton" id="button_span7">
+            <property name="label">button_span7</property>
             <layout>
               <property name="row">8</property>
               <property name="column">3</property>

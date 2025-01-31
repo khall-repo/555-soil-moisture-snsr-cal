@@ -95,13 +95,13 @@ int main(int argc, char *argv[])
   (void)argc; // not used yet
   (void)argv; // not used yet
 
-  /*wiringPiSetup();
+  //wiringPiSetup();
 
-  Config_File *config = new Config_File();
+  /*Config_File *config = new Config_File();
   if(config->read_config_file() != 0) {
     std::cerr << "Error reading config file" << '\n';
     return -1;
-  }
+  }*/
 
   init_param();
   if(test_values_init()){
@@ -112,8 +112,8 @@ int main(int argc, char *argv[])
   get_raw_test_cal_readings();
   get_raw_test_readings();
 
-  cal_test();
-  pv_test();*/
+  //cal_test();
+  //pv_test();
   
   if(0 != timebase_start()) {
     return -1;

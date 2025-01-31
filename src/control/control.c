@@ -8,12 +8,42 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <time.h>
+#include "config.h"
 #include "imain-window.h"
-//#include "main-window.h"
 #include "control.h"
 #include "gui.h"
+#include "struct.h"
+
+extern Param_t param; // Import from struct.cpp
 
 timer_t timebase_timerid;
+
+void update_sensor_raw_display(void)
+{
+  char str_buf[32];
+  // Update the sensor raw display labels
+  set_data_display_label_sensor_raw0(gcvt(param.sensor_raw[0], 2, str_buf));
+  set_data_display_label_sensor_raw1(gcvt(param.sensor_raw[1], 2, str_buf));
+  set_data_display_label_sensor_raw2(gcvt(param.sensor_raw[2], 2, str_buf));
+  set_data_display_label_sensor_raw3(gcvt(param.sensor_raw[3], 2, str_buf));
+  set_data_display_label_sensor_raw4(gcvt(param.sensor_raw[4], 2, str_buf));
+  set_data_display_label_sensor_raw5(gcvt(param.sensor_raw[5], 2, str_buf));
+  set_data_display_label_sensor_raw6(gcvt(param.sensor_raw[6], 2, str_buf));
+  set_data_display_label_sensor_raw7(gcvt(param.sensor_raw[7], 2, str_buf));
+}
+
+void update_pv_display(void)
+{
+  char str_buf[32];
+  set_data_display_label_sensor_pv0(gcvt(param.sensor_pv[0], 2, str_buf));
+  set_data_display_label_sensor_pv1(gcvt(param.sensor_pv[1], 2, str_buf));
+  set_data_display_label_sensor_pv2(gcvt(param.sensor_pv[2], 2, str_buf));
+  set_data_display_label_sensor_pv3(gcvt(param.sensor_pv[3], 2, str_buf));
+  set_data_display_label_sensor_pv4(gcvt(param.sensor_pv[4], 2, str_buf));
+  set_data_display_label_sensor_pv5(gcvt(param.sensor_pv[5], 2, str_buf));
+  set_data_display_label_sensor_pv6(gcvt(param.sensor_pv[6], 2, str_buf));
+  set_data_display_label_sensor_pv7(gcvt(param.sensor_pv[7], 2, str_buf));
+}
 
 // Signal handler for the timebase timer
 void timebase_handler(int signum, siginfo_t *info, void *context)
@@ -24,11 +54,13 @@ void timebase_handler(int signum, siginfo_t *info, void *context)
   // try to print a data label from the main window.
   // Do it at 5-6 seconds so we can watch it change. 
   if (5 == count) { // try to set the data label
-    set_data_display_label0("Farts");
-    printf("\tData label 0 was set\n");
+    //set_data_display_label_sensor_raw0("Farts");
+    //printf("\tData label 0 was set\n");
+    update_sensor_raw_display();
+    update_pv_display();
   }
   else if (6 == count) { // try to print the data label again
-    printf("\tNew Data label 0: %s\n", get_data_display_label0());
+    printf("\tNew Data label 0: %s\n", get_data_display_label_sensor_raw0());
   }
   else if (30 == count) { // Stop timer after 10 expirations to test timer_delete
     if (timer_delete(timebase_timerid) == -1) {

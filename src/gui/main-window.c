@@ -1,7 +1,14 @@
-// Read this to understand some of what is going on..
-// The GLib Object System
-// https://docs.gtk.org/gobject/concepts.html
-
+/**
+ * @file main-window.c
+ * @brief Main Window file for the 555 soil moisture sensor calibration
+ * @par (C) 2025 Keith Hall
+ * Read this to understand some of what is going on..
+ * The GLib Object System
+ * https://docs.gtk.org/gobject/concepts.html
+ * 
+ * Why did I start this project with cpp and then switch to C to do the GUI?
+ * Because.
+ */
 #include "config.h"
 #include "imain-window.h"
 #include "main-window.h"
@@ -16,45 +23,45 @@ typedef struct _MainWindow
 {
   GtkApplicationWindow parent_instance;
 
-  GtkWidget *col_header_label0;
-  GtkWidget *col_header_label1;
+  GtkWidget *col_header_sensor_raw;
+  GtkWidget *col_header_sensor_pv;
 
-  GtkWidget *data_display_label0;
-  GtkWidget *data_display_label1;
-  GtkWidget *data_display_label2;
-  GtkWidget *data_display_label3;
-  GtkWidget *data_display_label4;
-  GtkWidget *data_display_label5;
-  GtkWidget *data_display_label6;
-  GtkWidget *data_display_label7;
-  GtkWidget *data_display_label8;
-  GtkWidget *data_display_label9;
-  GtkWidget *data_display_label10;
-  GtkWidget *data_display_label11;
-  GtkWidget *data_display_label12;
-  GtkWidget *data_display_label13;
-  GtkWidget *data_display_label14;
-  GtkWidget *data_display_label15;
+  GtkWidget *data_display_label_sensor_raw0;
+  GtkWidget *data_display_label_sensor_raw1;
+  GtkWidget *data_display_label_sensor_raw2;
+  GtkWidget *data_display_label_sensor_raw3;
+  GtkWidget *data_display_label_sensor_raw4;
+  GtkWidget *data_display_label_sensor_raw5;
+  GtkWidget *data_display_label_sensor_raw6;
+  GtkWidget *data_display_label_sensor_raw7;
+  GtkWidget *data_display_label_sensor_pv0;
+  GtkWidget *data_display_label_sensor_pv1;
+  GtkWidget *data_display_label_sensor_pv2;
+  GtkWidget *data_display_label_sensor_pv3;
+  GtkWidget *data_display_label_sensor_pv4;
+  GtkWidget *data_display_label_sensor_pv5;
+  GtkWidget *data_display_label_sensor_pv6;
+  GtkWidget *data_display_label_sensor_pv7;
   
   GtkWidget *button0; // bottom button
 
-  GtkWidget *button1;
-  GtkWidget *button2;
-  GtkWidget *button3;
-  GtkWidget *button4;
-  GtkWidget *button5;
-  GtkWidget *button6;
-  GtkWidget *button7;
-  GtkWidget *button8;
+  GtkWidget *button_zero0;
+  GtkWidget *button_zero1;
+  GtkWidget *button_zero2;
+  GtkWidget *button_zero3;
+  GtkWidget *button_zero4;
+  GtkWidget *button_zero5;
+  GtkWidget *button_zero6;
+  GtkWidget *button_zero7;
 
-  GtkWidget *button9;
-  GtkWidget *button10;
-  GtkWidget *button11;
-  GtkWidget *button12;
-  GtkWidget *button13;
-  GtkWidget *button14;
-  GtkWidget *button15;
-  GtkWidget *button16;
+  GtkWidget *button_span0;
+  GtkWidget *button_span1;
+  GtkWidget *button_span2;
+  GtkWidget *button_span3;
+  GtkWidget *button_span4;
+  GtkWidget *button_span5;
+  GtkWidget *button_span6;
+  GtkWidget *button_span7;
 
 } MainWindow;
 
@@ -93,25 +100,25 @@ static void main_window_class_init(MainWindowClass *klass)
     gtk_widget_class_set_template(widget_class, template_bytes);
     g_bytes_unref(template_bytes);
 
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, col_header_label0);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, col_header_label1);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, col_header_sensor_raw);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, col_header_sensor_pv);
 
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label0);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label1);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label2);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label3);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label4);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label5);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label6);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label7);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label8);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label9);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label10);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label11);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label12);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label13);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label14);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label15);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw0);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw1);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw2);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw3);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw4);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw5);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw6);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw7);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_pv0);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_pv1);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_pv2);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_pv3);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_pv4);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_pv5);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_pv6);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_pv7);
 
     gtk_widget_class_bind_template_child(widget_class, MainWindow, button0);
   } else {
@@ -142,25 +149,25 @@ static gboolean update_main_window(MainWindow *self)
   // I could update the column headers and button text, but the window elements
   // intended to be static should be set in the .ui file, not here. No sense in
   // wasting resources to update things that never change on every frame.
-  //gtk_label_set_text(GTK_LABEL(self->col_header_label0), imain_window.col_header_label0);
-  //gtk_label_set_text(GTK_LABEL(self->col_header_label1), imain_window.col_header_label1);
+  //gtk_label_set_text(GTK_LABEL(self->col_header_sensor_raw), imain_window.col_header_sensor_raw);
+  //gtk_label_set_text(GTK_LABEL(self->col_header_sensor_pv), imain_window.col_header_sensor_pv);
   
-  gtk_label_set_text(GTK_LABEL(self->data_display_label0), imain_window.data_display_label0);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label1), imain_window.data_display_label1);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label2), imain_window.data_display_label2);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label3), imain_window.data_display_label3);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label4), imain_window.data_display_label4);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label5), imain_window.data_display_label5);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label6), imain_window.data_display_label6);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label7), imain_window.data_display_label7);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label8), imain_window.data_display_label8);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label9), imain_window.data_display_label9);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label10), imain_window.data_display_label10);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label11), imain_window.data_display_label11);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label12), imain_window.data_display_label12);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label13), imain_window.data_display_label13);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label14), imain_window.data_display_label14);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label15), imain_window.data_display_label15);
+  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw0), imain_window.data_display_label_sensor_raw0);
+  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw1), imain_window.data_display_label_sensor_raw1);
+  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw2), imain_window.data_display_label_sensor_raw2);
+  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw3), imain_window.data_display_label_sensor_raw3);
+  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw4), imain_window.data_display_label_sensor_raw4);
+  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw5), imain_window.data_display_label_sensor_raw5);
+  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw6), imain_window.data_display_label_sensor_raw6);
+  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw7), imain_window.data_display_label_sensor_raw7);
+  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv0), imain_window.data_display_label_sensor_pv0);
+  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv1), imain_window.data_display_label_sensor_pv1);
+  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv2), imain_window.data_display_label_sensor_pv2);
+  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv3), imain_window.data_display_label_sensor_pv3);
+  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv4), imain_window.data_display_label_sensor_pv4);
+  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv5), imain_window.data_display_label_sensor_pv5);
+  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv6), imain_window.data_display_label_sensor_pv6);
+  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv7), imain_window.data_display_label_sensor_pv7);
 
   // Return TRUE to keep the idle function running
   return TRUE;
@@ -182,7 +189,7 @@ static void button0_clicked_cb(GtkButton *button, MainWindow *self)
   // Show all widgets in the SubWindow
   gtk_widget_show(sub_window);
 
-  gtk_label_set_text(GTK_LABEL(self->data_display_label0), "Button0 was clicked!");
+  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw0), "Button0 was clicked!");
 }
 
 // was named activate_cb and was static
@@ -238,10 +245,10 @@ void activate_main_window_cb(GtkApplication *app, gpointer user_data)
   return MAIN_WINDOW(g_object_get_data(G_OBJECT(window), "main-window-instance"));
 }
 
-// Function to retrieve the text from data_display_label0
+// Function to retrieve the text from data_display_label_sensor_raw0
 const char *_get_data_display_label0_text(MainWindow *window)
 {
-  return gtk_label_get_text(GTK_LABEL(window->data_display_label0));
+  return gtk_label_get_text(GTK_LABEL(window->data_display_label_sensor_raw0));
 }
 
 // Example usage of get_data_display_label0_text
@@ -261,7 +268,7 @@ int set_data_display_label0_text(const char *text)
 {
   MainWindow *window = _get_main_window_instance();
   if (window) {
-    gtk_label_set_text(GTK_LABEL(window->data_display_label0), text);
+    gtk_label_set_text(GTK_LABEL(window->data_display_label_sensor_raw0), text);
     return 0;
   } else {
     g_print("Failed to retrieve MainWindow instance\n");

@@ -19,7 +19,7 @@ INC_TESTVALUES_DIR := src/test-values
 
 BIN		:= bin
 SRC		:= $(wildcard $(SRC_CFGFILE_DIR)/*.cpp) \
-		   $(wildcard $(SRC_STRUCT_DIR)/*.cpp) \
+		   $(wildcard $(SRC_STRUCT_DIR)/*.c) \
 		   $(wildcard $(SRC_CAL_DIR)/*.cpp) \
 		   $(wildcard $(SRC_TESTVALUES_DIR)/*.cpp) \
 		   $(wildcard $(SRC_GUI_DIR)/*.c) \

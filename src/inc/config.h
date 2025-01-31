@@ -7,10 +7,10 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <iostream>
+/*#include <iostream>
 #include <fstream>
 #include <map>
-#include <string>
+#include <string>*/
 
 // Path to window resource files. It's relative to the current working
 // directory. The bin should be ran from the project root directory.
