@@ -27,6 +27,6 @@ void init_param()
     param.sensor_cal2_pv[i] = CAL2_PV;
     param.sensor_slope[i] = 0.0;
     param.sensor_offset[i] = 0.0;
-    param.hi_alarm = 0.0;`
+    param.hi_alarm = 0.0;
   }
 }

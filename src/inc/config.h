@@ -12,6 +12,11 @@
 #include <map>
 #include <string>
 
+// Path to window resource files. It's relative to the current working
+// directory. The bin should be ran from the project root directory.
+#define PATH_TO_MAIN_WIN_RESOURCE "./src/gui/resource/main-window.ui"
+#define PATH_TO_SUB_WIN_RESOURCE "./src/gui/resource/sub-window.ui"
+
 #define MAX_CONFIG_SECTIONS 64u
 #define CONFIG_INI_FILE_PATH "config.ini"
 

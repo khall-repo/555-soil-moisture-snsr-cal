@@ -12,7 +12,8 @@
 #include "struct.h"
 #include "cal.h"
 #include "test-values.h"
-
+#include "gui.h"
+#include "control.h"
 
 extern Param_t param; // Import from struct.cpp
 
@@ -89,12 +90,12 @@ void pv_test(void)
  * @brief Main program entry point
  * @return 0 if success, -1 if error
  */
-int main(int argc, char const *argv[])
+int main(int argc, char *argv[])
 {
   (void)argc; // not used yet
   (void)argv; // not used yet
 
-  wiringPiSetup();
+  /*wiringPiSetup();
 
   Config_File *config = new Config_File();
   if(config->read_config_file() != 0) {
@@ -112,7 +113,12 @@ int main(int argc, char const *argv[])
   get_raw_test_readings();
 
   cal_test();
-  pv_test();
+  pv_test();*/
   
-  return 0;
+  if(0 != timebase_start()) {
+    return -1;
+  }
+
+  int status = run_gui_application(argc, argv);
+  return status;
 }
