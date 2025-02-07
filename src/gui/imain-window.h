@@ -3,9 +3,12 @@
 
 #include <stdbool.h>
 
+#define MAX_COL_HEADER_STR_SZ   16u
+#define MAX_SENSOR_DATA_DISP_SZ 16u
+
 typedef struct _INainWindow
 {
-  const char *col_header_sensor_raw;
+  /*const char *col_header_sensor_raw;
   const char *col_header_sensor_pv;
 
   const char *data_display_label_sensor_raw0;
@@ -23,7 +26,27 @@ typedef struct _INainWindow
   const char *data_display_label_sensor_pv4;
   const char *data_display_label_sensor_pv5;
   const char *data_display_label_sensor_pv6;
-  const char *data_display_label_sensor_pv7;
+  const char *data_display_label_sensor_pv7;*/
+
+  char col_header_sensor_raw[MAX_COL_HEADER_STR_SZ];
+  char col_header_sensor_pv[MAX_COL_HEADER_STR_SZ];
+
+  char data_display_label_sensor_raw0[MAX_SENSOR_DATA_DISP_SZ];
+  char data_display_label_sensor_raw1[MAX_SENSOR_DATA_DISP_SZ];
+  char data_display_label_sensor_raw2[MAX_SENSOR_DATA_DISP_SZ];
+  char data_display_label_sensor_raw3[MAX_SENSOR_DATA_DISP_SZ];
+  char data_display_label_sensor_raw4[MAX_SENSOR_DATA_DISP_SZ];
+  char data_display_label_sensor_raw5[MAX_SENSOR_DATA_DISP_SZ];
+  char data_display_label_sensor_raw6[MAX_SENSOR_DATA_DISP_SZ];
+  char data_display_label_sensor_raw7[MAX_SENSOR_DATA_DISP_SZ];
+  char data_display_label_sensor_pv0[MAX_SENSOR_DATA_DISP_SZ];
+  char data_display_label_sensor_pv1[MAX_SENSOR_DATA_DISP_SZ];
+  char data_display_label_sensor_pv2[MAX_SENSOR_DATA_DISP_SZ];
+  char data_display_label_sensor_pv3[MAX_SENSOR_DATA_DISP_SZ];
+  char data_display_label_sensor_pv4[MAX_SENSOR_DATA_DISP_SZ];
+  char data_display_label_sensor_pv5[MAX_SENSOR_DATA_DISP_SZ];
+  char data_display_label_sensor_pv6[MAX_SENSOR_DATA_DISP_SZ];
+  char data_display_label_sensor_pv7[MAX_SENSOR_DATA_DISP_SZ];
   
   bool button0; // bottom button
 

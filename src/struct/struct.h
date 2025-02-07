@@ -6,21 +6,24 @@
 #ifndef STRUCT_H
 #define STRUCT_H
 
-struct Param_t {
-    double sensor_min_scale[NUM_SENSORS];
-    double sensor_full_scale[NUM_SENSORS];
-    double sensor_raw[NUM_SENSORS];
-    double sensor_pv[NUM_SENSORS];
-    double sensor_cal1_raw[NUM_SENSORS];
-    double sensor_cal2_raw[NUM_SENSORS];
-    double sensor_cal1_pv[NUM_SENSORS];
-    double sensor_cal2_pv[NUM_SENSORS];
-    double sensor_slope[NUM_SENSORS];
-    double sensor_offset[NUM_SENSORS];
+typedef struct _Param_t {
+    unsigned int num_sensors;
+    double sensor_min_scale;
+    double sensor_full_scale;
+    double sensor_cal1_pv;
+    double sensor_cal2_pv;
     double hi_alarm;
     double mid_alarm;
     double low_alarm;
-};
+    unsigned int raw_disp_precision;
+    unsigned int pv_disp_precision;
+    double sensor_raw[MAX_SENSORS];
+    double sensor_pv[MAX_SENSORS];
+    double sensor_cal1_raw[MAX_SENSORS];
+    double sensor_cal2_raw[MAX_SENSORS];
+    double sensor_slope[MAX_SENSORS];
+    double sensor_offset[MAX_SENSORS];
+}Param_t;
 
 void init_param();
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <template class="MainWindow" parent="GtkApplicationWindow">
-    <property name="title">GTK4 Test 3</property>
+    <property name="title">Soil Moisture Sensor Monitor and Calibration</property>
     <property name="default-width">800</property>
     <property name="default-height">600</property>
     <child>

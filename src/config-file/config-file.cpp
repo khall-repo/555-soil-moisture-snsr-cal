@@ -83,14 +83,14 @@ Config_File::Config_File()
 
   // debug messages to follow:
   std::cout << "Config file read successfully" << '\n';
-  std::cout << "Number of sections: " << num_sections << '\n';
+  //std::cout << "Number of sections: " << num_sections << '\n';
 
-  for(auto const& section : config_section_map) {
-    std::cout << "Section: " << section.first << '\n';
-    for(auto const& key : section.second) {
-      std::cout << "  Key: " << key.first << " Value: " << key.second << '\n';
-    }
-  }
+  //for(auto const& section : config_section_map) {
+  //  std::cout << "Section: " << section.first << '\n';
+  //  for(auto const& key : section.second) {
+  //    std::cout << "  Key: " << key.first << " Value: " << key.second << '\n';
+  //  }
+  //}
   // end debug messages
 
   config_file.close();

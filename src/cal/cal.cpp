@@ -18,7 +18,7 @@ extern Param_t param;
  */
 int capture_zero_raw(int sensor_num)
 {
-  if(NUM_SENSORS < sensor_num){
+  if(MAX_SENSORS < sensor_num){
     return -1;
   }
 
@@ -34,7 +34,7 @@ int capture_zero_raw(int sensor_num)
  */
 int capture_span_raw(int sensor_num)
 {
-  if(NUM_SENSORS < sensor_num){
+  if(MAX_SENSORS < sensor_num){
     return -1;
   }
 
@@ -50,7 +50,7 @@ int capture_span_raw(int sensor_num)
  */
 int do_zero(int sensor_num)
 {
-  if(NUM_SENSORS < sensor_num){
+  if(MAX_SENSORS < sensor_num){
     return -1;
   }
 
@@ -66,12 +66,12 @@ int do_zero(int sensor_num)
  */
 int do_span(int sensor_num)
 {
-  if(NUM_SENSORS < sensor_num){
+  if(MAX_SENSORS < sensor_num){
     return -1;
   }
 //  std::cout << "Sensor num: " << sensor_num << " Cal1 raw: " << param.sensor_cal1_raw[sensor_num] << " Cal2 raw: " << param.sensor_cal2_raw[sensor_num] << '\n';
-//  std::cout << "Cal1 pv: " << param.sensor_cal1_pv[sensor_num] << " Cal2 pv: " << param.sensor_cal2_pv[sensor_num] << '\n';
-  param.sensor_slope[sensor_num] = (param.sensor_cal2_raw[sensor_num] - param.sensor_cal1_raw[sensor_num])/(param.sensor_cal2_pv[sensor_num] - param.sensor_cal1_pv[sensor_num]);
+//  std::cout << "Cal1 pv: " << param.sensor_cal1_pv << " Cal2 pv: " << param.sensor_cal2_pv << '\n';
+  param.sensor_slope[sensor_num] = (param.sensor_cal2_raw[sensor_num] - param.sensor_cal1_raw[sensor_num])/(param.sensor_cal2_pv - param.sensor_cal1_pv);
 
   return 0;
 }
