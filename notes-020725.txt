@@ -1,0 +1,17 @@
+MCP3008 Connections:
+VDD:  3.3V   (Pin 1 on the Raspberry Pi GPIO header)
+VREF: 3.3V   (Pin 1 on the Raspberry Pi GPIO header)
+AGND: GND    (Pin 6 on the Raspberry Pi GPIO header)
+DGND: GND    (Pin 6 on the Raspberry Pi GPIO header)
+CLK:  GPIO11 (Pin 23 on the Raspberry Pi GPIO header)
+DOUT: GPIO9  (Pin 21 on the Raspberry Pi GPIO header)
+DIN:  GPIO10 (Pin 19 on the Raspberry Pi GPIO header)
+CS:   GPIO8  (Pin 24 on the Raspberry Pi GPIO header)
+
+Raspberry Pi GPIO Header Pinout for SPI:
+WHT 3.3V: Pin 1
+GRY GND:  Pin 6
+BRN MOSI: GPIO10 (Pin 19)
+RED MISO: GPIO9 (Pin 21)
+ORG SCLK: GPIO11 (Pin 23)
+YEL CE0:  GPIO8 (Pin 24)
