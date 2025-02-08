@@ -23,4 +23,14 @@ std::string dtos(double val, unsigned int precision)
   std::ostringstream out;
   out << std::fixed << std::setprecision(precision) << val;
   return out.str();
-}   
+}
+
+/**
+ * @brief Clear terminal screen
+ * @param none
+ * @return none
+ */
+void clear_terminal_screen(void)
+{
+    std::cout << "\033[2J\033[H";
+}

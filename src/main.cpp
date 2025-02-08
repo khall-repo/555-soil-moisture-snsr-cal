@@ -7,12 +7,16 @@
  */
 #include <iostream>
 #include <wiringPi.h>
+#include <mcp3004.h>
 #include "config.h"
 #include "config-file.h"
 #include "struct.h"
 #include "cal.h"
 #include "gui.h"
 #include "control.h"
+
+#define MCP3008_PINBASE   100
+#define MCP3008_0_SPI_CHAN  0
 
 extern Param_t param; // Import from struct.cpp
 
@@ -64,17 +68,23 @@ int main(int argc, char *argv[])
   (void)argc; // not used yet
   (void)argv; // not used yet
 
-  //wiringPiSetup();
-
   // Read the config file
   config_file = new Config_File();
   if(config_file->read_config_file() != 0) {
     std::cerr << "Error reading config file" << '\n';
     return -1;
   }
-
   init_param();
 
+  if (wiringPiSetup() == -1) {
+    std::cerr << "Failed to initialize WiringPi" << '\n';
+    return -1;
+  }
+
+  if (mcp3004Setup(MCP3008_PINBASE, MCP3008_0_SPI_CHAN) == -1) {
+    std::cerr << "Failed to initialize MCP3008" << '\n';
+    return -1;
+  }
   //cal_test();
   //pv_test();
   

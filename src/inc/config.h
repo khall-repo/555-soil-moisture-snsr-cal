@@ -24,4 +24,19 @@
 #define TEST_CAL_RAW_VALUES_FILE_PATH     "test-cal-raw-values.txt"
 #define TEST_READING_RAW_VALUES_FILE_PATH "test-reading-raw-values.txt"
 
+#define MCP3008_PINBASE   100
+#define MCP3008_0_SPI_CHAN  0
+
+#define VREF    (double)3300.0
+#define ADC_MAX (double)1024.0
+
+#define FILTER            (double) 15.0 // normal filter
+#define BIG_JUMP          (double) 50.0	// if the raw value jumps by this amount
+                                        // then use this filter number (i.e.
+                                        // relax the filtering for big jumps)
+#define MID_JUMP          (double) 25.0
+#define SMALL_JUMP        (double) 10.0
+#define MAX_FILTER  (unsigned int) 25
+#define MIN_FILTER  (unsigned int) 1
+
 #endif

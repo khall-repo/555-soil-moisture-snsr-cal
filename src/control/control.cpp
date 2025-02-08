@@ -11,6 +11,9 @@
 #include <string>
 #include <signal.h>
 #include <time.h>
+#include <math.h>
+#include <wiringPi.h>
+#include <mcp3004.h>
 #include "util.h"
 #include "config.h"
 #include "imain-window.h"
@@ -19,8 +22,47 @@
 #include "control.h"
 
 extern Param_t param; // Import from struct.c
+extern Analog_Input_t analog_input[MAX_SENSORS]; // Import from struct.c
 
 timer_t timebase_timerid;
+
+/**
+ * @brief Read and print raw values from all 8 channels of the MCP3008
+ * @param none
+ * @return none
+ */
+void mcp3008_read_all_print(void)
+{
+  for (unsigned int channel = 0; channel < param.num_sensors; ++channel) {
+    int value = analogRead(MCP3008_PINBASE + channel);
+    std::cout << "Ch " << channel << ": " << value << '\n';
+  }
+}
+
+/**
+ * @brief Read MCP3008 ADC values and convert to millivolts
+ * @param none
+ * @return none
+ */
+void mcp3008_read_raw_mv_all(void)
+{
+  for (unsigned int channel = 0; channel < param.num_sensors; ++channel) {
+    int value = analogRead(MCP3008_PINBASE + channel);
+    param.sensor_raw[channel] = VREF * (double)value / ADC_MAX;
+  }
+}
+
+/**
+ * @brief Print all sensor raw values
+ * @param none
+ * @return none
+ */
+void print_all_sensor_raw(void)
+{
+  for (unsigned int channel = 0; channel < param.num_sensors; ++channel) {
+    std::cout << "Ch " << channel << ": " << param.sensor_raw[channel] << " mV" << '\n';
+  }
+}
 
 /**
  * @brief Update the main window sensor raw signal display boxes
@@ -57,6 +99,76 @@ void update_pv_display(void)
 }
 
 /**
+ * @brief Calculate millivolts from ADC value
+ * @param adc_val - ADC output value
+ * @return ADC output value converted to millivolts
+ */
+double calc_mv(int adc_val)
+{
+  return VREF * (double)adc_val / ADC_MAX;
+}
+
+double calc_filtered_mv(double unfiltered_mv, double last_filtered_mv)
+{
+  double jump;
+  double filtera;
+  jump = fabs(last_filtered_mv - unfiltered_mv); // calculate difference between filter in and out
+
+	if (jump > BIG_JUMP)  // set filter based on jump - for big jumps the filter is relaxed 
+		filtera = (double) param.ewma_filter / 8.0;
+
+	else if (jump > MID_JUMP)  // for middle jumps the filter is less relaxed than for big jumps
+		filtera = (double) param.ewma_filter / 4.0;
+
+	else if (jump > SMALL_JUMP)	// for small jumps the filter is less relaxed than for middle jumps
+		filtera = (double) param.ewma_filter / 1.5;
+
+	else
+		filtera = (double) param.ewma_filter;
+
+	if (filtera < 1.0)		// dFilterA CANNOT BE LESS THAN 1 TO AVOID GETTING A NEGATIVE FILTER VALUE
+		filtera = 1.0;
+
+	filtera = (filtera - 1.0) / filtera; // get filter ready for use
+
+	return filtera * last_filtered_mv  + (1.0-filtera) * unfiltered_mv;	// apply the EWMA filter
+}
+
+/**
+ * @brief Read and average ADC output values and update the analog input 
+ * structure
+ * @param none
+ * @return none 
+ */
+void update_analog_input(void)
+{
+  for (unsigned int channel = 0; channel < param.num_sensors; ++channel) {
+    analog_input[channel].adc_val = analogRead(MCP3008_PINBASE + channel);
+    analog_input[channel].accum_adc += analog_input[channel].adc_val;
+    if(param.adc_num_samples == ++analog_input[channel].sample_num) {
+      analog_input[channel].unfiltered_mv = 
+        calc_mv(analog_input[channel].accum_adc / param.adc_num_samples);
+      analog_input[channel].filtered_mv = 
+        calc_filtered_mv(analog_input[channel].unfiltered_mv, analog_input[channel].filtered_mv);
+      analog_input[channel].accum_adc = 0.0;
+      analog_input[channel].sample_num = 0;
+    }
+  }
+}
+
+/**
+ * @brief Update param structure live data
+ * @param none
+ * @return none 
+ */
+void update_param(void)
+{
+  for (unsigned int channel = 0; channel < param.num_sensors; ++channel) {
+    param.sensor_raw[channel] = analog_input[channel].filtered_mv;
+  }
+}
+
+/**
  * @brief Program timebase handler
  * @param signum - Signal number
  * @param *info - Signal information
@@ -68,7 +180,16 @@ void timebase_handler(int signum, siginfo_t *info, void *context)
 {
   static int count = 0;
 
-  if (10 == count) { // One second (10 * 100ms) has passed
+  // .1 second tasks
+  update_analog_input();
+
+  // 1 second tasks
+  if (10 == count) {
+    // Terminal update
+    clear_terminal_screen();
+    update_param();
+    print_all_sensor_raw();
+    // Main window update
     update_sensor_raw_display();
     update_pv_display();
     count = 0;

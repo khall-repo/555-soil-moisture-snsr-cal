@@ -9,5 +9,6 @@
 #define UTIL_H
 
 std::string dtos(double val, unsigned int precision);
+void clear_terminal_screen(void);
 
 #endif // UTIL_H

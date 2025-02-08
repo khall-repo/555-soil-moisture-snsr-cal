@@ -6,6 +6,7 @@
 #ifndef STRUCT_H
 #define STRUCT_H
 
+/// @brief Sensor parameter structure typedef
 typedef struct _Param_t {
     unsigned int num_sensors;
     double sensor_min_scale;
@@ -17,6 +18,8 @@ typedef struct _Param_t {
     double low_alarm;
     unsigned int raw_disp_precision;
     unsigned int pv_disp_precision;
+    unsigned int adc_num_samples; // number of samples to average
+    unsigned int ewma_filter;     // exponential weighted moving average filter val
     double sensor_raw[MAX_SENSORS];
     double sensor_pv[MAX_SENSORS];
     double sensor_cal1_raw[MAX_SENSORS];
@@ -24,6 +27,15 @@ typedef struct _Param_t {
     double sensor_slope[MAX_SENSORS];
     double sensor_offset[MAX_SENSORS];
 }Param_t;
+
+/// @brief Analog input structure typedef
+typedef struct _Analog_Input_t {
+    int adc_val;
+    int accum_adc;
+    unsigned int sample_num;
+    double unfiltered_mv;
+    double filtered_mv;
+}Analog_Input_t;
 
 void init_param();
 

@@ -11,6 +11,7 @@
 extern Config_File *config_file; // Import from main.cpp
 
 Param_t param;
+Analog_Input_t analog_input[MAX_SENSORS];
 
 /**
  * @brief Set raw and PV values with test values from the config file
@@ -47,6 +48,8 @@ void set_param_from_config_file(void)
   param.raw_disp_precision = std::stoi(value);
   value = config_file->get_config_value("param", "pv_disp_precision");
   param.pv_disp_precision = std::stoi(value);
+  value = config_file->get_config_value("param", "adc_num_samples");
+  param.adc_num_samples = std::stoi(value);
 
   value = config_file->get_config_value("param", "testraw0");
   param.sensor_raw[0] = std::stod(value);
@@ -109,5 +112,15 @@ void init_param()
     param.sensor_slope[i] = 0.0;
     param.sensor_offset[i] = 0.0;
   }
+
+  // zero out analog input structure
+  for(int i = 0; i < MAX_SENSORS; i++) {
+    analog_input[i].adc_val = 0;
+    analog_input[i].accum_adc = 0;
+    analog_input[i].sample_num = 0;
+    analog_input[i].unfiltered_mv = 0.0;
+    analog_input[i].filtered_mv = 0.0;
+  }
+
   set_param_from_config_file(); // set test values
 }

@@ -8,26 +8,6 @@
 
 typedef struct _INainWindow
 {
-  /*const char *col_header_sensor_raw;
-  const char *col_header_sensor_pv;
-
-  const char *data_display_label_sensor_raw0;
-  const char *data_display_label_sensor_raw1;
-  const char *data_display_label_sensor_raw2;
-  const char *data_display_label_sensor_raw3;
-  const char *data_display_label_sensor_raw4;
-  const char *data_display_label_sensor_raw5;
-  const char *data_display_label_sensor_raw6;
-  const char *data_display_label_sensor_raw7;
-  const char *data_display_label_sensor_pv0;
-  const char *data_display_label_sensor_pv1;
-  const char *data_display_label_sensor_pv2;
-  const char *data_display_label_sensor_pv3;
-  const char *data_display_label_sensor_pv4;
-  const char *data_display_label_sensor_pv5;
-  const char *data_display_label_sensor_pv6;
-  const char *data_display_label_sensor_pv7;*/
-
   char col_header_sensor_raw[MAX_COL_HEADER_STR_SZ];
   char col_header_sensor_pv[MAX_COL_HEADER_STR_SZ];
 
