@@ -14,6 +14,9 @@
 #include "main-window.h"
 #include "sub-window.h"
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
 extern IMainWindow imain_window;
 
 // This is the handle for the idle function that updates the main window 
@@ -121,6 +124,23 @@ static void main_window_class_init(MainWindowClass *klass)
     gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_pv7);
 
     gtk_widget_class_bind_template_child(widget_class, MainWindow, button0);
+
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero0);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero1);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero2);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero3);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero4);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero5);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero6);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero7);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span0);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span1);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span2);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span3);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span4);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span5);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span6);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span7);
   } else {
     g_error("Failed to load MainWindow template: %s\n", error->message);
     g_error_free(error);
@@ -192,6 +212,86 @@ static void button0_clicked_cb(GtkButton *button, MainWindow *self)
   gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw0), "Button0 was clicked!");
 }
 
+static void button_zero0_clicked_cb(GtkButton *button, MainWindow *self)
+{
+  imain_window.button_zero_0_pressed = true;
+}
+
+static void button_zero1_clicked_cb(GtkButton *button, MainWindow *self)
+{
+  imain_window.button_zero_1_pressed = true;
+}
+
+static void button_zero2_clicked_cb(GtkButton *button, MainWindow *self)
+{
+  imain_window.button_zero_2_pressed = true;
+}
+
+static void button_zero3_clicked_cb(GtkButton *button, MainWindow *self)
+{
+  imain_window.button_zero_3_pressed = true;
+}
+
+static void button_zero4_clicked_cb(GtkButton *button, MainWindow *self)
+{
+  imain_window.button_zero_4_pressed = true;
+}
+
+static void button_zero5_clicked_cb(GtkButton *button, MainWindow *self)
+{
+  imain_window.button_zero_5_pressed = true;
+}
+
+static void button_zero6_clicked_cb(GtkButton *button, MainWindow *self)
+{
+  imain_window.button_zero_6_pressed = true;
+}
+
+static void button_zero7_clicked_cb(GtkButton *button, MainWindow *self)
+{
+  imain_window.button_zero_7_pressed = true;
+}
+
+static void button_span0_clicked_cb(GtkButton *button, MainWindow *self)
+{
+  imain_window.button_span_0_pressed = true;
+}
+
+static void button_span1_clicked_cb(GtkButton *button, MainWindow *self)
+{
+  imain_window.button_span_1_pressed = true;
+}
+
+static void button_span2_clicked_cb(GtkButton *button, MainWindow *self)
+{
+  imain_window.button_span_2_pressed = true;
+}
+
+static void button_span3_clicked_cb(GtkButton *button, MainWindow *self)
+{
+  imain_window.button_span_3_pressed = true;
+}
+
+static void button_span4_clicked_cb(GtkButton *button, MainWindow *self)
+{
+  imain_window.button_span_4_pressed = true;
+}
+
+static void button_span5_clicked_cb(GtkButton *button, MainWindow *self)
+{
+  imain_window.button_span_5_pressed = true;
+}
+
+static void button_span6_clicked_cb(GtkButton *button, MainWindow *self)
+{
+  imain_window.button_span_6_pressed = true;
+}
+
+static void button_span7_clicked_cb(GtkButton *button, MainWindow *self)
+{
+  imain_window.button_span_7_pressed = true;
+}
+
 // was named activate_cb and was static
 void activate_main_window_cb(GtkApplication *app, gpointer user_data)
 {
@@ -204,6 +304,24 @@ void activate_main_window_cb(GtkApplication *app, gpointer user_data)
 
   // Connect the button0 signal its the callback function
   g_signal_connect(window->button0, "clicked", G_CALLBACK(button0_clicked_cb), window);
+
+  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_zero0_clicked_cb), window);
+  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_zero1_clicked_cb), window);
+  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_zero2_clicked_cb), window);
+  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_zero3_clicked_cb), window);
+  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_zero4_clicked_cb), window);
+  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_zero5_clicked_cb), window);
+  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_zero6_clicked_cb), window);
+  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_zero7_clicked_cb), window);
+  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_span0_clicked_cb), window);
+  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_span1_clicked_cb), window);
+  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_span2_clicked_cb), window);
+  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_span3_clicked_cb), window);
+  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_span4_clicked_cb), window);
+  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_span5_clicked_cb), window);
+  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_span6_clicked_cb), window);
+  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_span7_clicked_cb), window);
+
   // Connect the destroy signal to detect when the window is closed
   g_signal_connect(window, "destroy", G_CALLBACK(main_window_destroy_cb), NULL);
 
@@ -216,26 +334,7 @@ void activate_main_window_cb(GtkApplication *app, gpointer user_data)
   //window_update_fn_source_id = g_timeout_add(1000, (GSourceFunc)update_main_window, window);
 }
 
-// gonna try to move this to gui.c
-/*int run_gui_application(int argc, char *argv[])
-{
-  GtkApplication *main_app;
-  int status;
-
-  // Disable accessibility so we don't get a bunch of warnings about it.
-  g_setenv("GTK_A11Y", "none", TRUE);
-
-  // On the RPi OS, it complains that G_APPLICATION_FLAGS_NONE is deprecated,
-  // and that we should use instead use G_APPLICATION_DEFAULT_FLAGS.
-  // But on Linux mint AMD64, that doesn't even exist.
-  main_app = gtk_application_new("com.example.myapp", G_APPLICATION_FLAGS_NONE);
-  g_signal_connect(main_app, "activate", G_CALLBACK(activate_main_window_cb), NULL);
-  status = g_application_run(G_APPLICATION(main_app), argc, argv);
-
-  g_object_unref(main_app);
-  return status;
-}*/
-
+#pragma GCC diagnostic pop
 
 // Here is some scrap code.. It works so I'm leaving it here for my own
 // reference.

@@ -30,23 +30,23 @@ typedef struct _INainWindow
   
   bool button0; // bottom button
 
-  bool button_zero0; // first column of buttons
-  bool button_zero1;
-  bool button_zero2;
-  bool button_zero3;
-  bool button_zero4;
-  bool button_zero5;
-  bool button_zero6;
-  bool button_zero7;
+  bool button_zero_0_pressed; // first column of buttons
+  bool button_zero_1_pressed;
+  bool button_zero_2_pressed;
+  bool button_zero_3_pressed;
+  bool button_zero_4_pressed;
+  bool button_zero_5_pressed;
+  bool button_zero_6_pressed;
+  bool button_zero_7_pressed;
 
-  bool button_span0; // second column of buttons
-  bool button_span1;
-  bool button_span2;
-  bool button_span3;
-  bool button_span4;
-  bool button_span5;
-  bool button_span6;
-  bool button_span7;
+  bool button_span_0_pressed; // second column of buttons
+  bool button_span_1_pressed;
+  bool button_span_2_pressed;
+  bool button_span_3_pressed;
+  bool button_span_4_pressed;
+  bool button_span_5_pressed;
+  bool button_span_6_pressed;
+  bool button_span_7_pressed;
 
 } IMainWindow;
 
@@ -85,5 +85,41 @@ void set_data_display_label_sensor_pv4(const char *text);
 void set_data_display_label_sensor_pv5(const char *text);
 void set_data_display_label_sensor_pv6(const char *text);
 void set_data_display_label_sensor_pv7(const char *text);
+
+bool button_zero_0_pressed(void);
+bool button_zero_1_pressed(void);
+bool button_zero_2_pressed(void);
+bool button_zero_3_pressed(void);
+bool button_zero_4_pressed(void);
+bool button_zero_5_pressed(void);
+bool button_zero_6_pressed(void);
+bool button_zero_7_pressed(void);
+
+bool button_span_0_pressed(void);
+bool button_span_1_pressed(void);
+bool button_span_2_pressed(void);
+bool button_span_3_pressed(void);
+bool button_span_4_pressed(void);
+bool button_span_5_pressed(void);
+bool button_span_6_pressed(void);
+bool button_span_7_pressed(void);
+
+bool button_zero_0_pressed_ack(void);
+bool button_zero_1_pressed_ack(void);
+bool button_zero_2_pressed_ack(void);
+bool button_zero_3_pressed_ack(void);
+bool button_zero_4_pressed_ack(void);
+bool button_zero_5_pressed_ack(void);
+bool button_zero_6_pressed_ack(void);
+bool button_zero_7_pressed_ack(void);
+
+bool button_span_0_pressed_ack(void);
+bool button_span_1_pressed_ack(void);
+bool button_span_2_pressed_ack(void);
+bool button_span_3_pressed_ack(void);
+bool button_span_4_pressed_ack(void);
+bool button_span_5_pressed_ack(void);
+bool button_span_6_pressed_ack(void);
+bool button_span_7_pressed_ack(void);
 
 #endif

@@ -19,10 +19,12 @@
 #include "imain-window.h"
 #include "gui.h"
 #include "struct.h"
+#include "cal.h"
 #include "control.h"
 
 extern Param_t param; // Import from struct.c
 extern Analog_Input_t analog_input[MAX_SENSORS]; // Import from struct.c
+extern IMainWindow imain_window; // import from imain-window.cpp
 
 timer_t timebase_timerid;
 
@@ -134,6 +136,11 @@ double calc_filtered_mv(double unfiltered_mv, double last_filtered_mv)
 	return filtera * last_filtered_mv  + (1.0-filtera) * unfiltered_mv;	// apply the EWMA filter
 }
 
+double calc_pv(unsigned int sensor_num)
+{
+  return (param.sensor_raw[sensor_num] - param.sensor_offset[sensor_num]) / param.sensor_slope[sensor_num];
+}
+
 /**
  * @brief Read and average ADC output values and update the analog input 
  * structure
@@ -165,6 +172,73 @@ void update_param(void)
 {
   for (unsigned int channel = 0; channel < param.num_sensors; ++channel) {
     param.sensor_raw[channel] = analog_input[channel].filtered_mv;
+    param.sensor_pv[channel] = calc_pv(channel);
+  }
+}
+
+void cmd_handler(void)
+{
+  bool do_cal = false;
+  unsigned int cal_sensor_num = 0;
+  if(button_zero_0_pressed_ack()) {
+    capture_zero_raw(0);
+  } else if(button_zero_1_pressed_ack()) {
+    capture_zero_raw(1);
+  } else if(button_zero_2_pressed_ack()) {
+    capture_zero_raw(2);
+  } else if(button_zero_3_pressed_ack()) {
+    capture_zero_raw(3);
+  } else if(button_zero_4_pressed_ack()) {
+    capture_zero_raw(4);
+  } else if(button_zero_5_pressed_ack()) {
+    capture_zero_raw(5);
+  } else if(button_zero_6_pressed_ack()) {
+    capture_zero_raw(6);
+  } else if(button_zero_7_pressed_ack()) {
+    capture_zero_raw(7);
+  } else if(button_span_0_pressed_ack()) {
+    capture_span_raw(0);
+    cal_sensor_num = 0;
+    do_cal = true;
+  } else if(button_span_1_pressed_ack()) {
+    capture_span_raw(1);
+    cal_sensor_num = 1;
+    do_cal = true;
+  } else if(button_span_2_pressed_ack()) {
+    capture_span_raw(2);
+    cal_sensor_num = 2;
+    do_cal = true;
+  } else if(button_span_3_pressed_ack()) {
+    capture_span_raw(3);
+    cal_sensor_num = 3;
+    do_cal = true;
+  } else if(button_span_4_pressed_ack()) {
+    capture_span_raw(4);
+    cal_sensor_num = 4;
+    do_cal = true;
+  } else if(button_span_5_pressed_ack()) {
+    capture_span_raw(5);
+    cal_sensor_num = 5;
+    do_cal = true;
+  } else if(button_span_6_pressed_ack()) {
+    capture_span_raw(6);
+    cal_sensor_num = 6;
+    do_cal = true;
+  } else if(button_span_7_pressed_ack()) {
+    capture_span_raw(7);
+    cal_sensor_num = 7;
+    do_cal = true;
+  }
+  if(do_cal) {
+    if(do_zero(cal_sensor_num) == 0) {
+      if(do_span(cal_sensor_num) == 0) {
+        std::cout << "Calibration complete" << '\n';
+      } else {
+        std::cout << "Span calibration error" << '\n';
+      }
+    } else {
+      std::cout << "Zero calibration error" << '\n';
+    }
   }
 }
 
@@ -182,6 +256,7 @@ void timebase_handler(int signum, siginfo_t *info, void *context)
 
   // .1 second tasks
   update_analog_input();
+  cmd_handler();
 
   // 1 second tasks
   if (10 == count) {
