@@ -26,6 +26,10 @@ typedef struct _MainWindow
 {
   GtkApplicationWindow parent_instance;
 
+  GtkWidget *notebook;
+  GtkWidget *tab_label_page0;
+  GtkWidget *tab_label_page1;
+
   GtkWidget *col_header_sensor_raw;
   GtkWidget *col_header_sensor_pv;
 
@@ -73,6 +77,16 @@ typedef struct _MainWindowClass
   GtkApplicationWindowClass parent_class;
 } MainWindowClass;
 
+// Custom log handler to detect "Gtk-CRITICAL" errors
+void custom_log_handler(const gchar *log_domain, GLogLevelFlags log_level, const gchar *message, gpointer user_data)
+{
+  if (log_level & G_LOG_LEVEL_CRITICAL)
+  {
+    g_printerr("Critical error detected: %s\n", message);
+    exit(EXIT_FAILURE);
+  }
+}
+
 // Register the MainWindow type with the GObject type system.
 // This macro will actually take the string "my_app_window" and converts it to
 // "main_window_app_class_init" and "main_app_window_init", and stores those
@@ -102,6 +116,10 @@ static void main_window_class_init(MainWindowClass *klass)
     GBytes *template_bytes = g_bytes_new_take(contents, length);
     gtk_widget_class_set_template(widget_class, template_bytes);
     g_bytes_unref(template_bytes);
+
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, notebook);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, tab_label_page0);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, tab_label_page1);
 
     gtk_widget_class_bind_template_child(widget_class, MainWindow, col_header_sensor_raw);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, col_header_sensor_pv);
@@ -141,6 +159,7 @@ static void main_window_class_init(MainWindowClass *klass)
     gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span5);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span6);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span7);
+
   } else {
     g_error("Failed to load MainWindow template: %s\n", error->message);
     g_error_free(error);
@@ -150,6 +169,13 @@ static void main_window_class_init(MainWindowClass *klass)
 static void main_window_init(MainWindow *self)
 {
   gtk_widget_init_template(GTK_WIDGET(self));
+
+  // Set the tab labels programmatically
+  GtkWidget *label_page0 = gtk_label_new("Ch 0-7");
+  GtkWidget *label_page1 = gtk_label_new("Ch 8-15");
+
+  gtk_notebook_set_tab_label(GTK_NOTEBOOK(self->notebook), gtk_notebook_get_nth_page(GTK_NOTEBOOK(self->notebook), 0), label_page0);
+  gtk_notebook_set_tab_label(GTK_NOTEBOOK(self->notebook), gtk_notebook_get_nth_page(GTK_NOTEBOOK(self->notebook), 1), label_page1);
 }
 
 static void main_window_destroy_cb(GtkWidget *widget, gpointer data)
@@ -296,7 +322,7 @@ static void button_span7_clicked_cb(GtkButton *button, MainWindow *self)
 void activate_main_window_cb(GtkApplication *app, gpointer user_data)
 {
   MainWindow *window = (MainWindow*)g_object_new(main_window_get_type(), "application", app, NULL);
-
+  
   // Store the MainWindow instance in the GtkApplicationWindow
   // Then you can use it for something later on. Look at the commented out
   // code at the bottom of this file.
@@ -304,7 +330,6 @@ void activate_main_window_cb(GtkApplication *app, gpointer user_data)
 
   // Connect the button0 signal its the callback function
   g_signal_connect(window->button0, "clicked", G_CALLBACK(button0_clicked_cb), window);
-
   g_signal_connect(window->button_zero0, "clicked", G_CALLBACK(button_zero0_clicked_cb), window);
   g_signal_connect(window->button_zero1, "clicked", G_CALLBACK(button_zero1_clicked_cb), window);
   g_signal_connect(window->button_zero2, "clicked", G_CALLBACK(button_zero2_clicked_cb), window);
@@ -332,9 +357,12 @@ void activate_main_window_cb(GtkApplication *app, gpointer user_data)
   // Alternatively, you could use g_timeout_add() to update the window at a
   // regular interval. The function would be called every 1000 milliseconds.
   //window_update_fn_source_id = g_timeout_add(1000, (GSourceFunc)update_main_window, window);
+  
+  // Set the custom log handler for the GTK log domain
+  g_log_set_handler("Gtk", G_LOG_LEVEL_CRITICAL, custom_log_handler, NULL);
 }
 
-#pragma GCC diagnostic pop
+#pragma GCC diagnostic pop // End disable warning for unused parameter
 
 // Here is some scrap code.. It works so I'm leaving it here for my own
 // reference.

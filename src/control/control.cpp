@@ -364,10 +364,10 @@ void timebase_handler(int signum, siginfo_t *info, void *context)
 
   // 1 second tasks
   if (10 == count) {
-    // Terminal update
-    clear_terminal_screen();
     update_param();
-    print_all_sensor_raw();
+    // Terminal update
+    //clear_terminal_screen();
+    //print_all_sensor_raw();
     // Main window update
     update_sensor_raw_display();
     update_pv_display();
