@@ -299,7 +299,7 @@
 <!-- *************************** Column 2 ********************************* -->
         <child>
           <object class="GtkButton" id="button_zero0">
-            <property name="label">button_zero0</property>
+            <property name="label">Zero</property>
             <layout>
               <property name="row">1</property>
               <property name="column">2</property>
@@ -308,7 +308,7 @@
         </child>
         <child>
           <object class="GtkButton" id="button_zero1">
-            <property name="label">button_zero1</property>
+            <property name="label">Zero</property>
             <layout>
               <property name="row">2</property>
               <property name="column">2</property>
@@ -317,7 +317,7 @@
         </child>
         <child>
           <object class="GtkButton" id="button_zero2">
-            <property name="label">button_zero2</property>
+            <property name="label">Zero</property>
             <layout>
               <property name="row">3</property>
               <property name="column">2</property>
@@ -326,7 +326,7 @@
         </child>
         <child>
           <object class="GtkButton" id="button_zero3">
-            <property name="label">button_zero3</property>
+            <property name="label">Zero</property>
             <layout>
               <property name="row">4</property>
               <property name="column">2</property>
@@ -335,7 +335,7 @@
         </child>
         <child>
           <object class="GtkButton" id="button_zero4">
-            <property name="label">button_zero4</property>
+            <property name="label">Zero</property>
             <layout>
               <property name="row">5</property>
               <property name="column">2</property>
@@ -344,7 +344,7 @@
         </child>
         <child>
           <object class="GtkButton" id="button_zero5">
-            <property name="label">button_zero5</property>
+            <property name="label">Zero</property>
             <layout>
               <property name="row">6</property>
               <property name="column">2</property>
@@ -353,7 +353,7 @@
         </child>
         <child>
           <object class="GtkButton" id="button_zero6">
-            <property name="label">button_zero6</property>
+            <property name="label">Zero</property>
             <layout>
               <property name="row">7</property>
               <property name="column">2</property>
@@ -362,7 +362,7 @@
         </child>
         <child>
           <object class="GtkButton" id="button_zero7">
-            <property name="label">button_zero7</property>
+            <property name="label">Zero</property>
             <layout>
               <property name="row">8</property>
               <property name="column">2</property>
@@ -372,7 +372,7 @@
 <!-- *************************** Column 3 ********************************* -->
         <child>
           <object class="GtkButton" id="button_span0">
-            <property name="label">button_span0</property>
+            <property name="label">Span</property>
             <layout>
               <property name="row">1</property>
               <property name="column">3</property>
@@ -381,7 +381,7 @@
         </child>
         <child>
           <object class="GtkButton" id="button_span1">
-            <property name="label">button_span1</property>
+            <property name="label">Span</property>
             <layout>
               <property name="row">2</property>
               <property name="column">3</property>
@@ -390,7 +390,7 @@
         </child>
         <child>
           <object class="GtkButton" id="button_span2">
-            <property name="label">button_span2</property>
+            <property name="label">Span</property>
             <layout>
               <property name="row">3</property>
               <property name="column">3</property>
@@ -399,7 +399,7 @@
         </child>
         <child>
           <object class="GtkButton" id="button_span3">
-            <property name="label">button_span3</property>
+            <property name="label">Span</property>
             <layout>
               <property name="row">4</property>
               <property name="column">3</property>
@@ -408,7 +408,7 @@
         </child>
         <child>
           <object class="GtkButton" id="button_span4">
-            <property name="label">button_span4</property>
+            <property name="label">Span</property>
             <layout>
               <property name="row">5</property>
               <property name="column">3</property>
@@ -417,7 +417,7 @@
         </child>
         <child>
           <object class="GtkButton" id="button_span5">
-            <property name="label">button_span5</property>
+            <property name="label">Span</property>
             <layout>
               <property name="row">6</property>
               <property name="column">3</property>
@@ -426,7 +426,7 @@
         </child>
         <child>
           <object class="GtkButton" id="button_span6">
-            <property name="label">button_span6</property>
+            <property name="label">Span</property>
             <layout>
               <property name="row">7</property>
               <property name="column">3</property>
@@ -435,7 +435,7 @@
         </child>
         <child>
           <object class="GtkButton" id="button_span7">
-            <property name="label">button_span7</property>
+            <property name="label">Span</property>
             <layout>
               <property name="row">8</property>
               <property name="column">3</property>

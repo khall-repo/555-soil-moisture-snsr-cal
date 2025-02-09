@@ -230,59 +230,106 @@ int save_calibration_data(unsigned int sensor_num)
  */
 void cmd_handler(void)
 {
-  bool do_cal = false;
+  bool save_cal = false;
+  //bool do_cal = false;
   unsigned int cal_sensor_num = 0;
   if(button_zero_0_pressed_ack()) {
-    capture_zero_raw(0);
-  } else if(button_zero_1_pressed_ack()) {
-    capture_zero_raw(1);
-  } else if(button_zero_2_pressed_ack()) {
-    capture_zero_raw(2);
-  } else if(button_zero_3_pressed_ack()) {
-    capture_zero_raw(3);
-  } else if(button_zero_4_pressed_ack()) {
-    capture_zero_raw(4);
-  } else if(button_zero_5_pressed_ack()) {
-    capture_zero_raw(5);
-  } else if(button_zero_6_pressed_ack()) {
-    capture_zero_raw(6);
-  } else if(button_zero_7_pressed_ack()) {
-    capture_zero_raw(7);
-  } else if(button_span_0_pressed_ack()) {
-    capture_span_raw(0);
+    //capture_zero_raw(0);
     cal_sensor_num = 0;
-    do_cal = true;
-  } else if(button_span_1_pressed_ack()) {
-    capture_span_raw(1);
+    force_zero(cal_sensor_num, true);
+    save_cal = true;
+  } else if(button_zero_1_pressed_ack()) {
+    //capture_zero_raw(1);
     cal_sensor_num = 1;
-    do_cal = true;
-  } else if(button_span_2_pressed_ack()) {
-    capture_span_raw(2);
+    force_zero(cal_sensor_num, true);
+    save_cal = true;
+  } else if(button_zero_2_pressed_ack()) {
+    //capture_zero_raw(2);
     cal_sensor_num = 2;
-    do_cal = true;
-  } else if(button_span_3_pressed_ack()) {
-    capture_span_raw(3);
+    force_zero(cal_sensor_num, true);
+    save_cal = true;
+  } else if(button_zero_3_pressed_ack()) {
+    //capture_zero_raw(3);
     cal_sensor_num = 3;
-    do_cal = true;
-  } else if(button_span_4_pressed_ack()) {
-    capture_span_raw(4);
+    force_zero(cal_sensor_num, true);
+    save_cal = true;
+  } else if(button_zero_4_pressed_ack()) {
+    //capture_zero_raw(4);
     cal_sensor_num = 4;
-    do_cal = true;
-  } else if(button_span_5_pressed_ack()) {
-    capture_span_raw(5);
+    force_zero(cal_sensor_num, true);
+    save_cal = true;
+  } else if(button_zero_5_pressed_ack()) {
+    //capture_zero_raw(5);
     cal_sensor_num = 5;
-    do_cal = true;
-  } else if(button_span_6_pressed_ack()) {
-    capture_span_raw(6);
+    force_zero(cal_sensor_num, true);
+    save_cal = true;
+  } else if(button_zero_6_pressed_ack()) {
+    //capture_zero_raw(6);
     cal_sensor_num = 6;
-    do_cal = true;
-  } else if(button_span_7_pressed_ack()) {
-    capture_span_raw(7);
+    force_zero(cal_sensor_num, true);
+    save_cal = true;
+  } else if(button_zero_7_pressed_ack()) {
+    //capture_zero_raw(7);
     cal_sensor_num = 7;
-    do_cal = true;
+    force_zero(cal_sensor_num, true);
+    save_cal = true;
+  } else if(button_span_0_pressed_ack()) {
+    //capture_span_raw(0);
+    cal_sensor_num = 0;
+    force_span(cal_sensor_num);
+    save_cal = true;
+    //do_cal = true;
+  } else if(button_span_1_pressed_ack()) {
+    //capture_span_raw(1);
+    cal_sensor_num = 1;
+    force_span(cal_sensor_num);
+    save_cal = true;
+    //do_cal = true;
+  } else if(button_span_2_pressed_ack()) {
+    //capture_span_raw(2);
+    cal_sensor_num = 2;
+    force_span(cal_sensor_num);
+    save_cal = true;
+    //do_cal = true;
+  } else if(button_span_3_pressed_ack()) {
+    //capture_span_raw(3);
+    cal_sensor_num = 3;
+    force_span(cal_sensor_num);
+    save_cal = true;
+    //do_cal = true;
+  } else if(button_span_4_pressed_ack()) {
+    //capture_span_raw(4);
+    cal_sensor_num = 4;
+    force_span(cal_sensor_num);
+    save_cal = true;
+    //do_cal = true;
+  } else if(button_span_5_pressed_ack()) {
+    //capture_span_raw(5);
+    cal_sensor_num = 5;
+    force_span(cal_sensor_num);
+    save_cal = true;
+    //do_cal = true;
+  } else if(button_span_6_pressed_ack()) {
+    //capture_span_raw(6);
+    cal_sensor_num = 6;
+    force_span(cal_sensor_num);
+    save_cal = true;
+    //do_cal = true;
+  } else if(button_span_7_pressed_ack()) {
+    //capture_span_raw(7);
+    cal_sensor_num = 7;
+    force_span(cal_sensor_num);
+    save_cal = true;
+    //do_cal = true;
   }
 
-  if(do_cal) {
+  if(save_cal){
+    if(0 != save_calibration_data(cal_sensor_num)) {
+      std::cerr << "Error saving calibration data" << '\n';
+    }
+  }
+
+  /*if(do_cal) {
     if(do_zero(cal_sensor_num) == 0) {
       if(do_span(cal_sensor_num) == 0) {
         std::cout << "Calibration OK for sensor: " << cal_sensor_num << '\n';
@@ -296,7 +343,7 @@ void cmd_handler(void)
     } else {
       std::cout << "Zero calibration error" << '\n';
     }
-  }
+  }*/
 }
 
 /**
