@@ -1,6 +1,6 @@
 /**
  * @file cal.cpp
- * @brief Calibration functions for the 555 soil moisture sensor
+ * @brief Calibration functions
  * @par (C) 2025 Keith Hall
  */
 #include <iostream>
@@ -39,6 +39,23 @@ int capture_span_raw(int sensor_num)
   }
 
   param.sensor_cal2_raw[sensor_num] = param.sensor_raw[sensor_num];
+
+  return 0;
+}
+
+/**
+ * @brief Force zero now
+ * @param sensor_num - the sensor number to force the zero offset for
+ * @return -1 if error, 0 if success
+ */
+int force_zero(int sensor_num)
+{
+  if(MAX_SENSORS < sensor_num){
+    return -1;
+  }
+
+  param.sensor_cal1_raw[sensor_num] = param.sensor_raw[sensor_num];
+  param.sensor_offset[sensor_num] = param.sensor_cal1_raw[sensor_num];
 
   return 0;
 }

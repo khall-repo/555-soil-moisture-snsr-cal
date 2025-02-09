@@ -16,12 +16,14 @@
 #include <mcp3004.h>
 #include "util.h"
 #include "config.h"
+#include "config-file.h"
 #include "imain-window.h"
 #include "gui.h"
 #include "struct.h"
 #include "cal.h"
 #include "control.h"
 
+extern Config_File *config_file; // Import from main.cpp
 extern Param_t param; // Import from struct.c
 extern Analog_Input_t analog_input[MAX_SENSORS]; // Import from struct.c
 extern IMainWindow imain_window; // import from imain-window.cpp
@@ -176,6 +178,56 @@ void update_param(void)
   }
 }
 
+/**
+ * @brief Print sensor calibration values
+ * @param sensor_num - the sensor number to print calibration data for
+ * @return none
+ */
+void print_sensor_cal_values(unsigned int sensor_num)
+{
+  std::cout << "Sensor " << sensor_num << " offset: " << param.sensor_offset[sensor_num] << '\n';
+  std::cout << "Sensor " << sensor_num << " slope: " << param.sensor_slope[sensor_num] << '\n';
+}
+
+/**
+ * @brief Save calibration data to config file
+ * @param sensor_num - the sensor number to save calibration data for
+ * @return 0 if success, -1 if error
+ */
+int save_calibration_data(unsigned int sensor_num)
+{
+  std::string section = "calibration";
+  std::string key;
+  std::string value;
+  /*for (unsigned int channel = 0; channel < param.num_sensors; ++channel) {
+    key = "sensor_offset_" + std::to_string(channel);
+    value = dtos(param.sensor_offset[channel], param.raw_disp_precision);
+    config_file->set_config_value(section, key, value);
+    key = "sensor_slope_" + std::to_string(channel);
+    value = dtos(param.sensor_slope[channel], param.raw_disp_precision);
+    config_file->set_config_value(section, key, value);
+  }*/
+  key = "sensor_offset_" + std::to_string(sensor_num);
+  value = dtos(param.sensor_offset[sensor_num], param.raw_disp_precision);
+  if(0 != config_file->set_config_value(section, key, value, false)) {
+    std::cerr << "Error setting config value: " << key << '\n';
+    return -1;
+  }
+  
+  key = "sensor_slope_" + std::to_string(sensor_num);
+  value = dtos(param.sensor_slope[sensor_num], param.raw_disp_precision);
+  if(0 != config_file->set_config_value(section, key, value, false)) {
+    std::cerr << "Error setting config value: " << key << '\n';
+    return -1;
+  }
+  return 0;
+}
+
+/**
+ * @brief Command handler for UI button presses
+ * @param none
+ * @return none
+ */
 void cmd_handler(void)
 {
   bool do_cal = false;
@@ -229,10 +281,15 @@ void cmd_handler(void)
     cal_sensor_num = 7;
     do_cal = true;
   }
+
   if(do_cal) {
     if(do_zero(cal_sensor_num) == 0) {
       if(do_span(cal_sensor_num) == 0) {
-        std::cout << "Calibration complete" << '\n';
+        std::cout << "Calibration OK for sensor: " << cal_sensor_num << '\n';
+        print_sensor_cal_values(cal_sensor_num);
+        if(0 != save_calibration_data(cal_sensor_num)) {
+          std::cerr << "Error saving calibration data" << '\n';
+        }
       } else {
         std::cout << "Span calibration error" << '\n';
       }

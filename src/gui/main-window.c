@@ -305,22 +305,22 @@ void activate_main_window_cb(GtkApplication *app, gpointer user_data)
   // Connect the button0 signal its the callback function
   g_signal_connect(window->button0, "clicked", G_CALLBACK(button0_clicked_cb), window);
 
-  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_zero0_clicked_cb), window);
-  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_zero1_clicked_cb), window);
-  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_zero2_clicked_cb), window);
-  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_zero3_clicked_cb), window);
-  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_zero4_clicked_cb), window);
-  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_zero5_clicked_cb), window);
-  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_zero6_clicked_cb), window);
-  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_zero7_clicked_cb), window);
-  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_span0_clicked_cb), window);
-  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_span1_clicked_cb), window);
-  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_span2_clicked_cb), window);
-  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_span3_clicked_cb), window);
-  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_span4_clicked_cb), window);
-  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_span5_clicked_cb), window);
-  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_span6_clicked_cb), window);
-  g_signal_connect(window->button0, "clicked", G_CALLBACK(button_span7_clicked_cb), window);
+  g_signal_connect(window->button_zero0, "clicked", G_CALLBACK(button_zero0_clicked_cb), window);
+  g_signal_connect(window->button_zero1, "clicked", G_CALLBACK(button_zero1_clicked_cb), window);
+  g_signal_connect(window->button_zero2, "clicked", G_CALLBACK(button_zero2_clicked_cb), window);
+  g_signal_connect(window->button_zero3, "clicked", G_CALLBACK(button_zero3_clicked_cb), window);
+  g_signal_connect(window->button_zero4, "clicked", G_CALLBACK(button_zero4_clicked_cb), window);
+  g_signal_connect(window->button_zero5, "clicked", G_CALLBACK(button_zero5_clicked_cb), window);
+  g_signal_connect(window->button_zero6, "clicked", G_CALLBACK(button_zero6_clicked_cb), window);
+  g_signal_connect(window->button_zero7, "clicked", G_CALLBACK(button_zero7_clicked_cb), window);
+  g_signal_connect(window->button_span0, "clicked", G_CALLBACK(button_span0_clicked_cb), window);
+  g_signal_connect(window->button_span1, "clicked", G_CALLBACK(button_span1_clicked_cb), window);
+  g_signal_connect(window->button_span2, "clicked", G_CALLBACK(button_span2_clicked_cb), window);
+  g_signal_connect(window->button_span3, "clicked", G_CALLBACK(button_span3_clicked_cb), window);
+  g_signal_connect(window->button_span4, "clicked", G_CALLBACK(button_span4_clicked_cb), window);
+  g_signal_connect(window->button_span5, "clicked", G_CALLBACK(button_span5_clicked_cb), window);
+  g_signal_connect(window->button_span6, "clicked", G_CALLBACK(button_span6_clicked_cb), window);
+  g_signal_connect(window->button_span7, "clicked", G_CALLBACK(button_span7_clicked_cb), window);
 
   // Connect the destroy signal to detect when the window is closed
   g_signal_connect(window, "destroy", G_CALLBACK(main_window_destroy_cb), NULL);

@@ -156,3 +156,91 @@ std::string Config_File::get_config_value(std::string section, std::string key)
 {
   return config_section_map[section][key];
 }
+
+/// @brief Set a configuration value in a section and save the file
+/// @param section - the section to set the value in
+/// @param key - the key to set the value for
+/// @param value - the value to set
+/// @return 0 if success, -1 if error
+int Config_File::set_config_value(std::string section, std::string key, std::string value, bool add_if_not_found)
+{
+  std::string file_path = CONFIG_INI_FILE_PATH;
+  std::ifstream config_file_in(file_path);
+  std::string line;
+  bool section_found = false;
+  bool key_found = false;
+  int res = 0;
+
+  // Ensure file exists
+  if(!config_file_in.is_open()) {
+    std::cerr << "Error opening file: " << file_path << '\n';
+    return -1;
+  }
+
+  std::ofstream config_file_out(file_path + ".tmp");
+
+  while (std::getline(config_file_in, line)) {
+    // done if eof
+    if(config_file_in.eof()) {
+      break;
+    }
+    // Ignore comments starting with '#'
+    if(line[0] == '#') {
+      config_file_out << line << '\n';
+      continue;
+    }
+    // Remove comment text from line after ';' char
+    std::string::size_type pos = line.find(";");
+    if(pos != std::string::npos) {
+      line = line.substr(0, pos);
+    }
+
+    // find the section name
+    pos = line.find("[");
+    if(pos != std::string::npos) {
+      std::string section_name = line.substr(pos + 1);
+      pos = section_name.find("]");
+      if(pos != std::string::npos) {
+        section_name = section_name.substr(0, pos);
+        if(section_name == section) {
+          section_found = true;
+        }
+      }
+    }
+
+    if(section_found) {
+      pos = line.find(key);
+      if(pos != std::string::npos) {
+        key_found = true;
+        line = key + "=" + value;
+      }
+    }
+    config_file_out << line << '\n';
+  }
+
+  if(add_if_not_found) {
+    if(!section_found) {
+      config_file_out << "[" << section << "]" << '\n';
+      config_file_out << key << "=" << value << '\n';
+    } else if(!key_found) {
+      config_file_out << key << "=" << value << '\n';
+    }
+  } else {
+    if(!section_found || !key_found) {
+      res = -1;
+    }
+  }
+
+  config_file_in.close();
+  config_file_out.close();
+
+  if(res != 0) {
+    std::remove((file_path + ".tmp").c_str());
+    std::cerr << "Error setting config value: " << key << '\n';
+    return res;
+  }
+
+  std::remove(file_path.c_str());
+  std::rename((file_path + ".tmp").c_str(), file_path.c_str());
+  return res;
+}

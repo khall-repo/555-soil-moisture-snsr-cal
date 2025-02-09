@@ -31,6 +31,7 @@ class Config_File {
 
     int read_config_file(void);
     std::string get_config_value(std::string section, std::string key);
+    int set_config_value(std::string section, std::string key, std::string value, bool add_if_not_found);
   private:
     std::ifstream config_file;
     int num_sections; // I think I only need this for debug

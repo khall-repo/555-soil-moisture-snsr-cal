@@ -1,5 +1,5 @@
 # 555-soil-moisture-snsr-cal
-CLI calibration program for those cheap 555 timer based capacitive soil
+GUI calibration program for those cheap 555 timer based capacitive soil
 moisture sensors.
 Intended to be ran on Raspberry Pi with a BC Robotics 16-channel analog
 multiplexer HAT.
@@ -34,6 +34,19 @@ Couple of things I need to determine.. may need end user to do a couple
 experiments with sensors and report back. What will max offset be? What are the
 slope limits going to be, or do we even care? Can we detect a fault condition?
 Haven't received the analog HAT in the mail yet, so there's still that to do..
+
+02-09-2025
+Working now:
+ - ADC data capture
+ - ADC data averaging
+ - ADC data to millivolts
+ - EWMA filtering for millivolts
+ - Millivolts to PV
+ - Zero and span calibration
+ - Calibration save and load, to and from config.ini
+
+Still plenty of work to do.. like supporting the remaining 8 available ADC
+channels and alarms.
 
 ## Disclaimer 1 of 2
 This software is provided "as is", without warranty of any kind, express or

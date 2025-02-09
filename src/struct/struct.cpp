@@ -84,6 +84,29 @@ void set_param_from_config_file(void)
   param.sensor_pv[6] = std::stod(value);
   value = config_file->get_config_value("param", "testpv7");
   param.sensor_pv[7] = std::stod(value);
+
+  // Load calibration data
+  for (unsigned int sensor_num = 0; sensor_num < param.num_sensors; ++sensor_num) {
+    value = config_file->get_config_value("calibration", "sensor_offset_" + std::to_string(sensor_num));
+    try{
+      param.sensor_offset[sensor_num] = std::stod(value);
+    } catch (std::exception &e) {
+      std::cerr << "Error: " << e.what() << '\n';
+      std::cerr << "Error reading sensor offset for sensor: " << sensor_num << '\n';
+      std::cerr << "Value: " << value << '\n';
+      exit(-1);
+    }
+    
+    value = config_file->get_config_value("calibration", "sensor_slope_" + std::to_string(sensor_num));
+    try{
+      param.sensor_slope[sensor_num] = std::stod(value);
+    } catch (std::exception &e) {
+      std::cerr << "Error: " << e.what() << '\n';
+      std::cerr << "Error reading sensor slope for sensor: " << sensor_num << '\n';
+      std::cerr << "Value: " << value << '\n';
+      exit(-1);
+    }
+  }
 }
 
 /**
