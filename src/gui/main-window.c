@@ -77,7 +77,8 @@ typedef struct _MainWindowClass
   GtkApplicationWindowClass parent_class;
 } MainWindowClass;
 
-// Custom log handler to detect "Gtk-CRITICAL" errors
+// Custom log handler to detect "Gtk-CRITICAL" errors and shut down the program
+// Because boy... I've caused many of those...
 void custom_log_handler(const gchar *log_domain, GLogLevelFlags log_level, const gchar *message, gpointer user_data)
 {
   if (log_level & G_LOG_LEVEL_CRITICAL)
@@ -186,6 +187,15 @@ static void main_window_destroy_cb(GtkWidget *widget, gpointer data)
     g_source_remove(window_update_fn_source_id);
     window_update_fn_source_id = 0;
   }
+}
+
+static void set_label_color(GtkLabel *label, guint16 red, guint16 green, guint16 blue)
+{
+  PangoAttrList *attr_list = pango_attr_list_new();
+  PangoAttribute *attr = pango_attr_foreground_new(red, green, blue);
+  pango_attr_list_insert(attr_list, attr);
+  gtk_label_set_attributes(label, attr_list);
+  pango_attr_list_unref(attr_list);
 }
 
 // This is where you would update data display labels in the main window
