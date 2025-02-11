@@ -286,9 +286,16 @@ void timebase_handler(int signum, siginfo_t *info, void *context)
     // Terminal update
     //clear_terminal_screen();
     //print_all_sensor_raw();
+
     // Main window update
     update_sensor_raw_display();
     update_pv_display();
+
+    set_data_display_label_sensor_raw_fg_color(0, 0xffff, 0, 0);
+
+    set_data_display_label_sensor_pv_fg_color(0, 0xffff, 0xffff, 0xffff);
+    set_data_display_label_sensor_pv_bg_color(0, 0xffff, 0, 0);
+
     count = 0;
   }
   ++count;

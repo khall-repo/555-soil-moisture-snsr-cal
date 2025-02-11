@@ -7,39 +7,43 @@
 #define MAX_COL_HEADER_STR_SZ   16u
 #define MAX_SENSOR_DATA_DISP_SZ 16u
 
-typedef struct _INainWindow
+typedef struct _Color_t
 {
-  char col_header_sensor_raw[MAX_COL_HEADER_STR_SZ];
-  char col_header_sensor_pv[MAX_COL_HEADER_STR_SZ];
+  guint16 red;
+  guint16 green;
+  guint16 blue;
+}Color_t;
 
-  char data_display_label_sensor_raw0[MAX_SENSOR_DATA_DISP_SZ];
-  char data_display_label_sensor_raw1[MAX_SENSOR_DATA_DISP_SZ];
-  char data_display_label_sensor_raw2[MAX_SENSOR_DATA_DISP_SZ];
-  char data_display_label_sensor_raw3[MAX_SENSOR_DATA_DISP_SZ];
-  char data_display_label_sensor_raw4[MAX_SENSOR_DATA_DISP_SZ];
-  char data_display_label_sensor_raw5[MAX_SENSOR_DATA_DISP_SZ];
-  char data_display_label_sensor_raw6[MAX_SENSOR_DATA_DISP_SZ];
-  char data_display_label_sensor_raw7[MAX_SENSOR_DATA_DISP_SZ];
-  char data_display_label_sensor_pv0[MAX_SENSOR_DATA_DISP_SZ];
-  char data_display_label_sensor_pv1[MAX_SENSOR_DATA_DISP_SZ];
-  char data_display_label_sensor_pv2[MAX_SENSOR_DATA_DISP_SZ];
-  char data_display_label_sensor_pv3[MAX_SENSOR_DATA_DISP_SZ];
-  char data_display_label_sensor_pv4[MAX_SENSOR_DATA_DISP_SZ];
-  char data_display_label_sensor_pv5[MAX_SENSOR_DATA_DISP_SZ];
-  char data_display_label_sensor_pv6[MAX_SENSOR_DATA_DISP_SZ];
-  char data_display_label_sensor_pv7[MAX_SENSOR_DATA_DISP_SZ];
+typedef struct _Data_Display_Label_t
+{
+  char label_text[MAX_SENSOR_DATA_DISP_SZ] = {0};
+  bool update_text = false;
+  Color_t foreground_color = {0,0,0};
+  bool update_foreground_color = false;
+  Color_t background_color = {0,0,0};
+  bool update_background_color = false;
+}Data_Display_Label_t;
 
-  struct _data_display_label_sensor_raw0_color { 
-    guint16 red; guint16 green; guint16 blue;
-  }data_display_label_sensor_raw0_color;
-  char data_display_label_sensor_raw1[MAX_SENSOR_DATA_DISP_SZ];
-  struct _data_display_label_sensor_raw1_color { 
-    guint16 red; guint16 green; guint16 blue;
-  }data_display_label_sensor_raw1_color;
-  char data_display_label_sensor_raw2[MAX_SENSOR_DATA_DISP_SZ];
-  struct _data_display_label_sensor_raw2_color { 
-    guint16 red; guint16 green; guint16 blue;
-  }data_display_label_sensor_raw2_color;
+typedef struct _IMainWindow
+{
+  Data_Display_Label_t col_header_sensor_raw;
+  Data_Display_Label_t col_header_sensor_pv;
+  Data_Display_Label_t data_display_label_sensor_raw0;
+  Data_Display_Label_t data_display_label_sensor_raw1;
+  Data_Display_Label_t data_display_label_sensor_raw2;
+  Data_Display_Label_t data_display_label_sensor_raw3;
+  Data_Display_Label_t data_display_label_sensor_raw4;
+  Data_Display_Label_t data_display_label_sensor_raw5;
+  Data_Display_Label_t data_display_label_sensor_raw6;
+  Data_Display_Label_t data_display_label_sensor_raw7;
+  Data_Display_Label_t data_display_label_sensor_pv0;
+  Data_Display_Label_t data_display_label_sensor_pv1;
+  Data_Display_Label_t data_display_label_sensor_pv2;
+  Data_Display_Label_t data_display_label_sensor_pv3;
+  Data_Display_Label_t data_display_label_sensor_pv4;
+  Data_Display_Label_t data_display_label_sensor_pv5;
+  Data_Display_Label_t data_display_label_sensor_pv6;
+  Data_Display_Label_t data_display_label_sensor_pv7;
   
   bool button0; // bottom button
 
@@ -65,8 +69,22 @@ typedef struct _INainWindow
 
 const char *get_data_display_label_sensor_raw(unsigned int index);
 const char *get_data_display_label_sensor_pv(unsigned int index);
+
 void set_data_display_label_sensor_raw(unsigned int index, const char *text);
 void set_data_display_label_sensor_pv(unsigned int index, const char *text);
+
+void set_data_display_label_sensor_raw_fg_color(unsigned int index, guint16 red, guint16 green, guint16 blue);
+void set_data_display_label_sensor_raw_bg_color(unsigned int index, guint16 red, guint16 green, guint16 blue);
+void set_data_display_label_sensor_pv_fg_color(unsigned int index, guint16 red, guint16 green, guint16 blue);
+void set_data_display_label_sensor_pv_bg_color(unsigned int index, guint16 red, guint16 green, guint16 blue);
+
+bool get_update_text_raw_ack(unsigned int index);
+bool get_update_text_pv_ack(unsigned int index);
+bool get_update_foreground_color_raw_ack(unsigned int index);
+bool get_update_background_color_raw_ack(unsigned int index);
+bool get_update_foreground_color_pv_ack(unsigned int index);
+bool get_update_background_color_pv_ack(unsigned int index);
+
 bool button_zero_pressed(unsigned int index);
 bool button_span_pressed(unsigned int index);
 bool button_zero_pressed_ack(unsigned int index);

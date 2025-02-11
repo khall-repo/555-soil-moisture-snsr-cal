@@ -189,10 +189,19 @@ static void main_window_destroy_cb(GtkWidget *widget, gpointer data)
   }
 }
 
-static void set_label_color(GtkLabel *label, guint16 red, guint16 green, guint16 blue)
+static void set_label_foreground_color(GtkLabel *label, guint16 red, guint16 green, guint16 blue)
 {
   PangoAttrList *attr_list = pango_attr_list_new();
   PangoAttribute *attr = pango_attr_foreground_new(red, green, blue);
+  pango_attr_list_insert(attr_list, attr);
+  gtk_label_set_attributes(label, attr_list);
+  pango_attr_list_unref(attr_list);
+}
+
+static void set_label_background_color(GtkLabel *label, guint16 red, guint16 green, guint16 blue)
+{
+  PangoAttrList *attr_list = pango_attr_list_new();
+  PangoAttribute *attr = pango_attr_background_new(red, green, blue);
   pango_attr_list_insert(attr_list, attr);
   gtk_label_set_attributes(label, attr_list);
   pango_attr_list_unref(attr_list);
@@ -202,28 +211,77 @@ static void set_label_color(GtkLabel *label, guint16 red, guint16 green, guint16
 // based on the data in the IMainWindow struct.
 static gboolean update_main_window(MainWindow *self)
 {
-  // I could update the column headers and button text, but the window elements
-  // intended to be static should be set in the .ui file, not here. No sense in
-  // wasting resources to update things that never change on every frame.
-  //gtk_label_set_text(GTK_LABEL(self->col_header_sensor_raw), imain_window.col_header_sensor_raw);
-  //gtk_label_set_text(GTK_LABEL(self->col_header_sensor_pv), imain_window.col_header_sensor_pv);
+  if(get_update_text_raw_ack(0)){
+    gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw0), imain_window.data_display_label_sensor_raw0.label_text);
+  }
+  if(get_update_text_raw_ack(1)){
+    gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw1), imain_window.data_display_label_sensor_raw1.label_text);
+  }
+  if(get_update_text_raw_ack(2)){
+    gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw2), imain_window.data_display_label_sensor_raw2.label_text);
+  }
+  if(get_update_text_raw_ack(3)){
+    gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw3), imain_window.data_display_label_sensor_raw3.label_text);
+  }
+  if(get_update_text_raw_ack(4)){
+    gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw4), imain_window.data_display_label_sensor_raw4.label_text);
+  }
+  if(get_update_text_raw_ack(5)){
+    gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw5), imain_window.data_display_label_sensor_raw5.label_text);
+  }
+  if(get_update_text_raw_ack(6)){
+    gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw6), imain_window.data_display_label_sensor_raw6.label_text);
+  }
+  if(get_update_text_raw_ack(7)){
+    gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw7), imain_window.data_display_label_sensor_raw7.label_text);
+  }
+
+  if(get_update_text_pv_ack(0)){
+    gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv0), imain_window.data_display_label_sensor_pv0.label_text);
+  }
+  if(get_update_text_pv_ack(1)){
+    gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv1), imain_window.data_display_label_sensor_pv1.label_text);
+  }
+  if(get_update_text_pv_ack(2)){
+    gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv2), imain_window.data_display_label_sensor_pv2.label_text);
+  }
+  if(get_update_text_pv_ack(3)){
+    gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv3), imain_window.data_display_label_sensor_pv3.label_text);
+  }
+  if(get_update_text_pv_ack(4)){
+    gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv4), imain_window.data_display_label_sensor_pv4.label_text);
+  }
+  if(get_update_text_pv_ack(5)){
+    gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv5), imain_window.data_display_label_sensor_pv5.label_text);
+  }
+  if(get_update_text_pv_ack(6)){
+    gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv6), imain_window.data_display_label_sensor_pv6.label_text);
+  }
+  if(get_update_text_pv_ack(7)){
+    gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv7), imain_window.data_display_label_sensor_pv7.label_text);
+  }
+
+  if(get_update_foreground_color_raw_ack(0)){
+    set_label_foreground_color(GTK_LABEL(self->data_display_label_sensor_raw0), 
+                                         imain_window.data_display_label_sensor_raw0.foreground_color.red,
+                                         imain_window.data_display_label_sensor_raw0.foreground_color.green,
+                                         imain_window.data_display_label_sensor_raw0.foreground_color.blue);
+  }
   
-  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw0), imain_window.data_display_label_sensor_raw0);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw1), imain_window.data_display_label_sensor_raw1);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw2), imain_window.data_display_label_sensor_raw2);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw3), imain_window.data_display_label_sensor_raw3);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw4), imain_window.data_display_label_sensor_raw4);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw5), imain_window.data_display_label_sensor_raw5);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw6), imain_window.data_display_label_sensor_raw6);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw7), imain_window.data_display_label_sensor_raw7);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv0), imain_window.data_display_label_sensor_pv0);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv1), imain_window.data_display_label_sensor_pv1);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv2), imain_window.data_display_label_sensor_pv2);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv3), imain_window.data_display_label_sensor_pv3);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv4), imain_window.data_display_label_sensor_pv4);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv5), imain_window.data_display_label_sensor_pv5);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv6), imain_window.data_display_label_sensor_pv6);
-  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv7), imain_window.data_display_label_sensor_pv7);
+  if(get_update_background_color_pv_ack(0)){
+    set_label_background_color(GTK_LABEL(self->data_display_label_sensor_pv0), 
+                                         imain_window.data_display_label_sensor_pv0.background_color.red,
+                                         imain_window.data_display_label_sensor_pv0.background_color.green,
+                                         imain_window.data_display_label_sensor_pv0.background_color.blue);
+  }
+  if(get_update_foreground_color_pv_ack(0)){
+    set_label_foreground_color(GTK_LABEL(self->data_display_label_sensor_pv0), 
+                                         imain_window.data_display_label_sensor_pv0.foreground_color.red,
+                                         imain_window.data_display_label_sensor_pv0.foreground_color.green,
+                                         imain_window.data_display_label_sensor_pv0.foreground_color.blue);
+  }
+  
+
 
   // Return TRUE to keep the idle function running
   return TRUE;

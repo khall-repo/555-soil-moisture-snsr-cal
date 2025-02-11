@@ -48,6 +48,12 @@ Working now:
 Still plenty of work to do.. like supporting the remaining 8 available ADC
 channels and alarms.
 
+02-10-2025
+We have tabs now in the main-window.
+Worked on cleaning up imain-window and adding ability to change foreground
+and background color of text. But changing foreground color resets the
+background color, and changing background color resets foreground color...
+
 ## Disclaimer 1 of 2
 This software is provided "as is", without warranty of any kind, express or
 implied, including but not limited to the warranties of merchantability,
