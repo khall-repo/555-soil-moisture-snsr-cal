@@ -22,6 +22,9 @@ typedef struct _SubWindowClass
 // Register the SubWindow type with the GObject type system
 G_DEFINE_TYPE(SubWindow, sub_window, GTK_TYPE_APPLICATION_WINDOW)
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
 static void sub_window_class_init(SubWindowClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
@@ -77,3 +80,4 @@ GtkWidget* sub_window_new(void)
 
   return (GtkWidget*)window;
 }
+#pragma GCC diagnostic pop // End disable warning for unused parameter

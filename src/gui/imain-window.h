@@ -3,16 +3,10 @@
 
 #include <stdbool.h>
 #include <glib.h>
+#include "attrib.h"
 
 #define MAX_COL_HEADER_STR_SZ   16u
 #define MAX_SENSOR_DATA_DISP_SZ 16u
-
-typedef struct _Color_t
-{
-  guint16 red;
-  guint16 green;
-  guint16 blue;
-}Color_t;
 
 typedef struct _Data_Display_Label_t
 {

@@ -134,6 +134,13 @@
                         <property name="column">1</property>
                     </layout>
                     <child>
+                      <object class="GtkDrawingArea" id="drawing_area0"> <!--Drawing area inside the frame-->
+                        <property name="hexpand">true</property> 
+                        <property name="vexpand">true</property>
+                        <signal name="draw" handler="on_draw_event" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkLabel" id="data_display_label_sensor_raw0"> <!--The label itself-->
                         <property name="label">data_display_label_sensor_raw0</property> <!--Label text displayed-->
                         <property name="hexpand">true</property> 

@@ -264,6 +264,8 @@ void cmd_handler(void)
 
 }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
 /**
  * @brief Program timebase handler
  * @param signum - Signal number
@@ -346,4 +348,7 @@ int timebase_start(void)
   }
   return 0;
 }
-
+#pragma GCC diagnostic pop // End disable warning for unused parameter
+/**
+ End of file
+ */

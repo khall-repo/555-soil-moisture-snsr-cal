@@ -13,6 +13,7 @@
 #include "imain-window.h"
 #include "main-window.h"
 #include "sub-window.h"
+#include "attrib.h"
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -33,6 +34,7 @@ typedef struct _MainWindow
   GtkWidget *col_header_sensor_raw;
   GtkWidget *col_header_sensor_pv;
 
+  GtkWidget *drawing_area0;
   GtkWidget *data_display_label_sensor_raw0;
   GtkWidget *data_display_label_sensor_raw1;
   GtkWidget *data_display_label_sensor_raw2;
@@ -125,6 +127,7 @@ static void main_window_class_init(MainWindowClass *klass)
     gtk_widget_class_bind_template_child(widget_class, MainWindow, col_header_sensor_raw);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, col_header_sensor_pv);
 
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area0);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw0);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw1);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw2);
@@ -207,6 +210,36 @@ static void set_label_background_color(GtkLabel *label, guint16 red, guint16 gre
   pango_attr_list_unref(attr_list);
 }
 
+static void set_label_color(GtkLabel *label, Color_t foreground, Color_t background)
+{
+  PangoAttrList *attr_list = pango_attr_list_new();
+  PangoAttribute *attr = pango_attr_foreground_new(foreground.red, foreground.green, foreground.blue);
+  pango_attr_list_insert(attr_list, attr);
+  attr = pango_attr_background_new(background.red, background.green, background.blue);
+  gtk_label_set_attributes(label, attr_list);
+  pango_attr_list_unref(attr_list);
+}
+
+// Function to set the background color of a GtkDrawingArea
+static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data)
+{
+    GdkRGBA color;
+    gdk_rgba_parse(&color, "lightblue"); // Set your desired color here
+    gdk_cairo_set_source_rgba(cr, &color);
+    cairo_paint(cr);
+    return FALSE;
+}
+
+void update_drawing_area_color(GtkDrawingArea *drawing_area, const gchar *color_str)
+{
+    GdkRGBA color;
+    gdk_rgba_parse(&color, color_str);
+    g_object_set_data(G_OBJECT(drawing_area), "drawing-area-color", gdk_rgba_copy(&color));
+    gtk_widget_queue_draw(GTK_WIDGET(drawing_area));
+}
+// Example usage
+//update_drawing_area_color(GTK_DRAWING_AREA(window->drawing_area0), "red");
+
 // This is where you would update data display labels in the main window
 // based on the data in the IMainWindow struct.
 static gboolean update_main_window(MainWindow *self)
@@ -281,7 +314,12 @@ static gboolean update_main_window(MainWindow *self)
                                          imain_window.data_display_label_sensor_pv0.foreground_color.blue);
   }
   
-
+  // Set the initial color for the drawing area FAILS
+  // Gtk-CRITICAL **: 19:04:16.890: Error building template class 'MainWindow' for an instance of type 'MainWindow': .:0:0 Invalid signal 'draw' for type 'GtkDrawingArea'
+  //GdkRGBA initial_color;
+  //gdk_rgba_parse(&initial_color, "lightblue");
+  //g_object_set_data(G_OBJECT(self->drawing_area0), "drawing-area-color", gdk_rgba_copy(&initial_color));
+  //g_signal_connect(self->drawing_area0, "draw", G_CALLBACK(on_draw_event), g_object_get_data(G_OBJECT(self->drawing_area0), "drawing-area-color"));
 
   // Return TRUE to keep the idle function running
   return TRUE;

@@ -44,6 +44,7 @@ Working now:
  - Millivolts to PV
  - Zero and span calibration
  - Calibration save and load, to and from config.ini
+ Changed timebase from 1 second to 0.1 second.
 
 Still plenty of work to do.. like supporting the remaining 8 available ADC
 channels and alarms.
@@ -53,6 +54,29 @@ We have tabs now in the main-window.
 Worked on cleaning up imain-window and adding ability to change foreground
 and background color of text. But changing foreground color resets the
 background color, and changing background color resets foreground color...
+
+
+## Fresh Pi
+# Libraries needed to run ./bin/main are WiringPi and GTK4.
+
+1. Get and install WiringPi
+https://github.com/WiringPi/WiringPi
+WiringPi can either be built from source or installed from binary.
+Instructions for both methods are listed on the WiringPi Github page.
+
+2. Install the GTK4 libary
+$ sudo apt install libgtk-4-1
+
+# Additional libraries needed to build this project:
+In addition to 1 and 2 above, you need to..
+
+1. Install the GTK4 Dev library
+$ sudo apt install libgtk-4-dev
+
+## Building the project:
+$ make
+
+
 
 ## Disclaimer 1 of 2
 This software is provided "as is", without warranty of any kind, express or
