@@ -79,6 +79,13 @@ typedef struct _MainWindowClass
   GtkApplicationWindowClass parent_class;
 } MainWindowClass;
 
+// Pango wants color in 16-bit uint, whereas Cairo wants doubles.
+void convert_color_to_double(Color_t color, double *red, double *green, double *blue) {
+  *red = color.red / 65535.0;
+  *green = color.green / 65535.0;
+  *blue = color.blue / 65535.0;
+}
+
 // Custom log handler to detect "Gtk-CRITICAL" errors and shut down the program
 // Because boy... I've caused many of those...
 void custom_log_handler(const gchar *log_domain, GLogLevelFlags log_level, const gchar *message, gpointer user_data)
@@ -106,28 +113,18 @@ G_DEFINE_TYPE(MainWindow, main_window, GTK_TYPE_APPLICATION_WINDOW)
 
 
 
-static void draw_function (GtkDrawingArea *area,
-                          cairo_t        *cr,
-                          int             width,
-                          int             height,
-                          gpointer        data)
+/*static void draw_gtkdrawingarea_fill_color(GtkDrawingArea *area,
+                                           cairo_t *cr,
+                                           int             width,  // unused
+                                           int             height, // unused
+                                           gpointer        data)
 {
   //GdkRGBA color;
-  //GtkStyleContext *context;
+  Color_t color;
 
-  //graphene_rect_t rect;
-  //graphene_rect_init(&rect, 0, 0, (float)gtk_widget_get_width(GTK_WIDGET (area)), (float)gtk_widget_get_height(GTK_WIDGET (area)));
-
-  /*context = gtk_widget_get_style_context (GTK_WIDGET (area));
-
-  cairo_arc (cr,
-             width / 2.0, height / 2.0,
-             MIN (width, height) / 2.0,
-             0, 2 * G_PI);
-
-  gtk_style_context_get_color (context,
-                               &color);
-  gdk_cairo_set_source_rgba (cr, &color);*/
+  color.red = 0x7fff;
+  color.green = 0x1000;
+  color.blue = 0xffff;
 
   width = gtk_widget_get_width(GTK_WIDGET (area));
   height = gtk_widget_get_height(GTK_WIDGET (area));
@@ -139,8 +136,29 @@ static void draw_function (GtkDrawingArea *area,
   cairo_rectangle(cr, 0, 0, width, height);
 
   cairo_fill (cr);
-}
+}*/
 
+static void draw_gtkdrawingarea_fill_color(GtkDrawingArea *area,
+  cairo_t *cr,
+  int             width,  // unused
+  int             height, // unused
+  gpointer        data)
+{
+  Color_t *color = (Color_t *)data;
+  double red, green, blue;
+  convert_color_to_double(*color, &red, &green, &blue);
+
+  width = gtk_widget_get_width(GTK_WIDGET (area));
+  height = gtk_widget_get_height(GTK_WIDGET (area));
+
+  // Set color (RGB values from 0 to 1)
+  cairo_set_source_rgb(cr, red, green, blue);
+
+  // Draw rectangle covering whole area
+  cairo_rectangle(cr, 0, 0, width, height);
+
+  cairo_fill (cr);
+}
 
 
 static void main_window_class_init(MainWindowClass *klass)
@@ -234,7 +252,7 @@ static void main_window_destroy_cb(GtkWidget *widget, gpointer data)
   }
 }
 
-static void set_label_foreground_color(GtkLabel *label, guint16 red, guint16 green, guint16 blue)
+/*static void set_label_foreground_color(GtkLabel *label, guint16 red, guint16 green, guint16 blue)
 {
   PangoAttrList *attr_list = pango_attr_list_new();
   PangoAttribute *attr = pango_attr_foreground_new(red, green, blue);
@@ -250,7 +268,7 @@ static void set_label_background_color(GtkLabel *label, guint16 red, guint16 gre
   pango_attr_list_insert(attr_list, attr);
   gtk_label_set_attributes(label, attr_list);
   pango_attr_list_unref(attr_list);
-}
+}*/
 
 static void set_label_color(GtkLabel *label, Color_t foreground, Color_t background)
 {
@@ -318,7 +336,7 @@ static gboolean update_main_window(MainWindow *self)
     gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv7), imain_window.data_display_label_sensor_pv7.label_text);
   }
 
-  if(get_update_foreground_color_raw_ack(0)){
+  /*if(get_update_foreground_color_raw_ack(0)){
     set_label_foreground_color(GTK_LABEL(self->data_display_label_sensor_raw0), 
                                          imain_window.data_display_label_sensor_raw0.foreground_color.red,
                                          imain_window.data_display_label_sensor_raw0.foreground_color.green,
@@ -336,7 +354,7 @@ static gboolean update_main_window(MainWindow *self)
                                          imain_window.data_display_label_sensor_pv0.foreground_color.red,
                                          imain_window.data_display_label_sensor_pv0.foreground_color.green,
                                          imain_window.data_display_label_sensor_pv0.foreground_color.blue);
-  }
+  }*/
   
   gtk_widget_queue_draw (  GTK_WIDGET (self->data_display_bg_color_sensor_raw0) );
 
@@ -485,7 +503,11 @@ void activate_main_window_cb(GtkApplication *app, gpointer user_data)
 
   // Set the drawing area function for the data display label cells for filling
   // the box with color
-  gtk_drawing_area_set_draw_func (GTK_DRAWING_AREA (window->data_display_bg_color_sensor_raw0), draw_function, NULL, NULL);
+  //gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA (window->data_display_bg_color_sensor_raw0), draw_gtkdrawingarea_fill_color, NULL, NULL);
+  gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA (window->data_display_bg_color_sensor_raw0), // which widget
+                                                   draw_gtkdrawingarea_fill_color, // the drawing fn to use
+                                                   (gpointer)&imain_window.data_display_label_sensor_raw0.background_color, // where the color is stored
+                                                   NULL); // GDestroyNotify
   // Set the custom log handler for the GTK log domain
   g_log_set_handler("Gtk", G_LOG_LEVEL_CRITICAL, custom_log_handler, NULL);
 }
