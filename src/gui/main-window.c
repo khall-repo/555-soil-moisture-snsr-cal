@@ -34,7 +34,7 @@ typedef struct _MainWindow
   GtkWidget *col_header_sensor_raw;
   GtkWidget *col_header_sensor_pv;
 
-  GtkWidget *drawing_area0;
+  GtkWidget *data_display_bg_color_sensor_raw0;
   GtkWidget *data_display_label_sensor_raw0;
   GtkWidget *data_display_label_sensor_raw1;
   GtkWidget *data_display_label_sensor_raw2;
@@ -104,6 +104,45 @@ G_DEFINE_TYPE(MainWindow, main_window, GTK_TYPE_APPLICATION_WINDOW)
 
 #define MAIN_WINDOW(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), MAIN_WINDOW_TYPE, MainWindow))
 
+
+
+static void draw_function (GtkDrawingArea *area,
+                          cairo_t        *cr,
+                          int             width,
+                          int             height,
+                          gpointer        data)
+{
+  //GdkRGBA color;
+  //GtkStyleContext *context;
+
+  //graphene_rect_t rect;
+  //graphene_rect_init(&rect, 0, 0, (float)gtk_widget_get_width(GTK_WIDGET (area)), (float)gtk_widget_get_height(GTK_WIDGET (area)));
+
+  /*context = gtk_widget_get_style_context (GTK_WIDGET (area));
+
+  cairo_arc (cr,
+             width / 2.0, height / 2.0,
+             MIN (width, height) / 2.0,
+             0, 2 * G_PI);
+
+  gtk_style_context_get_color (context,
+                               &color);
+  gdk_cairo_set_source_rgba (cr, &color);*/
+
+  width = gtk_widget_get_width(GTK_WIDGET (area));
+  height = gtk_widget_get_height(GTK_WIDGET (area));
+
+  // Set color (RGB values from 0 to 1)
+  cairo_set_source_rgb(cr, 0, 0, 1);
+
+  // Draw rectangle covering whole area
+  cairo_rectangle(cr, 0, 0, width, height);
+
+  cairo_fill (cr);
+}
+
+
+
 static void main_window_class_init(MainWindowClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
@@ -127,7 +166,7 @@ static void main_window_class_init(MainWindowClass *klass)
     gtk_widget_class_bind_template_child(widget_class, MainWindow, col_header_sensor_raw);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, col_header_sensor_pv);
 
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area0);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_bg_color_sensor_raw0);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw0);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw1);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw2);
@@ -180,6 +219,9 @@ static void main_window_init(MainWindow *self)
 
   gtk_notebook_set_tab_label(GTK_NOTEBOOK(self->notebook), gtk_notebook_get_nth_page(GTK_NOTEBOOK(self->notebook), 0), label_page0);
   gtk_notebook_set_tab_label(GTK_NOTEBOOK(self->notebook), gtk_notebook_get_nth_page(GTK_NOTEBOOK(self->notebook), 1), label_page1);
+
+
+  
 }
 
 static void main_window_destroy_cb(GtkWidget *widget, gpointer data)
@@ -220,25 +262,7 @@ static void set_label_color(GtkLabel *label, Color_t foreground, Color_t backgro
   pango_attr_list_unref(attr_list);
 }
 
-// Function to set the background color of a GtkDrawingArea
-static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data)
-{
-    GdkRGBA color;
-    gdk_rgba_parse(&color, "lightblue"); // Set your desired color here
-    gdk_cairo_set_source_rgba(cr, &color);
-    cairo_paint(cr);
-    return FALSE;
-}
 
-void update_drawing_area_color(GtkDrawingArea *drawing_area, const gchar *color_str)
-{
-    GdkRGBA color;
-    gdk_rgba_parse(&color, color_str);
-    g_object_set_data(G_OBJECT(drawing_area), "drawing-area-color", gdk_rgba_copy(&color));
-    gtk_widget_queue_draw(GTK_WIDGET(drawing_area));
-}
-// Example usage
-//update_drawing_area_color(GTK_DRAWING_AREA(window->drawing_area0), "red");
 
 // This is where you would update data display labels in the main window
 // based on the data in the IMainWindow struct.
@@ -314,12 +338,7 @@ static gboolean update_main_window(MainWindow *self)
                                          imain_window.data_display_label_sensor_pv0.foreground_color.blue);
   }
   
-  // Set the initial color for the drawing area FAILS
-  // Gtk-CRITICAL **: 19:04:16.890: Error building template class 'MainWindow' for an instance of type 'MainWindow': .:0:0 Invalid signal 'draw' for type 'GtkDrawingArea'
-  //GdkRGBA initial_color;
-  //gdk_rgba_parse(&initial_color, "lightblue");
-  //g_object_set_data(G_OBJECT(self->drawing_area0), "drawing-area-color", gdk_rgba_copy(&initial_color));
-  //g_signal_connect(self->drawing_area0, "draw", G_CALLBACK(on_draw_event), g_object_get_data(G_OBJECT(self->drawing_area0), "drawing-area-color"));
+  gtk_widget_queue_draw (  GTK_WIDGET (self->data_display_bg_color_sensor_raw0) );
 
   // Return TRUE to keep the idle function running
   return TRUE;
@@ -463,7 +482,10 @@ void activate_main_window_cb(GtkApplication *app, gpointer user_data)
   // Alternatively, you could use g_timeout_add() to update the window at a
   // regular interval. The function would be called every 1000 milliseconds.
   //window_update_fn_source_id = g_timeout_add(1000, (GSourceFunc)update_main_window, window);
-  
+
+  // Set the drawing area function for the data display label cells for filling
+  // the box with color
+  gtk_drawing_area_set_draw_func (GTK_DRAWING_AREA (window->data_display_bg_color_sensor_raw0), draw_function, NULL, NULL);
   // Set the custom log handler for the GTK log domain
   g_log_set_handler("Gtk", G_LOG_LEVEL_CRITICAL, custom_log_handler, NULL);
 }
