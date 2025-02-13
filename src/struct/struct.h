@@ -6,6 +6,8 @@
 #ifndef STRUCT_H
 #define STRUCT_H
 
+#include "config.h"
+
 /// @brief Sensor parameter structure typedef
 typedef struct _Param_t {
     unsigned int num_sensors;

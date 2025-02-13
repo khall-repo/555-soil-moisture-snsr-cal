@@ -1,6 +1,8 @@
 #include <cstring>
+#include "struct.h" // for num of sensors
 #include "imain-window.h"
 
+extern Param_t param; // Import from struct.cpp
 IMainWindow imain_window;
 
 // get imain_window.col_header_sensor_raw 
@@ -271,6 +273,64 @@ void set_data_display_label_sensor_raw_bg_color(unsigned int index, guint16 red,
   }
 }
 
+void set_data_display_label_sensor_raw_highlight_color(unsigned int index, guint16 red, guint16 green, guint16 blue)
+{
+  switch (index)
+  {
+  case 0:
+    imain_window.data_display_label_sensor_raw0.text_highlight_color.red = red;
+    imain_window.data_display_label_sensor_raw0.text_highlight_color.green = green;
+    imain_window.data_display_label_sensor_raw0.text_highlight_color.blue = blue;
+    imain_window.data_display_label_sensor_raw0.update_text_highlight_color = true;
+    break;
+  case 1:
+    imain_window.data_display_label_sensor_raw1.text_highlight_color.red = red;
+    imain_window.data_display_label_sensor_raw1.text_highlight_color.green = green;
+    imain_window.data_display_label_sensor_raw1.text_highlight_color.blue = blue;
+    imain_window.data_display_label_sensor_raw1.update_text_highlight_color = true;
+    break;
+  case 2:
+    imain_window.data_display_label_sensor_raw2.text_highlight_color.red = red;
+    imain_window.data_display_label_sensor_raw2.text_highlight_color.green = green;
+    imain_window.data_display_label_sensor_raw2.text_highlight_color.blue = blue;
+    imain_window.data_display_label_sensor_raw2.update_text_highlight_color = true;
+    break;
+  case 3:
+    imain_window.data_display_label_sensor_raw3.text_highlight_color.red = red;
+    imain_window.data_display_label_sensor_raw3.text_highlight_color.green = green;
+    imain_window.data_display_label_sensor_raw3.text_highlight_color.blue = blue;
+    imain_window.data_display_label_sensor_raw3.update_text_highlight_color = true;
+    break;
+  case 4:
+    imain_window.data_display_label_sensor_raw4.text_highlight_color.red = red;
+    imain_window.data_display_label_sensor_raw4.text_highlight_color.green = green;
+    imain_window.data_display_label_sensor_raw4.text_highlight_color.blue = blue;
+    imain_window.data_display_label_sensor_raw4.update_text_highlight_color = true;
+    break;
+  case 5:
+    imain_window.data_display_label_sensor_raw5.text_highlight_color.red = red;
+    imain_window.data_display_label_sensor_raw5.text_highlight_color.green = green;
+    imain_window.data_display_label_sensor_raw5.text_highlight_color.blue = blue;
+    imain_window.data_display_label_sensor_raw5.update_text_highlight_color = true;
+    break;
+  case 6:
+    imain_window.data_display_label_sensor_raw6.text_highlight_color.red = red;
+    imain_window.data_display_label_sensor_raw6.text_highlight_color.green = green;
+    imain_window.data_display_label_sensor_raw6.text_highlight_color.blue = blue;
+    imain_window.data_display_label_sensor_raw6.update_text_highlight_color = true;
+    break;
+  case 7:
+    imain_window.data_display_label_sensor_raw7.text_highlight_color.red = red;
+    imain_window.data_display_label_sensor_raw7.text_highlight_color.green = green;
+    imain_window.data_display_label_sensor_raw7.text_highlight_color.blue = blue;
+    imain_window.data_display_label_sensor_raw7.update_text_highlight_color = true;
+    break;
+  default:
+    g_printerr("imain-window set_data_display_label_sensor_raw_highlight_color(): Bad index\n");
+    break;
+  }
+}
+
 
 void set_data_display_label_sensor_pv_fg_color(unsigned int index, guint16 red, guint16 green, guint16 blue)
 {
@@ -389,7 +449,63 @@ void set_data_display_label_sensor_pv_bg_color(unsigned int index, guint16 red, 
   }
 }
 
-
+void set_data_display_label_sensor_pv_highlight_color(unsigned int index, guint16 red, guint16 green, guint16 blue)
+{
+  switch (index)
+  {
+  case 0:
+    imain_window.data_display_label_sensor_pv0.text_highlight_color.red = red;
+    imain_window.data_display_label_sensor_pv0.text_highlight_color.green = green;
+    imain_window.data_display_label_sensor_pv0.text_highlight_color.blue = blue;
+    imain_window.data_display_label_sensor_pv0.update_text_highlight_color = true;
+    break;
+  case 1:
+    imain_window.data_display_label_sensor_pv1.text_highlight_color.red = red;
+    imain_window.data_display_label_sensor_pv1.text_highlight_color.green = green;
+    imain_window.data_display_label_sensor_pv1.text_highlight_color.blue = blue;
+    imain_window.data_display_label_sensor_pv1.update_text_highlight_color = true;
+    break;
+  case 2:
+    imain_window.data_display_label_sensor_pv2.text_highlight_color.red = red;
+    imain_window.data_display_label_sensor_pv2.text_highlight_color.green = green;
+    imain_window.data_display_label_sensor_pv2.text_highlight_color.blue = blue;
+    imain_window.data_display_label_sensor_pv2.update_text_highlight_color = true;
+    break;
+  case 3:
+    imain_window.data_display_label_sensor_pv3.text_highlight_color.red = red;
+    imain_window.data_display_label_sensor_pv3.text_highlight_color.green = green;
+    imain_window.data_display_label_sensor_pv3.text_highlight_color.blue = blue;
+    imain_window.data_display_label_sensor_pv3.update_text_highlight_color = true;
+    break;
+  case 4:
+    imain_window.data_display_label_sensor_pv4.text_highlight_color.red = red;
+    imain_window.data_display_label_sensor_pv4.text_highlight_color.green = green;
+    imain_window.data_display_label_sensor_pv4.text_highlight_color.blue = blue;
+    imain_window.data_display_label_sensor_pv4.update_text_highlight_color = true;
+    break;
+  case 5:
+    imain_window.data_display_label_sensor_pv5.text_highlight_color.red = red;
+    imain_window.data_display_label_sensor_pv5.text_highlight_color.green = green;
+    imain_window.data_display_label_sensor_pv5.text_highlight_color.blue = blue;
+    imain_window.data_display_label_sensor_pv5.update_text_highlight_color = true;
+    break;
+  case 6:
+    imain_window.data_display_label_sensor_pv6.text_highlight_color.red = red;
+    imain_window.data_display_label_sensor_pv6.text_highlight_color.green = green;
+    imain_window.data_display_label_sensor_pv6.text_highlight_color.blue = blue;
+    imain_window.data_display_label_sensor_pv6.update_text_highlight_color = true;
+    break;
+  case 7:
+    imain_window.data_display_label_sensor_pv7.text_highlight_color.red = red;
+    imain_window.data_display_label_sensor_pv7.text_highlight_color.green = green;
+    imain_window.data_display_label_sensor_pv7.text_highlight_color.blue = blue;
+    imain_window.data_display_label_sensor_pv7.update_text_highlight_color = true;
+    break;
+  default:
+    g_printerr("imain-window set_data_display_label_sensor_pv_highlight_color(): Bad index\n");
+    break;
+  }
+}
 
 
 // get the update text flag and acknowledge
@@ -570,6 +686,50 @@ bool get_update_background_color_raw_ack(unsigned int index)
   return state;
 }
 
+bool get_update_highlight_color_raw_ack(unsigned int index)
+{
+  bool state = false;
+  switch(index)
+  {
+  case 0:
+    state = imain_window.data_display_label_sensor_raw0.update_text_highlight_color;
+    imain_window.data_display_label_sensor_raw0.update_text_highlight_color = false;
+    break;
+  case 1:
+    state = imain_window.data_display_label_sensor_raw1.update_text_highlight_color;
+    imain_window.data_display_label_sensor_raw1.update_text_highlight_color = false;
+    break;
+  case 2:
+    state = imain_window.data_display_label_sensor_raw2.update_text_highlight_color;
+    imain_window.data_display_label_sensor_raw2.update_text_highlight_color = false;
+    break;
+  case 3:
+    state = imain_window.data_display_label_sensor_raw3.update_text_highlight_color;
+    imain_window.data_display_label_sensor_raw3.update_text_highlight_color = false;
+    break;
+  case 4:
+    state = imain_window.data_display_label_sensor_raw4.update_text_highlight_color;
+    imain_window.data_display_label_sensor_raw4.update_text_highlight_color = false;
+    break;
+  case 5:
+    state = imain_window.data_display_label_sensor_raw5.update_text_highlight_color;
+    imain_window.data_display_label_sensor_raw5.update_text_highlight_color = false;
+    break;
+  case 6:
+    state = imain_window.data_display_label_sensor_raw6.update_text_highlight_color;
+    imain_window.data_display_label_sensor_raw6.update_text_highlight_color = false;
+    break;
+  case 7:
+    state = imain_window.data_display_label_sensor_raw7.update_text_highlight_color;
+    imain_window.data_display_label_sensor_raw7.update_text_highlight_color = false;
+    break;
+  default:
+    g_printerr("imain-window get_update_highlight_color_raw_ack(): Bad index\n");
+    break;
+  }
+  return state;
+}
+
 bool get_update_foreground_color_pv_ack(unsigned int index)
 {
   bool state = false;
@@ -658,7 +818,49 @@ bool get_update_background_color_pv_ack(unsigned int index)
   return state;
 }
 
-
+bool get_update_highlight_color_pv_ack(unsigned int index)
+{
+  bool state = false;
+  switch(index)
+  {
+  case 0:
+    state = imain_window.data_display_label_sensor_pv0.update_text_highlight_color;
+    imain_window.data_display_label_sensor_pv0.update_text_highlight_color = false;
+    break;
+  case 1:
+    state = imain_window.data_display_label_sensor_pv1.update_text_highlight_color;
+    imain_window.data_display_label_sensor_pv1.update_text_highlight_color = false;
+    break;
+  case 2:
+    state = imain_window.data_display_label_sensor_pv2.update_text_highlight_color;
+    imain_window.data_display_label_sensor_pv2.update_text_highlight_color = false;
+    break;
+  case 3:
+    state = imain_window.data_display_label_sensor_pv3.update_text_highlight_color;
+    imain_window.data_display_label_sensor_pv3.update_text_highlight_color = false;
+    break;
+  case 4:
+    state = imain_window.data_display_label_sensor_pv4.update_text_highlight_color;
+    imain_window.data_display_label_sensor_pv4.update_text_highlight_color = false;
+    break;
+  case 5:
+    state = imain_window.data_display_label_sensor_pv5.update_text_highlight_color;
+    imain_window.data_display_label_sensor_pv5.update_text_highlight_color = false;
+    break;
+  case 6:
+    state = imain_window.data_display_label_sensor_pv6.update_text_highlight_color;
+    imain_window.data_display_label_sensor_pv6.update_text_highlight_color = false;
+    break;
+  case 7:
+    state = imain_window.data_display_label_sensor_pv7.update_text_highlight_color;
+    imain_window.data_display_label_sensor_pv7.update_text_highlight_color = false;
+    break;
+  default:
+    g_printerr("imain-window get_update_highlight_color_pv_ack(): Bad index\n");
+    break;
+  }
+  return state;
+}
 
 
 
@@ -804,6 +1006,36 @@ bool button_span_pressed_ack(unsigned int index)
   }
 }
 
+void init_imain_window(void)
+{
+  Color_t text_color;
+  Color_t text_highlight_color;
+  Color_t background_color;
+
+  // Initial text color black
+  text_color.red = 0;
+  text_color.green = 0;
+  text_color.blue = 0;
+  // Initial text highlight color white
+  text_highlight_color.red = 0xffff;
+  text_highlight_color.green = 0xffff;
+  text_highlight_color.blue = 0xffff;
+  // Initial background color white
+  background_color.red = 0xffff;
+  background_color.green = 0xffff;
+  background_color.blue = 0xffff;
+
+  for(unsigned int i = 0; i < param.num_sensors; i++) {
+    set_data_display_label_sensor_raw_fg_color(i, text_color.red, text_color.green, text_color.blue);
+    set_data_display_label_sensor_raw_highlight_color(i, text_highlight_color.red, text_highlight_color.green, text_highlight_color.blue);
+    set_data_display_label_sensor_raw_bg_color(i, background_color.red, background_color.green, background_color.blue);
+    
+    set_data_display_label_sensor_pv_fg_color(i, text_color.red, text_color.green, text_color.blue);
+    set_data_display_label_sensor_pv_highlight_color(i, text_highlight_color.red, text_highlight_color.green, text_highlight_color.blue);
+    set_data_display_label_sensor_pv_bg_color(i, background_color.red, background_color.green, background_color.blue);
+  }
+
+}
 /**
   End of file
 */

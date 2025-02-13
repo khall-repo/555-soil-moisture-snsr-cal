@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
     return -1;
   }
 
+  init_imain_window();
   int status = run_gui_application(argc, argv);
   return status;
 }

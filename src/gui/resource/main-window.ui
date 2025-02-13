@@ -128,7 +128,7 @@
                 </child>
                 <!-- Leftmost column - Row 1, Col 1 - data_display_label_sensor_raw0 -->
                 <child>
-                  <object class="GtkDrawingArea" id="data_display_bg_color_sensor_raw0"> <!--Color box around the label-->
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_raw0"> <!--Color box around the label-->
                     <property name="hexpand">false</property>
                     <property name="vexpand">false</property>
                     <layout>
@@ -143,7 +143,6 @@
                         <property name="row">1</property> <!--The location of the label-->
                         <property name="column">1</property>
                     </layout>
-                   
                     <child>
                       <object class="GtkLabel" id="data_display_label_sensor_raw0"> <!--The label itself-->
                         <property name="label">data_display_label_sensor_raw0</property> <!--Label text displayed-->
@@ -154,6 +153,16 @@
                   </object>
                 </child>
                 <!-- Leftmost column - Row 2, Col 1 - data_display_label_sensor_raw1 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_raw1"> <!--Color box around the label-->
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">2</property>
+                        <property name="column">1</property>
+                    </layout>
+                  </object>
+                </child>
                 <child>
                   <object class="GtkFrame" id="label_frame1">
                     <layout>
@@ -171,6 +180,16 @@
                 </child>
                 <!-- Leftmost column - Row 3, Col 1 - data_display_label_sensor_raw2 -->
                 <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_raw2">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">3</property>
+                        <property name="column">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
                   <object class="GtkFrame" id="label_frame2">
                     <layout>
                         <property name="row">3</property>
@@ -186,6 +205,16 @@
                   </object>
                 </child>
                 <!-- Leftmost column - Row 4, Col 1 - data_display_label_sensor_raw3 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_raw3">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">4</property>
+                        <property name="column">1</property>
+                    </layout>
+                  </object>
+                </child>
                 <child>
                   <object class="GtkFrame" id="label_frame3">
                     <layout>
@@ -203,6 +232,16 @@
                 </child>
                 <!-- Leftmost column - Row 5, Col 1 - data_display_label_sensor_raw4 -->
                 <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_raw4">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">5</property>
+                        <property name="column">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
                   <object class="GtkFrame" id="label_frame4"> <!--Box around the label-->
                     <layout>
                         <property name="row">5</property> <!--The location of the label-->
@@ -218,6 +257,16 @@
                   </object>
                 </child>
                 <!-- Leftmost column - Row 6, Col 1 - data_display_label_sensor_raw5 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_raw5">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">6</property>
+                        <property name="column">1</property>
+                    </layout>
+                  </object>
+                </child>
                 <child>
                   <object class="GtkFrame" id="label_frame5">
                     <layout>
@@ -235,6 +284,16 @@
                 </child>
                 <!-- Leftmost column - Row 7, Col 1 - data_display_label_sensor_raw6 -->
                 <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_raw6">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">7</property>
+                        <property name="column">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
                   <object class="GtkFrame" id="label_frame6">
                     <layout>
                         <property name="row">7</property>
@@ -250,6 +309,16 @@
                   </object>
                 </child>
                 <!-- Leftmost column - Row 8, Col 1 - data_display_label_sensor_raw7 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_raw7">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">8</property>
+                        <property name="column">1</property>
+                    </layout>
+                  </object>
+                </child>
                 <child>
                   <object class="GtkFrame" id="label_frame7">
                     <layout>
@@ -280,6 +349,16 @@
                 </child>
                 <!-- Row 1, Col 2 - data_display_label_sensor_pv0 -->
                 <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_pv0">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">1</property>
+                        <property name="column">2</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
                   <object class="GtkFrame" id="label_frame8">
                     <layout>
                         <property name="row">1</property>
@@ -295,6 +374,16 @@
                   </object>
                 </child>
                 <!-- Row 2, Col 2 - data_display_label_sensor_pv1 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_pv1">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">2</property>
+                        <property name="column">2</property>
+                    </layout>
+                  </object>
+                </child>
                 <child>
                   <object class="GtkFrame" id="label_frame9">
                     <layout>
@@ -312,6 +401,16 @@
                 </child>
                 <!-- Row 3, Col 2 - data_display_label_sensor_pv2 -->
                 <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_pv2">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">3</property>
+                        <property name="column">2</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
                   <object class="GtkFrame" id="label_frame10">
                     <layout>
                         <property name="row">3</property>
@@ -327,6 +426,16 @@
                   </object>
                 </child>
                 <!-- Row 4, Col 2 - data_display_label_sensor_pv3 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_pv3">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">4</property>
+                        <property name="column">2</property>
+                    </layout>
+                  </object>
+                </child>
                 <child>
                   <object class="GtkFrame" id="label_frame11">
                     <layout>
@@ -344,6 +453,16 @@
                 </child>
                 <!-- Row 5, Col 2 - data_display_label_sensor_pv4 -->
                 <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_pv4">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">5</property>
+                        <property name="column">2</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
                   <object class="GtkFrame" id="label_frame12">
                     <layout>
                         <property name="row">5</property>
@@ -358,7 +477,17 @@
                     </child>
                   </object>
                 </child>
-                <!-- Row 6, Col 2 - data_display_label_sensor13 -->
+                <!-- Row 6, Col 2 - data_display_label_sensor_pv5 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_pv5">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">6</property>
+                        <property name="column">2</property>
+                    </layout>
+                  </object>
+                </child>
                 <child>
                   <object class="GtkFrame" id="label_frame13">
                     <layout>
@@ -374,7 +503,17 @@
                     </child>
                   </object>
                 </child>
-                <!-- Row 7, Col 2 - data_display_label_sensor14 -->
+                <!-- Row 7, Col 2 - data_display_label_sensor_pv6 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_pv6">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">7</property>
+                        <property name="column">2</property>
+                    </layout>
+                  </object>
+                </child>
                 <child>
                   <object class="GtkFrame" id="label_frame14">
                     <layout>
@@ -391,6 +530,16 @@
                   </object>
                 </child>
                 <!-- Row 8, Col 2 - data_display_label_sensor_pv7 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_pv7">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">8</property>
+                        <property name="column">2</property>
+                    </layout>
+                  </object>
+                </child>
                 <child>
                   <object class="GtkFrame" id="label_frame15">
                     <layout>

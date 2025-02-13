@@ -30,6 +30,117 @@ extern IMainWindow imain_window; // import from imain-window.cpp
 
 timer_t timebase_timerid;
 
+enum Color_Test_State_e{
+  TEXT_RED,
+  TEXT_GREEN,
+  TEXT_BLUE,
+  TEXT_BLACK,
+  HIGHLIGHT_RED,
+  HIGHLIGHT_GREEN,
+  HIGHLIGHT_BLUE,
+  HIGHLIGHT_WHITE,
+  BG_RED,
+  BG_GREEN,
+  BG_BLUE,
+  BG_WHITE,
+  COLOR_TEST_DONE
+};
+
+void color_test(void)
+{
+  static unsigned int color_test_state = TEXT_RED;
+
+  switch(color_test_state){
+    case TEXT_RED:
+      for(unsigned int i = 0; i < param.num_sensors; i++) {
+        set_data_display_label_sensor_raw_fg_color(i, 0xffff, 0, 0);
+        set_data_display_label_sensor_pv_fg_color(i, 0xffff, 0, 0);
+      }
+      ++color_test_state;
+      break;
+    case TEXT_GREEN:
+      for(unsigned int i = 0; i < param.num_sensors; i++) {
+        set_data_display_label_sensor_raw_fg_color(i, 0, 0xffff, 0);
+        set_data_display_label_sensor_pv_fg_color(i, 0, 0xffff, 0);
+      }
+      ++color_test_state;
+      break;
+    case TEXT_BLUE:
+      for(unsigned int i = 0; i < param.num_sensors; i++) {
+        set_data_display_label_sensor_raw_fg_color(i, 0, 0, 0xffff);
+        set_data_display_label_sensor_pv_fg_color(i, 0, 0, 0xffff);
+      }
+      ++color_test_state;
+      break;
+    case TEXT_BLACK:
+      for(unsigned int i = 0; i < param.num_sensors; i++) {
+        set_data_display_label_sensor_raw_fg_color(i, 0, 0, 0);
+        set_data_display_label_sensor_pv_fg_color(i, 0, 0, 0);
+      }
+      ++color_test_state;
+      break;
+    case HIGHLIGHT_RED:
+      for(unsigned int i = 0; i < param.num_sensors; i++) {
+        set_data_display_label_sensor_raw_highlight_color(i, 0xffff, 0, 0);
+        set_data_display_label_sensor_pv_highlight_color(i, 0xffff, 0, 0);
+      }
+      ++color_test_state;
+      break;
+    case HIGHLIGHT_GREEN:
+      for(unsigned int i = 0; i < param.num_sensors; i++) {
+        set_data_display_label_sensor_raw_highlight_color(i, 0, 0xffff, 0);
+        set_data_display_label_sensor_pv_highlight_color(i, 0, 0xffff, 0);
+      }
+      ++color_test_state;
+      break;
+    case HIGHLIGHT_BLUE:
+      for(unsigned int i = 0; i < param.num_sensors; i++) {
+        set_data_display_label_sensor_raw_highlight_color(i, 0, 0, 0xffff);
+        set_data_display_label_sensor_pv_highlight_color(i, 0, 0, 0xffff);
+      }
+      ++color_test_state;
+      break;
+    case HIGHLIGHT_WHITE:
+      for(unsigned int i = 0; i < param.num_sensors; i++) {
+        set_data_display_label_sensor_raw_highlight_color(i, 0xffff, 0xffff, 0xffff);
+        set_data_display_label_sensor_pv_highlight_color(i, 0xffff, 0xffff, 0xffff);
+      }
+      ++color_test_state;
+      break;
+    case BG_RED:
+      for(unsigned int i = 0; i < param.num_sensors; i++) {
+        set_data_display_label_sensor_raw_bg_color(i, 0xffff, 0, 0);
+        set_data_display_label_sensor_pv_bg_color(i, 0xffff, 0, 0);
+      }
+      ++color_test_state;
+      break;
+    case BG_GREEN:
+      for(unsigned int i = 0; i < param.num_sensors; i++) {
+        set_data_display_label_sensor_raw_bg_color(i, 0, 0xffff, 0);
+        set_data_display_label_sensor_pv_bg_color(i, 0, 0xffff, 0);
+      }
+      ++color_test_state;
+      break;
+    case BG_BLUE:
+      for(unsigned int i = 0; i < param.num_sensors; i++) {
+        set_data_display_label_sensor_raw_bg_color(i, 0, 0, 0xffff);
+        set_data_display_label_sensor_pv_bg_color(i, 0, 0, 0xffff);
+      }
+      ++color_test_state;
+      break;
+    case BG_WHITE:
+      for(unsigned int i = 0; i < param.num_sensors; i++) {
+        set_data_display_label_sensor_raw_bg_color(i, 0xffff, 0xffff, 0xffff);
+        set_data_display_label_sensor_pv_bg_color(i, 0xffff, 0xffff, 0xffff);
+      }
+      color_test_state = TEXT_RED;
+      break;
+    default:
+      std::cout << "color_test default state error\n";
+      break;
+  }
+}
+
 /**
  * @brief Read and print raw values from all 8 channels of the MCP3008
  * @param none
@@ -290,11 +401,12 @@ void timebase_handler(int signum, siginfo_t *info, void *context)
     //print_all_sensor_raw();
 
     // Main window update
+    color_test();
     update_sensor_raw_display();
     update_pv_display();
 
     //set_data_display_label_sensor_raw_fg_color(0, 0xffff, 0, 0);
-    set_data_display_label_sensor_raw_bg_color(0, 0xffff, 0, 0);
+    //set_data_display_label_sensor_raw_bg_color(0, 0xffff, 0, 0);
 
     //set_data_display_label_sensor_pv_fg_color(0, 0xffff, 0xffff, 0xffff);
     //set_data_display_label_sensor_pv_bg_color(0, 0xffff, 0, 0);

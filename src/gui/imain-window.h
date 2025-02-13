@@ -16,6 +16,8 @@ typedef struct _Data_Display_Label_t
   bool update_foreground_color = false;
   Color_t background_color = {0,0,0};
   bool update_background_color = false;
+  Color_t text_highlight_color = {0,0,0};
+  bool update_text_highlight_color = false;
 }Data_Display_Label_t;
 
 typedef struct _IMainWindow
@@ -69,21 +71,26 @@ void set_data_display_label_sensor_pv(unsigned int index, const char *text);
 
 void set_data_display_label_sensor_raw_fg_color(unsigned int index, guint16 red, guint16 green, guint16 blue);
 void set_data_display_label_sensor_raw_bg_color(unsigned int index, guint16 red, guint16 green, guint16 blue);
+void set_data_display_label_sensor_raw_highlight_color(unsigned int index, guint16 red, guint16 green, guint16 blue);
 void set_data_display_label_sensor_pv_fg_color(unsigned int index, guint16 red, guint16 green, guint16 blue);
 void set_data_display_label_sensor_pv_bg_color(unsigned int index, guint16 red, guint16 green, guint16 blue);
+void set_data_display_label_sensor_pv_highlight_color(unsigned int index, guint16 red, guint16 green, guint16 blue);
 
 bool get_update_text_raw_ack(unsigned int index);
 bool get_update_text_pv_ack(unsigned int index);
 bool get_update_foreground_color_raw_ack(unsigned int index);
 bool get_update_background_color_raw_ack(unsigned int index);
+bool get_update_highlight_color_raw_ack(unsigned int index);
 bool get_update_foreground_color_pv_ack(unsigned int index);
 bool get_update_background_color_pv_ack(unsigned int index);
+bool get_update_highlight_color_pv_ack(unsigned int index);
 
 bool button_zero_pressed(unsigned int index);
 bool button_span_pressed(unsigned int index);
 bool button_zero_pressed_ack(unsigned int index);
 bool button_span_pressed_ack(unsigned int index);
 
+void init_imain_window(void);
 #endif
 
 /**
