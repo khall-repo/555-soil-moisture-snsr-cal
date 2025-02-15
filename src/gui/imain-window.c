@@ -3,14 +3,14 @@
 #include "struct.h" // for num of sensors
 #include "imain-window.h"
 
-extern Param_t param; // Import from struct.cpp
+//extern Param_t param; // Import from struct.cpp
 extern Appearance_Config_t appearance_config; // Import from struct.cpp
 IMainWindow imain_window;
 
 const char *get_channel_label(unsigned int index)
 {
   if (MAX_SENSORS <= index) {
-    g_printerr("imain-window get_channel_label(): Bad index\n");
+    g_printerr("imain-window get_channel_label(): Bad index [%u]\n", index);
     return "\0";
   }
   return (const char *)imain_window.channel_label[index].label_text;
@@ -29,7 +29,7 @@ const char *get_col_header_sensor_pv(void)
 }
 
 // get imain_window.data_display_label_sensor_raw0
-const char *get_data_display_label_sensor_raw(unsigned int index)
+/*const char *get_data_display_label_sensor_raw(unsigned int index)
 {
   switch (index)
   {
@@ -53,6 +53,15 @@ const char *get_data_display_label_sensor_raw(unsigned int index)
     g_printerr("imain-window get_data_display_label_sensor_raw(): Bad index\n");
   }
   return "\0"; // don't crash the poor guy by returning NULL..
+}*/
+
+const char *get_data_display_label_sensor_raw(unsigned int index)
+{
+  if (MAX_SENSORS <= index) {
+    g_printerr("imain-window get_data_display_label_sensor_raw(): Bad index [%u]\n", index);
+    return "\0";
+  }
+  return (const char *)imain_window.data_display_label_sensor_raw[index].label_text;
 }
 
 // get imain_window.data_display_label_sensor_pv
@@ -94,7 +103,7 @@ void set_channel_label(unsigned int index, const char *text)
 }
 
 // set imain_window.col_header_sensor_raw
-void set_data_display_label_sensor_raw(unsigned int index, const char *text)
+/*void set_data_display_label_sensor_raw(unsigned int index, const char *text)
 {
   switch (index)
   {
@@ -134,7 +143,18 @@ void set_data_display_label_sensor_raw(unsigned int index, const char *text)
     g_printerr("imain-window set_data_display_label_sensor_raw(): Bad index\n");
     break;
   }
+}*/
+
+void set_data_display_label_sensor_raw(unsigned int index, const char *text)
+{
+  if (MAX_SENSORS <= index) {
+    g_printerr("imain-window set_data_display_label_sensor_raw(): Bad index [%u]\n", index);
+    return;
+  }
+  strncpy(imain_window.data_display_label_sensor_raw[index].label_text, text, MAX_DATA_DISP_SZ);
+  imain_window.data_display_label_sensor_raw[index].update_text = true;
 }
+
 
 // set imain_window.data_display_label_sensor_pv
 void set_data_display_label_sensor_pv(unsigned int index, const char *text)
@@ -179,7 +199,7 @@ void set_data_display_label_sensor_pv(unsigned int index, const char *text)
   }
 }
 
-void set_data_display_label_sensor_raw_fg_color(unsigned int index, guint16 red, guint16 green, guint16 blue)
+/*void set_data_display_label_sensor_raw_fg_color(unsigned int index, guint16 red, guint16 green, guint16 blue)
 {
   switch (index)
   {
@@ -235,9 +255,21 @@ void set_data_display_label_sensor_raw_fg_color(unsigned int index, guint16 red,
     g_printerr("imain-window set_data_display_label_sensor_raw_fg_color(): Bad index\n");
     break;
   }
+}*/
+
+void set_data_display_label_sensor_raw_fg_color(unsigned int index, guint16 red, guint16 green, guint16 blue)
+{
+  if (MAX_SENSORS <= index) {
+    g_printerr("imain-window set_data_display_label_sensor_raw_fg_color(): Bad index [%u]\n", index);
+    return;
+  }
+  imain_window.data_display_label_sensor_raw[index].foreground_color.red = red;
+  imain_window.data_display_label_sensor_raw[index].foreground_color.green = green;
+  imain_window.data_display_label_sensor_raw[index].foreground_color.blue = blue;
+  imain_window.data_display_label_sensor_raw[index].update_foreground_color = true;
 }
 
-void set_data_display_label_sensor_raw_bg_color(unsigned int index, guint16 red, guint16 green, guint16 blue)
+/*void set_data_display_label_sensor_raw_bg_color(unsigned int index, guint16 red, guint16 green, guint16 blue)
 {
   switch (index)
   {
@@ -293,9 +325,22 @@ void set_data_display_label_sensor_raw_bg_color(unsigned int index, guint16 red,
     g_printerr("imain-window set_data_display_label_sensor_raw_bg_color(): Bad index\n");
     break;
   }
+}*/
+
+void set_data_display_label_sensor_raw_bg_color(unsigned int index, guint16 red, guint16 green, guint16 blue)
+{
+  if (MAX_SENSORS <= index) {
+    g_printerr("imain-window set_data_display_label_sensor_raw_bg_color(): Bad index [%u]\n", index);
+    return;
+  }
+  imain_window.data_display_label_sensor_raw[index].background_color.red = red;
+  imain_window.data_display_label_sensor_raw[index].background_color.green = green;
+  imain_window.data_display_label_sensor_raw[index].background_color.blue = blue;
+  imain_window.data_display_label_sensor_raw[index].update_background_color = true;
 }
 
-void set_data_display_label_sensor_raw_highlight_color(unsigned int index, guint16 red, guint16 green, guint16 blue)
+
+/*void set_data_display_label_sensor_raw_highlight_color(unsigned int index, guint16 red, guint16 green, guint16 blue)
 {
   switch (index)
   {
@@ -351,6 +396,18 @@ void set_data_display_label_sensor_raw_highlight_color(unsigned int index, guint
     g_printerr("imain-window set_data_display_label_sensor_raw_highlight_color(): Bad index\n");
     break;
   }
+}*/
+
+void set_data_display_label_sensor_raw_highlight_color(unsigned int index, guint16 red, guint16 green, guint16 blue)
+{
+  if (MAX_SENSORS <= index) {
+    g_printerr("imain-window set_data_display_label_sensor_raw_highlight_color(): Bad index [%u]\n", index);
+    return;
+  }
+  imain_window.data_display_label_sensor_raw[index].text_highlight_color.red = red;
+  imain_window.data_display_label_sensor_raw[index].text_highlight_color.green = green;
+  imain_window.data_display_label_sensor_raw[index].text_highlight_color.blue = blue;
+  imain_window.data_display_label_sensor_raw[index].update_text_highlight_color = true;
 }
 
 
@@ -411,7 +468,6 @@ void set_data_display_label_sensor_pv_fg_color(unsigned int index, guint16 red, 
     break;
   }
 }
-
 
 void set_data_display_label_sensor_pv_bg_color(unsigned int index, guint16 red, guint16 green, guint16 blue)
 {
@@ -529,26 +585,10 @@ void set_data_display_label_sensor_pv_highlight_color(unsigned int index, guint1
   }
 }
 
-// behold the power of c
-/*void set_data_display_label_sensor_raw_font_family(unsigned int index, const char *font_family)
-{
- char **p_font_family = (char **)((char *)&imain_window.data_display_label_sensor_raw0.font_attrib.font_family + index * sizeof(Data_Display_Label_t));
- Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_raw0.font_attrib + index * sizeof(Data_Display_Label_t));
- *p_font_family = (char*)font_family;
- p_font_attrib->update_font_attrib = true;
-}
-
-void set_data_display_label_sensor_pv_font_family(unsigned int index, const char *font_family)
-{
-  char **p_font_family = (char **)((char *)&imain_window.data_display_label_sensor_pv0.font_attrib.font_family + index * sizeof(Data_Display_Label_t));
-  Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_pv0.font_attrib + index * sizeof(Data_Display_Label_t));
-  *p_font_family = (char*)font_family;
-  p_font_attrib->update_font_attrib = true;
-}*/
-
+// behold the power of c!
 void set_data_display_label_sensor_raw_font_family(unsigned int index, const char *font_family)
 {
-  Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_raw0.font_attrib + index * sizeof(Data_Display_Label_t));
+  Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_raw[0].font_attrib + index * sizeof(Data_Display_Label_t));
   if(NULL == font_family) {
     return;
   }
@@ -568,7 +608,7 @@ void set_data_display_label_sensor_pv_font_family(unsigned int index, const char
 
 void set_data_display_label_sensor_raw_font_size(unsigned int index, int size)
 {
-  Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_raw0.font_attrib + index * sizeof(Data_Display_Label_t));
+  Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_raw[0].font_attrib + index * sizeof(Data_Display_Label_t));
   p_font_attrib->size = size;
   p_font_attrib->update_font_attrib = true;
 }
@@ -582,7 +622,7 @@ void set_data_display_label_sensor_pv_font_size(unsigned int index, gint size)
 
 void set_data_display_label_sensor_raw_font_weight(unsigned int index, PangoWeight pango_weight)
 {
-  Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_raw0.font_attrib + index * sizeof(Data_Display_Label_t));
+  Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_raw[0].font_attrib + index * sizeof(Data_Display_Label_t));
   p_font_attrib->weight = pango_weight;
   p_font_attrib->update_font_attrib = true;
 }
@@ -595,7 +635,7 @@ void set_data_display_label_sensor_pv_font_weight(unsigned int index, PangoWeigh
 }
 
 // get the update text flag and acknowledge
-bool get_update_text_raw_ack(unsigned int index)
+/*bool get_update_text_raw_ack(unsigned int index)
 {
   bool state = false;
   switch(index)
@@ -636,6 +676,18 @@ bool get_update_text_raw_ack(unsigned int index)
     g_printerr("imain-window get_update_text_raw_ack(): Bad index\n");
     break;
   }
+  return state;
+}*/
+
+bool get_update_text_raw_ack(unsigned int index)
+{
+  bool state = false;
+  if (MAX_SENSORS <= index) {
+    g_printerr("imain-window get_update_text_raw_ack(): Bad index [%u]\n", index);
+    return false;
+  }
+  state = imain_window.data_display_label_sensor_raw[index].update_text;
+  imain_window.data_display_label_sensor_raw[index].update_text = false;
   return state;
 }
 
@@ -684,7 +736,7 @@ bool get_update_text_pv_ack(unsigned int index)
   return state;
 }
 
-bool get_update_foreground_color_raw_ack(unsigned int index)
+/*bool get_update_foreground_color_raw_ack(unsigned int index)
 {
   bool state = false;
   switch(index)
@@ -726,9 +778,21 @@ bool get_update_foreground_color_raw_ack(unsigned int index)
     break;
   }
   return state;
+}*/
+
+bool get_update_foreground_color_raw_ack(unsigned int index)
+{
+  bool state = false;
+  if (MAX_SENSORS <= index) {
+    g_printerr("imain-window get_update_foreground_color_raw_ack(): Bad index [%u]\n", index);
+    return false;
+  }
+  state = imain_window.data_display_label_sensor_raw[index].update_foreground_color;
+  imain_window.data_display_label_sensor_raw[index].update_foreground_color = false;
+  return state;
 }
 
-bool get_update_background_color_raw_ack(unsigned int index)
+/*bool get_update_background_color_raw_ack(unsigned int index)
 {
   bool state = false;
   switch(index)
@@ -770,9 +834,21 @@ bool get_update_background_color_raw_ack(unsigned int index)
     break;
   }
   return state;
+}*/
+
+bool get_update_background_color_raw_ack(unsigned int index)
+{
+  bool state = false;
+  if (MAX_SENSORS <= index) {
+    g_printerr("imain-window get_update_background_color_raw_ack(): Bad index [%u]\n", index);
+    return false;
+  }
+  state = imain_window.data_display_label_sensor_raw[index].update_background_color;
+  imain_window.data_display_label_sensor_raw[index].update_background_color = false;
+  return state;
 }
 
-bool get_update_highlight_color_raw_ack(unsigned int index)
+/*bool get_update_highlight_color_raw_ack(unsigned int index)
 {
   bool state = false;
   switch(index)
@@ -813,6 +889,18 @@ bool get_update_highlight_color_raw_ack(unsigned int index)
     g_printerr("imain-window get_update_highlight_color_raw_ack(): Bad index\n");
     break;
   }
+  return state;
+}*/
+
+bool get_update_highlight_color_raw_ack(unsigned int index)
+{
+  bool state = false;
+  if (MAX_SENSORS <= index) {
+    g_printerr("imain-window get_update_highlight_color_raw_ack(): Bad index [%u]\n", index);
+    return false;
+  }
+  state = imain_window.data_display_label_sensor_raw[index].update_text_highlight_color;
+  imain_window.data_display_label_sensor_raw[index].update_text_highlight_color = false;
   return state;
 }
 
@@ -951,7 +1039,7 @@ bool get_update_highlight_color_pv_ack(unsigned int index)
 bool get_update_font_attrib_raw_ack(unsigned int index)
 {
   bool state;
-  bool *p_update_font_attrib = (bool *)&imain_window.data_display_label_sensor_raw0.font_attrib.update_font_attrib + index * sizeof(Data_Display_Label_t);
+  bool *p_update_font_attrib = (bool *)&imain_window.data_display_label_sensor_raw[0].font_attrib.update_font_attrib + index * sizeof(Data_Display_Label_t);
   state = *p_update_font_attrib;
   *p_update_font_attrib = false;
   return state;
@@ -1108,15 +1196,14 @@ bool button_span_pressed_ack(unsigned int index)
   }
 }
 
-int init_imain_window(void)
+int init_imain_window(unsigned int num_sensor_ch)
 {
   Color_t text_color;
   Color_t text_highlight_color;
   Color_t background_color;
   char str_buf[MAX_DATA_DISP_SZ] = {0};
   // Set number of sensors for mass data update
-  imain_window.num_sensors = param.num_sensors; // not used yet..
-
+  imain_window.num_sensors = num_sensor_ch;
   // Initial text color black
   text_color.red = 0;
   text_color.green = 0;
@@ -1150,7 +1237,7 @@ int init_imain_window(void)
     }
     memcpy(dest, (const void*)&appearance_config.data_display_font_family[0], MAX_FONT_FAMILY_LEN);
 
-    char **font_family_ptr = (char **)((char *)&imain_window.data_display_label_sensor_raw0.font_attrib.font_family + i * sizeof(Data_Display_Label_t));
+    char **font_family_ptr = (char **)((char *)&imain_window.data_display_label_sensor_raw[0].font_attrib.font_family + i * sizeof(Data_Display_Label_t));
     *font_family_ptr = dest;
 
     set_data_display_label_sensor_raw_font_size(i, appearance_config.data_display_font_size);
@@ -1182,14 +1269,14 @@ int init_imain_window(void)
 
 void cleanup_imain_window(void)
 {
-  for(unsigned int i = 0; i < param.num_sensors; i++) {
-    char **font_family_ptr = (char **)((char *)&imain_window.data_display_label_sensor_raw0.font_attrib.font_family + i * sizeof(Data_Display_Label_t));
+  for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
+    char **font_family_ptr = (char **)((char *)&imain_window.data_display_label_sensor_raw[0].font_attrib.font_family + i * sizeof(Data_Display_Label_t));
     if (*font_family_ptr != NULL) {
       g_free(*font_family_ptr);
       *font_family_ptr = NULL;
     }
   }
-  for(unsigned int i = 0; i < param.num_sensors; i++) {
+  for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
     char **font_family_ptr = (char **)((char *)&imain_window.data_display_label_sensor_pv0.font_attrib.font_family + i * sizeof(Data_Display_Label_t));
     if (*font_family_ptr != NULL) {
       g_free(*font_family_ptr);

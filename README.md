@@ -55,6 +55,17 @@ Worked on cleaning up imain-window and adding ability to change foreground
 and background color of text. But changing foreground color resets the
 background color, and changing background color resets foreground color...
 
+02-15-2025
+The color stuff now sorted out, can change text color, text highlight color, and
+background colors of data display label boxes.
+Font attributes of the data display labels can now be changed/updated, such as
+the font family, size, and weight. Font family and weight can be changed in the
+config.ini file.
+Now working on "arraying" all of the window elements which have mulitiple
+similar elements, which took awhile to figure out because it wasn't so straight-
+forward. I got the sensor raw data display labels and all font attributes now
+"arrayed" in both the main-window and imain-window code. So much more work to
+go in this particular task..
 
 ## Fresh Pi
 # Libraries needed to run ./bin/main are WiringPi and GTK4.

@@ -28,11 +28,11 @@ long_line_behaviour=2
 long_line_column=80
 
 [files]
-current_page=2
-FILE_NAME_0=1382;C++;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fmain.cpp;0;2
-FILE_NAME_1=17392;C;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fgui%2Fmain-window.c;0;2
-FILE_NAME_2=48452;C;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fgui%2Fimain-window.c;0;2
-FILE_NAME_3=259;C++;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fgui%2Fimain-window.h;0;2
+current_page=14
+FILE_NAME_0=1458;C++;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fmain.cpp;0;2
+FILE_NAME_1=17974;C;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fgui%2Fmain-window.c;0;2
+FILE_NAME_2=44139;C;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fgui%2Fimain-window.c;0;2
+FILE_NAME_3=607;C++;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fgui%2Fimain-window.h;0;2
 FILE_NAME_4=253;C++;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fgui%2Fattrib.h;0;2
 FILE_NAME_5=45;C++;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fgui%2Fmain-window.h;0;2
 FILE_NAME_6=840;C++;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fcontrol%2Fcontrol.cpp;0;2
@@ -42,6 +42,8 @@ FILE_NAME_9=630;C++;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture
 FILE_NAME_10=0;C++;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fscrap.cpp;0;2
 FILE_NAME_11=1606;C++;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Finc%2Fconfig.h;0;2
 FILE_NAME_12=115;Conf;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fconfig.ini;0;2
+FILE_NAME_13=7231;XML;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fgui%2Fresource%2Fmain-window.ui;0;2
+FILE_NAME_14=2671;Markdown;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2FREADME.md;0;2
 
 [VTE]
 last_dir=/home/keith/gitrepo/555-soil-moisture-snsr-cal

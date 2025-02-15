@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     return -1;
   }
 
-  if(0 != init_imain_window()) {
+  if(0 != init_imain_window(param.num_sensors)) {
     std::cerr << "Failed to initialize imain-window" << '\n';
     return -1;
   }

@@ -38,14 +38,15 @@ typedef struct _MainWindow
   GtkWidget *channel_label[8];
 
   // Text boxes for display data
-  GtkWidget *data_display_label_sensor_raw0;
+  GtkWidget *data_display_label_sensor_raw[8];
+  /*GtkWidget *data_display_label_sensor_raw0;
   GtkWidget *data_display_label_sensor_raw1;
   GtkWidget *data_display_label_sensor_raw2;
   GtkWidget *data_display_label_sensor_raw3;
   GtkWidget *data_display_label_sensor_raw4;
   GtkWidget *data_display_label_sensor_raw5;
   GtkWidget *data_display_label_sensor_raw6;
-  GtkWidget *data_display_label_sensor_raw7;
+  GtkWidget *data_display_label_sensor_raw7;*/
   GtkWidget *data_display_label_sensor_pv0;
   GtkWidget *data_display_label_sensor_pv1;
   GtkWidget *data_display_label_sensor_pv2;
@@ -179,22 +180,37 @@ static void main_window_class_init(MainWindowClass *klass)
     gtk_widget_class_set_template(widget_class, template_bytes);
     g_bytes_unref(template_bytes);
 
+    // bind tab stuff
     gtk_widget_class_bind_template_child(widget_class, MainWindow, notebook);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, tab_label_page0);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, tab_label_page1);
 
+    // bind col header labels
     gtk_widget_class_bind_template_child(widget_class, MainWindow, col_header_sensor_raw);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, col_header_sensor_pv);
 
-    
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw0);
+    // bind ch labels
+    for (int i = 0; i < 8; i++) {
+      char widget_name[64];
+      snprintf(widget_name, sizeof(widget_name), "channel_label%d", i);
+      gtk_widget_class_bind_template_child_full(widget_class, widget_name, FALSE, offsetof(MainWindow, channel_label) + i * sizeof(GtkWidget *));
+    }
+    /*gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw0);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw1);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw2);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw3);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw4);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw5);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw6);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw7);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw7);*/
+    
+    // bind sensor raw data display labels
+    for (int i = 0; i < 8; i++) {
+      char widget_name[64];
+      snprintf(widget_name, sizeof(widget_name), "data_display_label_sensor_raw%d", i);
+      gtk_widget_class_bind_template_child_full(widget_class, widget_name, FALSE, offsetof(MainWindow, data_display_label_sensor_raw) + i * sizeof(GtkWidget *));
+    }
+    
     gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_pv0);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_pv1);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_pv2);
@@ -240,12 +256,6 @@ static void main_window_class_init(MainWindowClass *klass)
     gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span5);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span6);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span7);
-
-    for (int i = 0; i < 8; i++) {
-      char widget_name[64];
-      snprintf(widget_name, sizeof(widget_name), "channel_label%d", i);
-      gtk_widget_class_bind_template_child_full(widget_class, widget_name, FALSE, offsetof(MainWindow, channel_label) + i * sizeof(GtkWidget *));
-    }
 
   } else {
     g_error("Failed to load MainWindow template: %s\n", error->message);
@@ -322,35 +332,43 @@ static gboolean update_main_window(MainWindow *self)
     }
   }*/
   
-  if(get_update_font_attrib_raw_ack(0)) {
-    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw0), &imain_window.data_display_label_sensor_raw0.font_attrib);
+  /*if(get_update_font_attrib_raw_ack(0)) {
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw0), &imain_window.data_display_label_sensor_raw[0].font_attrib);
   }
   if(get_update_font_attrib_raw_ack(1)) {
-    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw1), &imain_window.data_display_label_sensor_raw1.font_attrib);
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw1), &imain_window.data_display_label_sensor_raw[1].font_attrib);
   }
   if(get_update_font_attrib_raw_ack(2)) {
-    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw2), &imain_window.data_display_label_sensor_raw2.font_attrib);
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw2), &imain_window.data_display_label_sensor_raw[2].font_attrib);
   }
   if(get_update_font_attrib_raw_ack(3)) {
-    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw3), &imain_window.data_display_label_sensor_raw3.font_attrib);
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw3), &imain_window.data_display_label_sensor_raw[3].font_attrib);
   }
   if(get_update_font_attrib_raw_ack(4)) {
-    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw4), &imain_window.data_display_label_sensor_raw4.font_attrib);
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw4), &imain_window.data_display_label_sensor_raw[4].font_attrib);
   }
   if(get_update_font_attrib_raw_ack(5)) {
-    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw5), &imain_window.data_display_label_sensor_raw5.font_attrib);
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw5), &imain_window.data_display_label_sensor_raw[5].font_attrib);
   }
   if(get_update_font_attrib_raw_ack(6)) {
-    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw6), &imain_window.data_display_label_sensor_raw6.font_attrib);
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw6), &imain_window.data_display_label_sensor_raw[6].font_attrib);
   }
   if(get_update_font_attrib_raw_ack(7)) {
-    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw7), &imain_window.data_display_label_sensor_raw7.font_attrib);
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw7), &imain_window.data_display_label_sensor_raw[7].font_attrib);
+  }*/
+  
+  for (unsigned int i = 0; i < imain_window.num_sensors; i++) {
+    if(get_update_font_attrib_raw_ack(i)) {
+      set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw[i]), &imain_window.data_display_label_sensor_raw[i].font_attrib);
+    }
   }
 
+  // TODO: remove this
   for (unsigned int i = 0; i < imain_window.num_sensors; i++) {
     gtk_label_set_text(GTK_LABEL(self->channel_label[i]), imain_window.channel_label[i].label_text);
   }
-  
+
+/*
   if(get_update_text_raw_ack(0)) {
     gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw0), imain_window.data_display_label_sensor_raw0.label_text);
   }
@@ -375,7 +393,13 @@ static gboolean update_main_window(MainWindow *self)
   if(get_update_text_raw_ack(7)) {
     gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw7), imain_window.data_display_label_sensor_raw7.label_text);
   }
-  
+*/
+  for (unsigned int i = 0; i < imain_window.num_sensors; i++) {
+    if(get_update_text_raw_ack(i)) {
+      gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw[i]), imain_window.data_display_label_sensor_raw[i].label_text);
+    }
+  }
+
   if(get_update_font_attrib_pv_ack(0)) {
     set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_pv0), &imain_window.data_display_label_sensor_pv0.font_attrib);
   }
@@ -426,6 +450,7 @@ static gboolean update_main_window(MainWindow *self)
     gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv7), imain_window.data_display_label_sensor_pv7.label_text);
   }
 
+/*
   if(get_update_foreground_color_raw_ack(0) || get_update_highlight_color_raw_ack(0)) {
     set_label_color(GTK_LABEL(self->data_display_label_sensor_raw0), 
                               imain_window.data_display_label_sensor_raw0.foreground_color,
@@ -465,6 +490,14 @@ static gboolean update_main_window(MainWindow *self)
     set_label_color(GTK_LABEL(self->data_display_label_sensor_raw7), 
                               imain_window.data_display_label_sensor_raw7.foreground_color,
                               imain_window.data_display_label_sensor_raw7.text_highlight_color);
+  }
+*/
+  for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
+    if(get_update_foreground_color_raw_ack(i) || get_update_highlight_color_raw_ack(i)) {
+      set_label_color(GTK_LABEL(self->data_display_label_sensor_raw[i]), 
+                                imain_window.data_display_label_sensor_raw[i].foreground_color,
+                                imain_window.data_display_label_sensor_raw[i].text_highlight_color);
+    }
   }
 
   if(get_update_foreground_color_pv_ack(0) || get_update_highlight_color_pv_ack(0)) {
@@ -507,7 +540,8 @@ static gboolean update_main_window(MainWindow *self)
                               imain_window.data_display_label_sensor_pv7.foreground_color,
                               imain_window.data_display_label_sensor_pv7.text_highlight_color);
   }
-  
+
+
   if(get_update_background_color_raw_ack(0)) {
     gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_raw0));
   }
@@ -532,6 +566,12 @@ static gboolean update_main_window(MainWindow *self)
   if(get_update_background_color_raw_ack(7)) {
     gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_raw7));
   }
+
+  /*for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
+    if(get_update_background_color_raw_ack(i)) {
+      gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_raw[i]));
+    }
+  }*/
 
   if(get_update_background_color_pv_ack(0)) {
     gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_pv0));
@@ -577,7 +617,7 @@ static void button0_clicked_cb(GtkButton *button, MainWindow *self)
   // Show all widgets in the SubWindow
   gtk_widget_show(sub_window);
 
-  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw0), "Button0 was clicked!");
+  gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw[0]), "Button0 was clicked!");
 }
 
 static void button_zero0_clicked_cb(GtkButton *button, MainWindow *self)
@@ -704,35 +744,35 @@ void activate_main_window_cb(GtkApplication *app, gpointer user_data)
   // the box with color
   gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_raw0), // which widget
                                                    draw_gtkdrawingarea_fill_color, // the drawing fn to use
-                                                   (gpointer)&imain_window.data_display_label_sensor_raw0.background_color, // where the color is stored
+                                                   (gpointer)&imain_window.data_display_label_sensor_raw[0].background_color, // where the color is stored
                                                    NULL); // GDestroyNotify
   gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_raw1),
                                                    draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_raw1.background_color,
+                                                   (gpointer)&imain_window.data_display_label_sensor_raw[1].background_color,
                                                    NULL);
   gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_raw2),
                                                    draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_raw2.background_color,
+                                                   (gpointer)&imain_window.data_display_label_sensor_raw[2].background_color,
                                                    NULL);
   gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_raw3),
                                                    draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_raw3.background_color,
+                                                   (gpointer)&imain_window.data_display_label_sensor_raw[3].background_color,
                                                    NULL);
   gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_raw4),
                                                    draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_raw4.background_color,
+                                                   (gpointer)&imain_window.data_display_label_sensor_raw[4].background_color,
                                                    NULL);
   gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_raw5),
                                                    draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_raw5.background_color,
+                                                   (gpointer)&imain_window.data_display_label_sensor_raw[5].background_color,
                                                    NULL);
   gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_raw6),
                                                    draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_raw6.background_color,
+                                                   (gpointer)&imain_window.data_display_label_sensor_raw[6].background_color,
                                                    NULL);
   gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_raw7),
                                                    draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_raw7.background_color,
+                                                   (gpointer)&imain_window.data_display_label_sensor_raw[7].background_color,
                                                    NULL);
 
   gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_pv0),

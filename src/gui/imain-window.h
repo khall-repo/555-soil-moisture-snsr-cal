@@ -32,14 +32,15 @@ typedef struct _IMainWindow
   Data_Display_Label_t channel_label[MAX_SENSORS];
 
   // Next 8 lines must be contiguous:
-  Data_Display_Label_t data_display_label_sensor_raw0;
+  /*Data_Display_Label_t data_display_label_sensor_raw0;
   Data_Display_Label_t data_display_label_sensor_raw1;
   Data_Display_Label_t data_display_label_sensor_raw2;
   Data_Display_Label_t data_display_label_sensor_raw3;
   Data_Display_Label_t data_display_label_sensor_raw4;
   Data_Display_Label_t data_display_label_sensor_raw5;
   Data_Display_Label_t data_display_label_sensor_raw6;
-  Data_Display_Label_t data_display_label_sensor_raw7;
+  Data_Display_Label_t data_display_label_sensor_raw7;*/
+  Data_Display_Label_t data_display_label_sensor_raw[MAX_SENSORS];
   // Next 8 lines must be contiguous:
   Data_Display_Label_t data_display_label_sensor_pv0;
   Data_Display_Label_t data_display_label_sensor_pv1;
@@ -111,7 +112,7 @@ bool button_span_pressed(unsigned int index);
 bool button_zero_pressed_ack(unsigned int index);
 bool button_span_pressed_ack(unsigned int index);
 
-int init_imain_window(void);
+int init_imain_window(unsigned int num_sensor_ch);
 void cleanup_imain_window(void);
 #endif
 
