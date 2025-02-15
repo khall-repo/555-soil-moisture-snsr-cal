@@ -41,24 +41,9 @@ typedef struct _MainWindow
   GtkWidget *data_display_label_sensor_raw[8];
   GtkWidget *data_display_label_sensor_pv[8];
 
-
   // Drawing areas for display data
-  GtkWidget *drawing_area_sensor_raw0;
-  GtkWidget *drawing_area_sensor_raw1;
-  GtkWidget *drawing_area_sensor_raw2;
-  GtkWidget *drawing_area_sensor_raw3;
-  GtkWidget *drawing_area_sensor_raw4;
-  GtkWidget *drawing_area_sensor_raw5;
-  GtkWidget *drawing_area_sensor_raw6;
-  GtkWidget *drawing_area_sensor_raw7;
-  GtkWidget *drawing_area_sensor_pv0;
-  GtkWidget *drawing_area_sensor_pv1;
-  GtkWidget *drawing_area_sensor_pv2;
-  GtkWidget *drawing_area_sensor_pv3;
-  GtkWidget *drawing_area_sensor_pv4;
-  GtkWidget *drawing_area_sensor_pv5;
-  GtkWidget *drawing_area_sensor_pv6;
-  GtkWidget *drawing_area_sensor_pv7;
+  GtkWidget *drawing_area_sensor_raw[8];
+  GtkWidget *drawing_area_sensor_pv[8];
   
   GtkWidget *button0; // bottom button
 
@@ -178,44 +163,39 @@ static void main_window_class_init(MainWindowClass *klass)
     gtk_widget_class_bind_template_child(widget_class, MainWindow, col_header_sensor_pv);
 
     // bind ch labels
-    for (int i = 0; i < 8; i++) {
+    for(int i = 0; i < 8; i++) {
       char widget_name[64];
       snprintf(widget_name, sizeof(widget_name), "channel_label%d", i);
       gtk_widget_class_bind_template_child_full(widget_class, widget_name, FALSE, offsetof(MainWindow, channel_label) + i * sizeof(GtkWidget *));
     }
     
     // bind sensor raw data display labels
-    for (int i = 0; i < 8; i++) {
+    for(int i = 0; i < 8; i++) {
       char widget_name[64];
       snprintf(widget_name, sizeof(widget_name), "data_display_label_sensor_raw%d", i);
       gtk_widget_class_bind_template_child_full(widget_class, widget_name, FALSE, offsetof(MainWindow, data_display_label_sensor_raw) + i * sizeof(GtkWidget *));
     }
     
     // bind sensor pv data display labels
-    for (int i = 0; i < 8; i++) {
+    for(int i = 0; i < 8; i++) {
       char widget_name[64];
       snprintf(widget_name, sizeof(widget_name), "data_display_label_sensor_pv%d", i);
       gtk_widget_class_bind_template_child_full(widget_class, widget_name, FALSE, offsetof(MainWindow, data_display_label_sensor_pv) + i * sizeof(GtkWidget *));
     }
 
-
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_raw0);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_raw1);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_raw2);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_raw3);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_raw4);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_raw5);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_raw6);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_raw7);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_pv0);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_pv1);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_pv2);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_pv3);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_pv4);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_pv5);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_pv6);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_pv7);
-
+    // bind sensor raw data display drawing area
+    for(int i = 0; i < 8; i++) {
+      char widget_name[64];
+      snprintf(widget_name, sizeof(widget_name), "drawing_area_sensor_raw%d", i);
+      gtk_widget_class_bind_template_child_full(widget_class, widget_name, FALSE, offsetof(MainWindow, drawing_area_sensor_raw) + i * sizeof(GtkWidget *));
+    }
+    
+    // bind sensor pv data display drawing area
+    for(int i = 0; i < 8; i++) {
+      char widget_name[64];
+      snprintf(widget_name, sizeof(widget_name), "drawing_area_sensor_pv%d", i);
+      gtk_widget_class_bind_template_child_full(widget_class, widget_name, FALSE, offsetof(MainWindow, drawing_area_sensor_pv) + i * sizeof(GtkWidget *));
+    }
 
     gtk_widget_class_bind_template_child(widget_class, MainWindow, button0);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero0);
@@ -310,11 +290,6 @@ static gboolean update_main_window(MainWindow *self)
     }
   }
 
-  // TODO: remove this
-  /*for (unsigned int i = 0; i < imain_window.num_sensors; i++) {
-    gtk_label_set_text(GTK_LABEL(self->channel_label[i]), imain_window.channel_label[i].label_text);
-  }*/
-
   // update sensor raw text
   for (unsigned int i = 0; i < imain_window.num_sensors; i++) {
     if(get_update_text_raw_ack(i)) {
@@ -355,62 +330,20 @@ static gboolean update_main_window(MainWindow *self)
     }
   }
 
-
-  if(get_update_background_color_raw_ack(0)) {
-    gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_raw0));
-  }
-  if(get_update_background_color_raw_ack(1)) {
-    gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_raw1));
-  }
-  if(get_update_background_color_raw_ack(2)) {
-    gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_raw2));
-  }
-  if(get_update_background_color_raw_ack(3)) {
-    gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_raw3));
-  }
-  if(get_update_background_color_raw_ack(4)) {
-    gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_raw4));
-  }
-  if(get_update_background_color_raw_ack(5)) {
-    gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_raw5));
-  }
-  if(get_update_background_color_raw_ack(6)) {
-    gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_raw6));
-  }
-  if(get_update_background_color_raw_ack(7)) {
-    gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_raw7));
-  }
-
-  /*for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
+  // update sensor raw background color
+  for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
     if(get_update_background_color_raw_ack(i)) {
       gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_raw[i]));
     }
-  }*/
+  }
 
-  if(get_update_background_color_pv_ack(0)) {
-    gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_pv0));
+  // update sensor pv background color
+  for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
+    if(get_update_background_color_pv_ack(i)) {
+      gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_pv[i]));
+    }
   }
-  if(get_update_background_color_pv_ack(1)) {
-    gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_pv1));
-  }
-  if(get_update_background_color_pv_ack(2)) {
-    gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_pv2));
-  }
-  if(get_update_background_color_pv_ack(3)) {
-    gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_pv3));
-  }
-  if(get_update_background_color_pv_ack(4)) {
-    gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_pv4));
-  }
-  if(get_update_background_color_pv_ack(5)) {
-    gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_pv5));
-  }
-  if(get_update_background_color_pv_ack(6)) {
-    gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_pv6));
-  }
-  if(get_update_background_color_pv_ack(7)) {
-    gtk_widget_queue_draw(GTK_WIDGET(self->drawing_area_sensor_pv7));
-  }
+  
   // Return TRUE to keep the idle function running
   return TRUE;
   // Or return FALSE to stop the idle function
@@ -421,7 +354,7 @@ static void button0_clicked_cb(GtkButton *button, MainWindow *self)
 {
   GtkWidget *sub_window;
 
-  // Create a new SubWindow
+  // Create a new test SubWindow
   sub_window = sub_window_new();
   if (sub_window == NULL) {
       g_printerr("Failed to create SubWindow\n");
@@ -556,71 +489,18 @@ void activate_main_window_cb(GtkApplication *app, gpointer user_data)
 
   // Set the drawing area function for the data display label cells for filling
   // the box with color
-  gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_raw0), // which widget
+  for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
+    gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_raw[i]), // which widget
                                                    draw_gtkdrawingarea_fill_color, // the drawing fn to use
-                                                   (gpointer)&imain_window.data_display_label_sensor_raw[0].background_color, // where the color is stored
+                                                   (gpointer)&imain_window.data_display_label_sensor_raw[i].background_color, // where the color is stored
                                                    NULL); // GDestroyNotify
-  gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_raw1),
+  }
+  for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
+    gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_pv[i]),
                                                    draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_raw[1].background_color,
+                                                   (gpointer)&imain_window.data_display_label_sensor_pv[i].background_color,
                                                    NULL);
-  gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_raw2),
-                                                   draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_raw[2].background_color,
-                                                   NULL);
-  gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_raw3),
-                                                   draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_raw[3].background_color,
-                                                   NULL);
-  gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_raw4),
-                                                   draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_raw[4].background_color,
-                                                   NULL);
-  gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_raw5),
-                                                   draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_raw[5].background_color,
-                                                   NULL);
-  gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_raw6),
-                                                   draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_raw[6].background_color,
-                                                   NULL);
-  gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_raw7),
-                                                   draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_raw[7].background_color,
-                                                   NULL);
-
-  gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_pv0),
-                                                   draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_pv[0].background_color,
-                                                   NULL);
-  gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_pv1),
-                                                   draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_pv[1].background_color,
-                                                   NULL);
-  gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_pv2),
-                                                   draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_pv[2].background_color,
-                                                   NULL);
-  gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_pv3),
-                                                   draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_pv[3].background_color,
-                                                   NULL);
-  gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_pv4),
-                                                   draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_pv[4].background_color,
-                                                   NULL);
-  gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_pv5),
-                                                   draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_pv[5].background_color,
-                                                   NULL);
-  gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_pv6),
-                                                   draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_pv[6].background_color,
-                                                   NULL);
-  gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(window->drawing_area_sensor_pv7),
-                                                   draw_gtkdrawingarea_fill_color,
-                                                   (gpointer)&imain_window.data_display_label_sensor_pv[7].background_color,
-                                                   NULL);
+  }
   // Set the custom log handler for the GTK log domain
   g_log_set_handler("Gtk", G_LOG_LEVEL_CRITICAL, custom_log_handler, NULL);
 }
