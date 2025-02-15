@@ -31,25 +31,17 @@ typedef struct _IMainWindow
   
   Data_Display_Label_t channel_label[MAX_SENSORS];
 
-  // Next 8 lines must be contiguous:
-  /*Data_Display_Label_t data_display_label_sensor_raw0;
-  Data_Display_Label_t data_display_label_sensor_raw1;
-  Data_Display_Label_t data_display_label_sensor_raw2;
-  Data_Display_Label_t data_display_label_sensor_raw3;
-  Data_Display_Label_t data_display_label_sensor_raw4;
-  Data_Display_Label_t data_display_label_sensor_raw5;
-  Data_Display_Label_t data_display_label_sensor_raw6;
-  Data_Display_Label_t data_display_label_sensor_raw7;*/
   Data_Display_Label_t data_display_label_sensor_raw[MAX_SENSORS];
   // Next 8 lines must be contiguous:
-  Data_Display_Label_t data_display_label_sensor_pv0;
+  /*Data_Display_Label_t data_display_label_sensor_pv0;
   Data_Display_Label_t data_display_label_sensor_pv1;
   Data_Display_Label_t data_display_label_sensor_pv2;
   Data_Display_Label_t data_display_label_sensor_pv3;
   Data_Display_Label_t data_display_label_sensor_pv4;
   Data_Display_Label_t data_display_label_sensor_pv5;
   Data_Display_Label_t data_display_label_sensor_pv6;
-  Data_Display_Label_t data_display_label_sensor_pv7;
+  Data_Display_Label_t data_display_label_sensor_pv7;*/
+  Data_Display_Label_t data_display_label_sensor_pv[MAX_SENSORS];
   
   bool button0; // bottom button
 

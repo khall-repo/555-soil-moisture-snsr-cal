@@ -28,11 +28,11 @@ long_line_behaviour=2
 long_line_column=80
 
 [files]
-current_page=14
+current_page=2
 FILE_NAME_0=1458;C++;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fmain.cpp;0;2
-FILE_NAME_1=17974;C;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fgui%2Fmain-window.c;0;2
-FILE_NAME_2=44139;C;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fgui%2Fimain-window.c;0;2
-FILE_NAME_3=607;C++;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fgui%2Fimain-window.h;0;2
+FILE_NAME_1=27833;C;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fgui%2Fmain-window.c;0;2
+FILE_NAME_2=13202;C;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fgui%2Fimain-window.c;0;2
+FILE_NAME_3=1123;C++;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fgui%2Fimain-window.h;0;2
 FILE_NAME_4=253;C++;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fgui%2Fattrib.h;0;2
 FILE_NAME_5=45;C++;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fgui%2Fmain-window.h;0;2
 FILE_NAME_6=840;C++;0;EUTF-8;0;1;0;%2Fhome%2Fkeith%2Fgitrepo%2F555-soil-moisture-snsr-cal%2Fsrc%2Fcontrol%2Fcontrol.cpp;0;2
