@@ -39,4 +39,7 @@
 #define MAX_FILTER  (unsigned int) 25
 #define MIN_FILTER  (unsigned int) 1
 
+#define MAX_FONT_FAMILY_LEN 64u // should be more than enough
+#define DEFAULT_DATA_DISP_FONT_FAMILY "LiberationMono"
+
 #endif

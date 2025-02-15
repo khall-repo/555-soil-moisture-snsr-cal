@@ -55,5 +55,6 @@ int main(int argc, char *argv[])
 
   init_imain_window();
   int status = run_gui_application(argc, argv);
+  cleanup_imain_window();
   return status;
 }

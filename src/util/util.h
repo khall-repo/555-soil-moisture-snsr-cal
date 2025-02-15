@@ -10,5 +10,6 @@
 
 std::string dtos(double val, unsigned int precision);
 void clear_terminal_screen(void);
+bool is_font_family_valid(const char *font_family);
 
 #endif // UTIL_H

@@ -259,6 +259,10 @@ static void main_window_destroy_cb(GtkWidget *widget, gpointer data)
   }
 }
 
+static void set_label_font_attribs(GtkLabel *label, Font_Attrib_t attrib)
+{
+  
+}
 
 static void set_label_color(GtkLabel *label, Color_t foreground, Color_t background)
 {

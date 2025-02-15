@@ -18,6 +18,7 @@ typedef struct _Data_Display_Label_t
   bool update_background_color = false;
   Color_t text_highlight_color = {0,0,0};
   bool update_text_highlight_color = false;
+  Font_Attrib_t font_attrib = {NULL,0,0};
 }Data_Display_Label_t;
 
 typedef struct _IMainWindow
@@ -91,6 +92,7 @@ bool button_zero_pressed_ack(unsigned int index);
 bool button_span_pressed_ack(unsigned int index);
 
 void init_imain_window(void);
+void cleanup_imain_window(void);
 #endif
 
 /**

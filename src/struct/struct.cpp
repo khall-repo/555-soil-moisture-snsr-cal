@@ -4,14 +4,18 @@
  * @par (C) 2025 Keith Hall
  */
 #include <iostream>
+#include <cstring>
 #include "config.h"
 #include "struct.h"
 #include "config-file.h"
+#include "util.h"
 
 extern Config_File *config_file; // Import from main.cpp
 
 Param_t param;
 Analog_Input_t analog_input[MAX_SENSORS];
+Appearance_Config_t appearance_config;
+
 
 /**
  * @brief Set raw and PV values with test values from the config file
@@ -104,9 +108,24 @@ void set_param_from_config_file(void)
       std::cerr << "Error: " << e.what() << '\n';
       std::cerr << "Error reading sensor slope for sensor: " << sensor_num << '\n';
       std::cerr << "Value: " << value << '\n';
-      exit(-1);
+      exit(EXIT_FAILURE);
     }
   }
+
+  // Load appearance data
+  value = config_file->get_config_value("appearance", "data_display_font_family");
+  if (!is_font_family_valid(value.c_str())) {
+    std::cerr << "Error: Invalid font family: " << value << '\n';
+    exit(EXIT_FAILURE);
+  }
+  // check value string length and copy to appearance_config.data_display_font_family if length is less than MAX_FONT_FAMILY_LEN
+  if (value.length() < MAX_FONT_FAMILY_LEN) {
+    strncpy(appearance_config.data_display_font_family, value.c_str(), value.length());
+  } else {
+    std::cerr << "Error: Font family string too long: " << value << '\n';
+    exit(EXIT_FAILURE);
+  }
+
 }
 
 /**
@@ -144,6 +163,9 @@ void init_param()
     analog_input[i].unfiltered_mv = 0.0;
     analog_input[i].filtered_mv = 0.0;
   }
+
+  memset(&appearance_config, 0, sizeof(Appearance_Config_t));
+  strncpy(appearance_config.data_display_font_family, DEFAULT_DATA_DISP_FONT_FAMILY, std::strlen(DEFAULT_DATA_DISP_FONT_FAMILY)+1);
 
   set_param_from_config_file(); // set test values
 }

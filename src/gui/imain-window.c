@@ -1,8 +1,10 @@
+#include <cstdint>
 #include <cstring>
 #include "struct.h" // for num of sensors
 #include "imain-window.h"
 
 extern Param_t param; // Import from struct.cpp
+extern Appearance_Config_t appearance_config; // Import from struct.cpp
 IMainWindow imain_window;
 
 // get imain_window.col_header_sensor_raw 
@@ -1034,7 +1036,36 @@ void init_imain_window(void)
     set_data_display_label_sensor_pv_highlight_color(i, text_highlight_color.red, text_highlight_color.green, text_highlight_color.blue);
     set_data_display_label_sensor_pv_bg_color(i, background_color.red, background_color.green, background_color.blue);
   }
+  
+  // Set the font family for each sensor data label
+  for(unsigned int i = 0; i < param.num_sensors; i++) {
+    char *dest = (char *)g_malloc0(MAX_FONT_FAMILY_LEN);
+    if (NULL == dest) {
+      g_printerr("Failed to allocate memory for font family data_display_label_sensor_raw[%d]\n", i);
+      exit(EXIT_FAILURE);
+    }
+    memcpy(dest, (const void*)&appearance_config.data_display_font_family[0], MAX_FONT_FAMILY_LEN);
+    g_print("Font fam %d: %s\r\n", i, dest);
 
+    // Calculate the address of the font_family member for the current sensor
+    char **font_family_ptr = (char **)((char *)&imain_window.data_display_label_sensor_raw0.font_attrib.font_family + i * sizeof(Data_Display_Label_t));
+    *font_family_ptr = dest;
+
+  }
+  g_print("str %s\r\n", (const char*)&imain_window.data_display_label_sensor_raw0.font_attrib.font_family[0]);
+  return;
+}
+
+void cleanup_imain_window(void)
+{
+  for(unsigned int i = 0; i < param.num_sensors; i++) {
+    char **font_family_ptr = (char **)((char *)&imain_window.data_display_label_sensor_raw0.font_attrib.font_family + i * sizeof(Data_Display_Label_t));
+    if (*font_family_ptr != NULL) {
+      g_free(*font_family_ptr);
+      *font_family_ptr = NULL;
+    }
+  }
+  g_print("imain-window cleanup\r\n");
 }
 /**
   End of file
