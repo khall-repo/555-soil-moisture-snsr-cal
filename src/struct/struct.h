@@ -41,8 +41,9 @@ typedef struct _Analog_Input_t {
 
 typedef struct _Appearance_Config_t {
   char data_display_font_family[MAX_FONT_FAMILY_LEN];
+  int data_display_font_size;
 }Appearance_Config_t;
 
-void init_param();
+int init_param();
 
 #endif

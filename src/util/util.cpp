@@ -15,7 +15,15 @@
 #include "util.h"
 
 const std::vector<std::string> allowed_font_families = {
-  "PibotoLT", "LiberationMono", "LiberationSans", "LiberationSerif"
+  "FreeMono",
+  "FreeSans",
+  "FreeSerif",
+  "PibotoLT",
+  "LiberationMono",
+  "LiberationSans",
+  "LiberationSerif",
+  "NimbusMonoPS",
+  "NimbusRoman"
 };
 
 /**
@@ -49,9 +57,9 @@ void clear_terminal_screen(void)
  bool is_font_family_valid(const char *font_family) {
   // compare font_family to allowed_font_families and return true if found
   for (const auto &family : allowed_font_families) {
-    //if (family == font_family) {
-    //  return true;
-    //}
+    /*if (family == font_family) {
+      return true;
+    }*/
     //std::cout << "\tfamily: " << "!" << family.c_str() << "!" << " font_family: " << "!" << font_family << "!" << "\n";
     if(0 == std::strcmp(family.c_str(), font_family)) {
       return true;

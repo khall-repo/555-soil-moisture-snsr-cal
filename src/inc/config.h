@@ -31,7 +31,7 @@
 #define ADC_MAX (double)1024.0
 
 #define FILTER            (double) 15.0 // normal filter
-#define BIG_JUMP          (double) 50.0	// if the raw value jumps by this amount
+#define BIG_JUMP          (double) 50.0 // if the raw value jumps by this amount
                                         // then use this filter number (i.e.
                                         // relax the filtering for big jumps)
 #define MID_JUMP          (double) 25.0
@@ -40,6 +40,9 @@
 #define MIN_FILTER  (unsigned int) 1
 
 #define MAX_FONT_FAMILY_LEN 64u // should be more than enough
+#define MAX_FONT_SIZE 32
 #define DEFAULT_DATA_DISP_FONT_FAMILY "LiberationMono"
+#define DEFAULT_DATA_DISP_FONT_SIZE 10
+#define DEFAULT_DATA_DISP_FONT_WEIGHT PANGO_WEIGHT_NORMAL
 
 #endif

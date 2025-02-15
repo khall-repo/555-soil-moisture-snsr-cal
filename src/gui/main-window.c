@@ -1,13 +1,13 @@
 /**
  * @file main-window.c
- * @brief Main Window file for the 555 soil moisture sensor calibration
+ * @brief Main Window file for the 555 soil moisture sensor calibration project
  * @par (C) 2025 Keith Hall
- * Read this to understand some of what is going on..
+ * Read the following page at url to understand some of what is going on..
  * The GLib Object System
  * https://docs.gtk.org/gobject/concepts.html
- * 
- * Why did I start this project with cpp and then switch to C to do the GUI?
- * Because.
+ * Also, the package "devhelp" is extremely helpful (apt install devhelp).
+ * Devhelp will appear in your program menu under programming when installed.
+ * It is a collection of manuals for Gtk, Glib, Pango, Cairo, etc..
  */
 #include "config.h"
 #include "imain-window.h"
@@ -117,12 +117,9 @@ void custom_log_handler(const gchar *log_domain, GLogLevelFlags log_level, const
 }
 
 // Register the MainWindow type with the GObject type system.
-// This macro will actually take the string "my_app_window" and converts it to
+// This macro will actually take the string "main_window" and converts it to
 // "main_window_app_class_init" and "main_app_window_init", and stores those
-// names internally. That is how GTK knows where to find the class and init
-// functions in here! Terrible for the uninitiated.
-// It seems to care that MainWindowClass struct is named after MainWindow
-// struct.. with "Class" appended to the end.
+// names internally.
 G_DEFINE_TYPE(MainWindow, main_window, GTK_TYPE_APPLICATION_WINDOW)
 // moved this down here to make it clearer that below line is related to the
 // line above.
@@ -130,7 +127,7 @@ G_DEFINE_TYPE(MainWindow, main_window, GTK_TYPE_APPLICATION_WINDOW)
 
 #define MAIN_WINDOW(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), MAIN_WINDOW_TYPE, MainWindow))
 
-
+// Draw function for the GtkDrawing areas
 static void draw_gtkdrawingarea_fill_color(GtkDrawingArea *area,
   cairo_t *cr,
   int             width,  // unused
@@ -152,7 +149,6 @@ static void draw_gtkdrawingarea_fill_color(GtkDrawingArea *area,
 
   cairo_fill (cr);
 }
-
 
 static void main_window_class_init(MainWindowClass *klass)
 {
@@ -259,9 +255,30 @@ static void main_window_destroy_cb(GtkWidget *widget, gpointer data)
   }
 }
 
-static void set_label_font_attribs(GtkLabel *label, Font_Attrib_t attrib)
+static void set_label_font_attribs(GtkLabel *label, Font_Attrib_t *attrib)
 {
+  PangoContext *p_pcontext = gtk_widget_get_pango_context(GTK_WIDGET(label));
+  PangoFontDescription *p_font_desc = pango_font_description_new();
   
+  if(p_pcontext == NULL) {
+    g_printerr("set_label_font_attribs(): Failed to create PangoContext\n");
+    return;
+  }
+  if(p_font_desc == NULL) {
+    g_printerr("set_label_font_attribs(): Failed to create PangoFontDescription\n");
+    return;
+  }
+  if(NULL == attrib) {
+    g_printerr("set_label_font_attribs(): NULL Font_Attrib_t\n");
+    return;
+  }
+
+  pango_font_description_set_family(p_font_desc, attrib->font_family);
+  pango_font_description_set_size(p_font_desc, attrib->size * PANGO_SCALE);
+  pango_font_description_set_weight(p_font_desc, attrib->weight);
+  pango_context_set_font_description(p_pcontext, p_font_desc);
+  
+  pango_font_description_free(p_font_desc);
 }
 
 static void set_label_color(GtkLabel *label, Color_t foreground, Color_t background)
@@ -279,53 +296,110 @@ static void set_label_color(GtkLabel *label, Color_t foreground, Color_t backgro
 // based on the data in the IMainWindow struct.
 static gboolean update_main_window(MainWindow *self)
 {
-  if(get_update_text_raw_ack(0)){
+  // shoot.. can't do this yet.
+  /*for(unsigned int i; i < imain_window.num_sensors; i++) {
+    if(get_update_font_attrib_raw_ack(i)) {
+      set_label_font_attribs(GtkLabel *label, Font_Attrib_t attrib);
+    }
+  }*/
+  
+  if(get_update_font_attrib_raw_ack(0)) {
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw0), &imain_window.data_display_label_sensor_raw0.font_attrib);
+  }
+  if(get_update_font_attrib_raw_ack(1)) {
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw1), &imain_window.data_display_label_sensor_raw1.font_attrib);
+  }
+  if(get_update_font_attrib_raw_ack(2)) {
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw2), &imain_window.data_display_label_sensor_raw2.font_attrib);
+  }
+  if(get_update_font_attrib_raw_ack(3)) {
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw3), &imain_window.data_display_label_sensor_raw3.font_attrib);
+  }
+  if(get_update_font_attrib_raw_ack(4)) {
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw4), &imain_window.data_display_label_sensor_raw4.font_attrib);
+  }
+  if(get_update_font_attrib_raw_ack(5)) {
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw5), &imain_window.data_display_label_sensor_raw5.font_attrib);
+  }
+  if(get_update_font_attrib_raw_ack(6)) {
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw6), &imain_window.data_display_label_sensor_raw6.font_attrib);
+  }
+  if(get_update_font_attrib_raw_ack(7)) {
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw7), &imain_window.data_display_label_sensor_raw7.font_attrib);
+  }
+  
+  if(get_update_text_raw_ack(0)) {
     gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw0), imain_window.data_display_label_sensor_raw0.label_text);
   }
-  if(get_update_text_raw_ack(1)){
+  if(get_update_text_raw_ack(1)) {
     gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw1), imain_window.data_display_label_sensor_raw1.label_text);
   }
-  if(get_update_text_raw_ack(2)){
+  if(get_update_text_raw_ack(2)) {
     gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw2), imain_window.data_display_label_sensor_raw2.label_text);
   }
-  if(get_update_text_raw_ack(3)){
+  if(get_update_text_raw_ack(3)) {
     gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw3), imain_window.data_display_label_sensor_raw3.label_text);
   }
-  if(get_update_text_raw_ack(4)){
+  if(get_update_text_raw_ack(4)) {
     gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw4), imain_window.data_display_label_sensor_raw4.label_text);
   }
-  if(get_update_text_raw_ack(5)){
+  if(get_update_text_raw_ack(5)) {
     gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw5), imain_window.data_display_label_sensor_raw5.label_text);
   }
-  if(get_update_text_raw_ack(6)){
+  if(get_update_text_raw_ack(6)) {
     gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw6), imain_window.data_display_label_sensor_raw6.label_text);
   }
-  if(get_update_text_raw_ack(7)){
+  if(get_update_text_raw_ack(7)) {
     gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw7), imain_window.data_display_label_sensor_raw7.label_text);
   }
+  
+  if(get_update_font_attrib_pv_ack(0)) {
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_pv0), &imain_window.data_display_label_sensor_pv0.font_attrib);
+  }
+  if(get_update_font_attrib_pv_ack(1)) {
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_pv1), &imain_window.data_display_label_sensor_pv1.font_attrib);
+  }
+  if(get_update_font_attrib_pv_ack(2)) {
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_pv2), &imain_window.data_display_label_sensor_pv2.font_attrib);
+  }
+  if(get_update_font_attrib_pv_ack(3)) {
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_pv3), &imain_window.data_display_label_sensor_pv3.font_attrib);
+  }
+  if(get_update_font_attrib_pv_ack(4)) {
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_pv4), &imain_window.data_display_label_sensor_pv4.font_attrib);
+  }
+  if(get_update_font_attrib_pv_ack(5)) {
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_pv5), &imain_window.data_display_label_sensor_pv5.font_attrib);
+  }
+  if(get_update_font_attrib_pv_ack(6)) {
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_pv6), &imain_window.data_display_label_sensor_pv6.font_attrib);
+  }
+  if(get_update_font_attrib_pv_ack(7)) {
+    set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_pv7), &imain_window.data_display_label_sensor_pv7.font_attrib);
+  }
 
-  if(get_update_text_pv_ack(0)){
+  if(get_update_text_pv_ack(0)) {
     gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv0), imain_window.data_display_label_sensor_pv0.label_text);
   }
-  if(get_update_text_pv_ack(1)){
+  if(get_update_text_pv_ack(1)) {
     gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv1), imain_window.data_display_label_sensor_pv1.label_text);
   }
-  if(get_update_text_pv_ack(2)){
+  if(get_update_text_pv_ack(2)) {
     gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv2), imain_window.data_display_label_sensor_pv2.label_text);
   }
-  if(get_update_text_pv_ack(3)){
+  if(get_update_text_pv_ack(3)) {
     gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv3), imain_window.data_display_label_sensor_pv3.label_text);
   }
-  if(get_update_text_pv_ack(4)){
+  if(get_update_text_pv_ack(4)) {
     gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv4), imain_window.data_display_label_sensor_pv4.label_text);
   }
-  if(get_update_text_pv_ack(5)){
+  if(get_update_text_pv_ack(5)) {
     gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv5), imain_window.data_display_label_sensor_pv5.label_text);
   }
-  if(get_update_text_pv_ack(6)){
+  if(get_update_text_pv_ack(6)) {
     gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv6), imain_window.data_display_label_sensor_pv6.label_text);
   }
-  if(get_update_text_pv_ack(7)){
+  if(get_update_text_pv_ack(7)) {
     gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_pv7), imain_window.data_display_label_sensor_pv7.label_text);
   }
 

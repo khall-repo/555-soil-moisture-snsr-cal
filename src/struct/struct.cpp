@@ -22,13 +22,13 @@ Appearance_Config_t appearance_config;
  * @param none
  * @return none
  */
-void set_param_from_config_file(void)
+int set_param_from_config_file(void)
 {
   std::string value;
 
   if(NULL == config_file) {
     std::cerr << "Error: Config file not initialized" << '\n';
-    return;
+    return -1;
   }
 
   value = config_file->get_config_value("param", "num_sensors");
@@ -55,40 +55,6 @@ void set_param_from_config_file(void)
   value = config_file->get_config_value("param", "adc_num_samples");
   param.adc_num_samples = std::stoi(value);
 
-  value = config_file->get_config_value("param", "testraw0");
-  param.sensor_raw[0] = std::stod(value);
-  value = config_file->get_config_value("param", "testraw1");
-  param.sensor_raw[1] = std::stod(value);
-  value = config_file->get_config_value("param", "testraw2");
-  param.sensor_raw[2] = std::stod(value);
-  value = config_file->get_config_value("param", "testraw3");
-  param.sensor_raw[3] = std::stod(value);
-  value = config_file->get_config_value("param", "testraw4");
-  param.sensor_raw[4] = std::stod(value);
-  value = config_file->get_config_value("param", "testraw5");
-  param.sensor_raw[5] = std::stod(value);
-  value = config_file->get_config_value("param", "testraw6");
-  param.sensor_raw[6] = std::stod(value);
-  value = config_file->get_config_value("param", "testraw7");
-  param.sensor_raw[7] = std::stod(value);
-
-  value = config_file->get_config_value("param", "testpv0");
-  param.sensor_pv[0] = std::stod(value);
-  value = config_file->get_config_value("param", "testpv1");
-  param.sensor_pv[1] = std::stod(value);
-  value = config_file->get_config_value("param", "testpv2");
-  param.sensor_pv[2] = std::stod(value);
-  value = config_file->get_config_value("param", "testpv3");
-  param.sensor_pv[3] = std::stod(value);
-  value = config_file->get_config_value("param", "testpv4");
-  param.sensor_pv[4] = std::stod(value);
-  value = config_file->get_config_value("param", "testpv5");
-  param.sensor_pv[5] = std::stod(value);
-  value = config_file->get_config_value("param", "testpv6");
-  param.sensor_pv[6] = std::stod(value);
-  value = config_file->get_config_value("param", "testpv7");
-  param.sensor_pv[7] = std::stod(value);
-
   // Load calibration data
   for (unsigned int sensor_num = 0; sensor_num < param.num_sensors; ++sensor_num) {
     value = config_file->get_config_value("calibration", "sensor_offset_" + std::to_string(sensor_num));
@@ -98,7 +64,7 @@ void set_param_from_config_file(void)
       std::cerr << "Error: " << e.what() << '\n';
       std::cerr << "Error reading sensor offset for sensor: " << sensor_num << '\n';
       std::cerr << "Value: " << value << '\n';
-      exit(-1);
+      return -1;
     }
     
     value = config_file->get_config_value("calibration", "sensor_slope_" + std::to_string(sensor_num));
@@ -108,7 +74,7 @@ void set_param_from_config_file(void)
       std::cerr << "Error: " << e.what() << '\n';
       std::cerr << "Error reading sensor slope for sensor: " << sensor_num << '\n';
       std::cerr << "Value: " << value << '\n';
-      exit(EXIT_FAILURE);
+      return -1;
     }
   }
 
@@ -116,16 +82,21 @@ void set_param_from_config_file(void)
   value = config_file->get_config_value("appearance", "data_display_font_family");
   if (!is_font_family_valid(value.c_str())) {
     std::cerr << "Error: Invalid font family: " << value << '\n';
-    exit(EXIT_FAILURE);
+    return -1;
+  }
+  value = config_file->get_config_value("appearance", "data_display_font_size");
+  appearance_config.data_display_font_size = std::stoi(value);
+  if(MAX_FONT_SIZE < appearance_config.data_display_font_size) {
+    appearance_config.data_display_font_size = DEFAULT_DATA_DISP_FONT_SIZE;
   }
   // check value string length and copy to appearance_config.data_display_font_family if length is less than MAX_FONT_FAMILY_LEN
   if (value.length() < MAX_FONT_FAMILY_LEN) {
     strncpy(appearance_config.data_display_font_family, value.c_str(), value.length());
   } else {
     std::cerr << "Error: Font family string too long: " << value << '\n';
-    exit(EXIT_FAILURE);
+    return -1;
   }
-
+  return 0;
 }
 
 /**
@@ -133,7 +104,7 @@ void set_param_from_config_file(void)
  * @param none
  * @return none
  */
-void init_param()
+int init_param()
 {
   // zero out the param structure
   param.num_sensors = 0;
@@ -164,8 +135,12 @@ void init_param()
     analog_input[i].filtered_mv = 0.0;
   }
 
+  // zero out appearance config structure
   memset(&appearance_config, 0, sizeof(Appearance_Config_t));
   strncpy(appearance_config.data_display_font_family, DEFAULT_DATA_DISP_FONT_FAMILY, std::strlen(DEFAULT_DATA_DISP_FONT_FAMILY)+1);
 
-  set_param_from_config_file(); // set test values
+  if(0 != set_param_from_config_file()) {
+    return -1;
+  }
+  return 0;
 }

@@ -30,31 +30,40 @@ int main(int argc, char *argv[])
 {
   (void)argc; // not used yet
   (void)argv; // not used yet
+  int status;
 
   // Read the config file
   config_file = new Config_File();
-  if(config_file->read_config_file() != 0) {
+  if(0 != config_file->read_config_file()) {
     std::cerr << "Error reading config file" << '\n';
     return -1;
   }
-  init_param();
+  if(0 != init_param()) {
+    std::cerr << "Failed to initialize param structure" << '\n';
+    return -1; 
+  }
 
-  if (wiringPiSetup() == -1) {
+  if(-1 == wiringPiSetup()) {
     std::cerr << "Failed to initialize WiringPi" << '\n';
     return -1;
   }
 
-  if (mcp3004Setup(MCP3008_PINBASE, MCP3008_0_SPI_CHAN) == -1) {
+  if(-1 == mcp3004Setup(MCP3008_PINBASE, MCP3008_0_SPI_CHAN)) {
     std::cerr << "Failed to initialize MCP3008" << '\n';
     return -1;
   }
   
   if(0 != timebase_start()) {
+    std::cerr << "Failed to timebase" << '\n';
     return -1;
   }
 
-  init_imain_window();
-  int status = run_gui_application(argc, argv);
+  if(0 != init_imain_window()) {
+    std::cerr << "Failed to initialize imain-window" << '\n';
+    return -1;
+  }
+  
+  status = run_gui_application(argc, argv);
   cleanup_imain_window();
   return status;
 }

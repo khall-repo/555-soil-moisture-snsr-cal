@@ -1,0 +1,56 @@
+PangoAttribute* pango_attr_font_desc_new (
+  const PangoFontDescription* desc
+)
+
+Use following functions to populate the PangoFontDescription structure.
+There are more description elements, but these are all I really need.
+
+pango_font_description_set_family(PangoFontDescription* desc,
+                                  const char* family)
+
+
+pango_font_description_set_size(PangoFontDescription* desc,
+                                gint size)
+Params:
+size
+Type: gint
+
+The size of the font in points, scaled by PANGO_SCALE. (That is, a size value of
+10 * PANGO_SCALE is a 10 point font. The conversion factor between points and
+device units depends on system configuration and the output device. For screen
+display, a logical DPI of 96 is common, in which case a 10 point font
+corresponds to a 10 * (96 / 72) = 13.3 pixel font. Use
+pango_font_description_set_absolute_size() if you need a particular size in
+device units.
+
+
+pango_font_description_set_weight(PangoFontDescription* desc,
+                                  PangoWeight weight)
+Params:
+weight
+Type: PangoWeight (enum)
+
+PANGO_WEIGHT_THIN 
+The thin weight (= 100) Since: 1.24
+PANGO_WEIGHT_ULTRALIGHT 
+The ultralight weight (= 200)
+PANGO_WEIGHT_LIGHT  
+The light weight (= 300)
+PANGO_WEIGHT_SEMILIGHT  
+The semilight weight (= 350) Since: 1.36.7
+PANGO_WEIGHT_BOOK 
+The book weight (= 380) Since: 1.24)
+PANGO_WEIGHT_NORMAL 
+The default weight (= 400)
+PANGO_WEIGHT_MEDIUM 
+The medium weight (= 500) Since: 1.24
+PANGO_WEIGHT_SEMIBOLD 
+The semibold weight (= 600)
+PANGO_WEIGHT_BOLD 
+The bold weight (= 700)
+PANGO_WEIGHT_ULTRABOLD  
+The ultrabold weight (= 800)
+PANGO_WEIGHT_HEAVY  
+The heavy weight (= 900)
+PANGO_WEIGHT_ULTRAHEAVY 
+The ultraheavy weight (= 1000) Since: 1.24

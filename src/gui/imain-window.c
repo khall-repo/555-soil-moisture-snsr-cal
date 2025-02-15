@@ -509,6 +509,70 @@ void set_data_display_label_sensor_pv_highlight_color(unsigned int index, guint1
   }
 }
 
+// behold the power of c
+/*void set_data_display_label_sensor_raw_font_family(unsigned int index, const char *font_family)
+{
+ char **p_font_family = (char **)((char *)&imain_window.data_display_label_sensor_raw0.font_attrib.font_family + index * sizeof(Data_Display_Label_t));
+ Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_raw0.font_attrib + index * sizeof(Data_Display_Label_t));
+ *p_font_family = (char*)font_family;
+ p_font_attrib->update_font_attrib = true;
+}
+
+void set_data_display_label_sensor_pv_font_family(unsigned int index, const char *font_family)
+{
+  char **p_font_family = (char **)((char *)&imain_window.data_display_label_sensor_pv0.font_attrib.font_family + index * sizeof(Data_Display_Label_t));
+  Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_pv0.font_attrib + index * sizeof(Data_Display_Label_t));
+  *p_font_family = (char*)font_family;
+  p_font_attrib->update_font_attrib = true;
+}*/
+
+void set_data_display_label_sensor_raw_font_family(unsigned int index, const char *font_family)
+{
+  Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_raw0.font_attrib + index * sizeof(Data_Display_Label_t));
+  if(NULL == font_family) {
+    return;
+  }
+  strncpy((char*)p_font_attrib->font_family, font_family, MAX_FONT_FAMILY_LEN);
+  p_font_attrib->update_font_attrib = true;
+}
+
+void set_data_display_label_sensor_pv_font_family(unsigned int index, const char *font_family)
+{
+  Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_pv0.font_attrib + index * sizeof(Data_Display_Label_t));
+  if(NULL == font_family) {
+    return;
+  }
+  strncpy((char*)p_font_attrib->font_family, font_family, MAX_FONT_FAMILY_LEN);
+  p_font_attrib->update_font_attrib = true;
+}
+
+void set_data_display_label_sensor_raw_font_size(unsigned int index, int size)
+{
+  Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_raw0.font_attrib + index * sizeof(Data_Display_Label_t));
+  p_font_attrib->size = size;
+  p_font_attrib->update_font_attrib = true;
+}
+
+void set_data_display_label_sensor_pv_font_size(unsigned int index, gint size)
+{
+  Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_pv0.font_attrib + index * sizeof(Data_Display_Label_t));
+  p_font_attrib->size = size;
+  p_font_attrib->update_font_attrib = true;
+}
+
+void set_data_display_label_sensor_raw_font_weight(unsigned int index, PangoWeight pango_weight)
+{
+  Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_raw0.font_attrib + index * sizeof(Data_Display_Label_t));
+  p_font_attrib->weight = pango_weight;
+  p_font_attrib->update_font_attrib = true;
+}
+
+void set_data_display_label_sensor_pv_font_weight(unsigned int index, PangoWeight pango_weight)
+{
+  Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_pv0.font_attrib + index * sizeof(Data_Display_Label_t));
+  p_font_attrib->weight = pango_weight;
+  p_font_attrib->update_font_attrib = true;
+}
 
 // get the update text flag and acknowledge
 bool get_update_text_raw_ack(unsigned int index)
@@ -864,7 +928,23 @@ bool get_update_highlight_color_pv_ack(unsigned int index)
   return state;
 }
 
+bool get_update_font_attrib_raw_ack(unsigned int index)
+{
+  bool state;
+  bool *p_update_font_attrib = (bool *)&imain_window.data_display_label_sensor_raw0.font_attrib.update_font_attrib + index * sizeof(Data_Display_Label_t);
+  state = *p_update_font_attrib;
+  *p_update_font_attrib = false;
+  return state;
+}
 
+bool get_update_font_attrib_pv_ack(unsigned int index)
+{
+  bool state;
+  bool *p_update_font_attrib = (bool *)&imain_window.data_display_label_sensor_pv0.font_attrib.update_font_attrib + index * sizeof(Data_Display_Label_t);
+  state = *p_update_font_attrib;
+  *p_update_font_attrib = false;
+  return state;
+}
 
 // get imain_window.button_zero_pressed
 bool button_zero_pressed(unsigned int index)
@@ -1008,11 +1088,14 @@ bool button_span_pressed_ack(unsigned int index)
   }
 }
 
-void init_imain_window(void)
+int init_imain_window(void)
 {
   Color_t text_color;
   Color_t text_highlight_color;
   Color_t background_color;
+  
+  // Set number of sensors for mass data update
+  imain_window.num_sensors = param.num_sensors; // not used yet..
 
   // Initial text color black
   text_color.red = 0;
@@ -1027,6 +1110,7 @@ void init_imain_window(void)
   background_color.green = 0xffff;
   background_color.blue = 0xffff;
 
+  // Set data label text foreground, highlight, and background color
   for(unsigned int i = 0; i < param.num_sensors; i++) {
     set_data_display_label_sensor_raw_fg_color(i, text_color.red, text_color.green, text_color.blue);
     set_data_display_label_sensor_raw_highlight_color(i, text_highlight_color.red, text_highlight_color.green, text_highlight_color.blue);
@@ -1041,25 +1125,47 @@ void init_imain_window(void)
   for(unsigned int i = 0; i < param.num_sensors; i++) {
     char *dest = (char *)g_malloc0(MAX_FONT_FAMILY_LEN);
     if (NULL == dest) {
-      g_printerr("Failed to allocate memory for font family data_display_label_sensor_raw[%d]\n", i);
-      exit(EXIT_FAILURE);
+      g_printerr("init_imain_window(): 0737 Failed to allocate memory for destination %d\n", i);
+      return -1;
     }
     memcpy(dest, (const void*)&appearance_config.data_display_font_family[0], MAX_FONT_FAMILY_LEN);
-    g_print("Font fam %d: %s\r\n", i, dest);
 
-    // Calculate the address of the font_family member for the current sensor
     char **font_family_ptr = (char **)((char *)&imain_window.data_display_label_sensor_raw0.font_attrib.font_family + i * sizeof(Data_Display_Label_t));
     *font_family_ptr = dest;
 
+    set_data_display_label_sensor_raw_font_size(i, appearance_config.data_display_font_size);
+    set_data_display_label_sensor_raw_font_weight(i, DEFAULT_DATA_DISP_FONT_WEIGHT);
   }
-  g_print("str %s\r\n", (const char*)&imain_window.data_display_label_sensor_raw0.font_attrib.font_family[0]);
-  return;
+  for(unsigned int i = 0; i < param.num_sensors; i++) {
+    char *dest = (char *)g_malloc0(MAX_FONT_FAMILY_LEN);
+    if (NULL == dest) {
+      g_printerr("init_imain_window(): 0738 Failed to allocate memory for destination %d\n", i);
+      return -1;
+    }
+    memcpy(dest, (const void*)&appearance_config.data_display_font_family[0], MAX_FONT_FAMILY_LEN);
+
+    char **font_family_ptr = (char **)((char *)&imain_window.data_display_label_sensor_pv0.font_attrib.font_family + i * sizeof(Data_Display_Label_t));
+    *font_family_ptr = dest;
+
+    set_data_display_label_sensor_pv_font_size(i, appearance_config.data_display_font_size);
+    set_data_display_label_sensor_pv_font_weight(i, DEFAULT_DATA_DISP_FONT_WEIGHT);
+  }
+  
+  
+  return 0;
 }
 
 void cleanup_imain_window(void)
 {
   for(unsigned int i = 0; i < param.num_sensors; i++) {
     char **font_family_ptr = (char **)((char *)&imain_window.data_display_label_sensor_raw0.font_attrib.font_family + i * sizeof(Data_Display_Label_t));
+    if (*font_family_ptr != NULL) {
+      g_free(*font_family_ptr);
+      *font_family_ptr = NULL;
+    }
+  }
+  for(unsigned int i = 0; i < param.num_sensors; i++) {
+    char **font_family_ptr = (char **)((char *)&imain_window.data_display_label_sensor_pv0.font_attrib.font_family + i * sizeof(Data_Display_Label_t));
     if (*font_family_ptr != NULL) {
       g_free(*font_family_ptr);
       *font_family_ptr = NULL;
