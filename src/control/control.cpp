@@ -28,6 +28,11 @@ extern Param_t param; // Import from struct.c
 extern Analog_Input_t analog_input[MAX_SENSORS]; // Import from struct.c
 extern IMainWindow imain_window; // import from imain-window.cpp
 
+unsigned int seconds_count = 0;
+
+//ch label test
+//bool ch_label_test_done = false;
+
 timer_t timebase_timerid;
 
 enum Color_Test_State_e{
@@ -141,6 +146,16 @@ void color_test(void)
   }
 }
 
+/*void set_ch_label_test(void)
+{
+  char str[MAX_DATA_DISP_SZ] = {0};
+
+  for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
+    sprintf(str, "Test %u", i);
+    set_channel_label(i, (const char*)str);
+  }
+}*/
+
 /**
  * @brief Read and print raw values from all 8 channels of the MCP3008
  * @param none
@@ -237,24 +252,24 @@ double calc_filtered_mv(double unfiltered_mv, double last_filtered_mv)
   double filtera;
   jump = fabs(last_filtered_mv - unfiltered_mv); // calculate difference between filter in and out
 
-	if (jump > BIG_JUMP)  // set filter based on jump - for big jumps the filter is relaxed 
-		filtera = (double) param.ewma_filter / 8.0;
+  if (jump > BIG_JUMP)  // set filter based on jump - for big jumps the filter is relaxed 
+    filtera = (double) param.ewma_filter / 8.0;
 
-	else if (jump > MID_JUMP)  // for middle jumps the filter is less relaxed than for big jumps
-		filtera = (double) param.ewma_filter / 4.0;
+  else if (jump > MID_JUMP)  // for middle jumps the filter is less relaxed than for big jumps
+    filtera = (double) param.ewma_filter / 4.0;
 
-	else if (jump > SMALL_JUMP)	// for small jumps the filter is less relaxed than for middle jumps
-		filtera = (double) param.ewma_filter / 1.5;
+  else if (jump > SMALL_JUMP) // for small jumps the filter is less relaxed than for middle jumps
+    filtera = (double) param.ewma_filter / 1.5;
 
-	else
-		filtera = (double) param.ewma_filter;
+  else
+    filtera = (double) param.ewma_filter;
 
-	if (filtera < 1.0)		// dFilterA CANNOT BE LESS THAN 1 TO AVOID GETTING A NEGATIVE FILTER VALUE
-		filtera = 1.0;
+  if (filtera < 1.0)    // dFilterA CANNOT BE LESS THAN 1 TO AVOID GETTING A NEGATIVE FILTER VALUE
+    filtera = 1.0;
 
-	filtera = (filtera - 1.0) / filtera; // get filter ready for use
+  filtera = (filtera - 1.0) / filtera; // get filter ready for use
 
-	return filtera * last_filtered_mv  + (1.0-filtera) * unfiltered_mv;	// apply the EWMA filter
+  return filtera * last_filtered_mv  + (1.0-filtera) * unfiltered_mv; // apply the EWMA filter
 }
 
 double calc_pv(unsigned int sensor_num)
@@ -405,12 +420,14 @@ void timebase_handler(int signum, siginfo_t *info, void *context)
     update_sensor_raw_display();
     update_pv_display();
 
-    //set_data_display_label_sensor_raw_fg_color(0, 0xffff, 0, 0);
-    //set_data_display_label_sensor_raw_bg_color(0, 0xffff, 0, 0);
+    /*if(5 == seconds_count) {
+      if(!ch_label_test_done) {
+        set_ch_label_test();
+        ch_label_test_done = true;
+      }
+    }*/
 
-    //set_data_display_label_sensor_pv_fg_color(0, 0xffff, 0xffff, 0xffff);
-    //set_data_display_label_sensor_pv_bg_color(0, 0xffff, 0, 0);
-
+    ++seconds_count;
     count = 0;
   }
   ++count;

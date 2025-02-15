@@ -35,6 +35,8 @@ typedef struct _MainWindow
   GtkWidget *col_header_sensor_raw;
   GtkWidget *col_header_sensor_pv;
 
+  GtkWidget *channel_label[8];
+
   // Text boxes for display data
   GtkWidget *data_display_label_sensor_raw0;
   GtkWidget *data_display_label_sensor_raw1;
@@ -126,6 +128,17 @@ G_DEFINE_TYPE(MainWindow, main_window, GTK_TYPE_APPLICATION_WINDOW)
 #define MAIN_WINDOW_TYPE (main_window_get_type())
 
 #define MAIN_WINDOW(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), MAIN_WINDOW_TYPE, MainWindow))
+
+
+/*static void bind_template_child(GtkWidgetClass *widget_class, const char *widget_name, size_t offset)
+{
+  GParamSpec *pspec = g_object_class_find_property(G_OBJECT_CLASS(widget_class), widget_name);
+  if (pspec) {
+    gtk_widget_class_bind_template_child_full(widget_class, widget_name, FALSE, offset);
+  } else {
+    g_warning("Property '%s' not found in class '%s'", widget_name, G_OBJECT_CLASS_NAME(widget_class));
+  }
+}*/
 
 // Draw function for the GtkDrawing areas
 static void draw_gtkdrawingarea_fill_color(GtkDrawingArea *area,
@@ -228,6 +241,12 @@ static void main_window_class_init(MainWindowClass *klass)
     gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span6);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span7);
 
+    for (int i = 0; i < 8; i++) {
+      char widget_name[64];
+      snprintf(widget_name, sizeof(widget_name), "channel_label%d", i);
+      gtk_widget_class_bind_template_child_full(widget_class, widget_name, FALSE, offsetof(MainWindow, channel_label) + i * sizeof(GtkWidget *));
+    }
+
   } else {
     g_error("Failed to load MainWindow template: %s\n", error->message);
     g_error_free(error);
@@ -326,6 +345,10 @@ static gboolean update_main_window(MainWindow *self)
   }
   if(get_update_font_attrib_raw_ack(7)) {
     set_label_font_attribs(GTK_LABEL(self->data_display_label_sensor_raw7), &imain_window.data_display_label_sensor_raw7.font_attrib);
+  }
+
+  for (unsigned int i = 0; i < imain_window.num_sensors; i++) {
+    gtk_label_set_text(GTK_LABEL(self->channel_label[i]), imain_window.channel_label[i].label_text);
   }
   
   if(get_update_text_raw_ack(0)) {

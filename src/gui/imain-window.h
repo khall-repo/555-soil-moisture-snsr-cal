@@ -6,12 +6,13 @@
 //#include <glib.h>
 #include "attrib.h"
 
-#define MAX_COL_HEADER_STR_SZ   16u
-#define MAX_SENSOR_DATA_DISP_SZ 16u
+//#define MAX_CH_LABEL_STR_SZ     32u
+#define MAX_COL_HEADER_STR_SZ   32u
+#define MAX_DATA_DISP_SZ 32u
 
 typedef struct _Data_Display_Label_t
 {
-  char label_text[MAX_SENSOR_DATA_DISP_SZ] = {0};
+  char label_text[MAX_DATA_DISP_SZ] = {0};
   bool update_text = false;
   Color_t foreground_color = {0,0,0};
   bool update_foreground_color = false;
@@ -28,6 +29,8 @@ typedef struct _IMainWindow
   Data_Display_Label_t col_header_sensor_raw;
   Data_Display_Label_t col_header_sensor_pv;
   
+  Data_Display_Label_t channel_label[MAX_SENSORS];
+
   // Next 8 lines must be contiguous:
   Data_Display_Label_t data_display_label_sensor_raw0;
   Data_Display_Label_t data_display_label_sensor_raw1;
@@ -69,9 +72,11 @@ typedef struct _IMainWindow
 
 } IMainWindow;
 
+const char *get_channel_label(unsigned int index);
 const char *get_data_display_label_sensor_raw(unsigned int index);
 const char *get_data_display_label_sensor_pv(unsigned int index);
 
+void set_channel_label(unsigned int index, const char *text);
 void set_data_display_label_sensor_raw(unsigned int index, const char *text);
 void set_data_display_label_sensor_pv(unsigned int index, const char *text);
 

@@ -26,6 +26,12 @@ const std::vector<std::string> allowed_font_families = {
   "NimbusRoman"
 };
 
+// not used yet
+const std::vector<std::string> allowed_font_weights = {
+  "bold",
+  "normal"
+};
+
 /**
  * @brief Convert double to string, with precision adjust
  * @param val - Double value to convert
@@ -54,13 +60,9 @@ void clear_terminal_screen(void)
  * @param font_family - Font family string to verify
  * @return true if font family is valid, false otherwise
  */
- bool is_font_family_valid(const char *font_family) {
-  // compare font_family to allowed_font_families and return true if found
+ bool is_font_family_valid(const char *font_family)
+ {
   for (const auto &family : allowed_font_families) {
-    /*if (family == font_family) {
-      return true;
-    }*/
-    //std::cout << "\tfamily: " << "!" << family.c_str() << "!" << " font_family: " << "!" << font_family << "!" << "\n";
     if(0 == std::strcmp(family.c_str(), font_family)) {
       return true;
     }

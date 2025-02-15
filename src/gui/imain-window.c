@@ -7,6 +7,15 @@ extern Param_t param; // Import from struct.cpp
 extern Appearance_Config_t appearance_config; // Import from struct.cpp
 IMainWindow imain_window;
 
+const char *get_channel_label(unsigned int index)
+{
+  if (MAX_SENSORS <= index) {
+    g_printerr("imain-window get_channel_label(): Bad index\n");
+    return "\0";
+  }
+  return (const char *)imain_window.channel_label[index].label_text;
+}
+
 // get imain_window.col_header_sensor_raw 
 const char *get_col_header_sensor_raw(void)
 {
@@ -73,41 +82,52 @@ const char *get_data_display_label_sensor_pv(unsigned int index)
   return "\0";
 }
 
+
+void set_channel_label(unsigned int index, const char *text)
+{
+  if (MAX_SENSORS <= index) {
+    g_printerr("imain-window set_channel_label(): Bad index\n");
+    return;
+  }
+  strncpy(imain_window.channel_label[index].label_text, text, MAX_DATA_DISP_SZ);
+  imain_window.channel_label[index].update_text = true;
+}
+
 // set imain_window.col_header_sensor_raw
 void set_data_display_label_sensor_raw(unsigned int index, const char *text)
 {
   switch (index)
   {
   case 0:
-    strncpy(imain_window.data_display_label_sensor_raw0.label_text, text, MAX_SENSOR_DATA_DISP_SZ);
+    strncpy(imain_window.data_display_label_sensor_raw0.label_text, text, MAX_DATA_DISP_SZ);
     imain_window.data_display_label_sensor_raw0.update_text = true;
     break;
   case 1:
-    strncpy(imain_window.data_display_label_sensor_raw1.label_text, text, MAX_SENSOR_DATA_DISP_SZ);
+    strncpy(imain_window.data_display_label_sensor_raw1.label_text, text, MAX_DATA_DISP_SZ);
     imain_window.data_display_label_sensor_raw1.update_text = true;
     break;
   case 2:
-    strncpy(imain_window.data_display_label_sensor_raw2.label_text, text, MAX_SENSOR_DATA_DISP_SZ);
+    strncpy(imain_window.data_display_label_sensor_raw2.label_text, text, MAX_DATA_DISP_SZ);
     imain_window.data_display_label_sensor_raw2.update_text = true;
     break;
   case 3:
-    strncpy(imain_window.data_display_label_sensor_raw3.label_text, text, MAX_SENSOR_DATA_DISP_SZ);
+    strncpy(imain_window.data_display_label_sensor_raw3.label_text, text, MAX_DATA_DISP_SZ);
     imain_window.data_display_label_sensor_raw3.update_text = true;
     break;
   case 4:
-    strncpy(imain_window.data_display_label_sensor_raw4.label_text, text, MAX_SENSOR_DATA_DISP_SZ);
+    strncpy(imain_window.data_display_label_sensor_raw4.label_text, text, MAX_DATA_DISP_SZ);
     imain_window.data_display_label_sensor_raw4.update_text = true;
     break;
   case 5:
-    strncpy(imain_window.data_display_label_sensor_raw5.label_text, text, MAX_SENSOR_DATA_DISP_SZ);
+    strncpy(imain_window.data_display_label_sensor_raw5.label_text, text, MAX_DATA_DISP_SZ);
     imain_window.data_display_label_sensor_raw5.update_text = true;
     break;
   case 6:
-    strncpy(imain_window.data_display_label_sensor_raw6.label_text, text, MAX_SENSOR_DATA_DISP_SZ);
+    strncpy(imain_window.data_display_label_sensor_raw6.label_text, text, MAX_DATA_DISP_SZ);
     imain_window.data_display_label_sensor_raw6.update_text = true;
     break;
   case 7:
-    strncpy(imain_window.data_display_label_sensor_raw7.label_text, text, MAX_SENSOR_DATA_DISP_SZ);
+    strncpy(imain_window.data_display_label_sensor_raw7.label_text, text, MAX_DATA_DISP_SZ);
     imain_window.data_display_label_sensor_raw7.update_text = true;
     break;
   default:
@@ -122,35 +142,35 @@ void set_data_display_label_sensor_pv(unsigned int index, const char *text)
   switch (index)
   {
   case 0:
-    strncpy(imain_window.data_display_label_sensor_pv0.label_text, text, MAX_SENSOR_DATA_DISP_SZ);
+    strncpy(imain_window.data_display_label_sensor_pv0.label_text, text, MAX_DATA_DISP_SZ);
     imain_window.data_display_label_sensor_pv0.update_text = true;
     break;
   case 1:
-    strncpy(imain_window.data_display_label_sensor_pv1.label_text, text, MAX_SENSOR_DATA_DISP_SZ);
+    strncpy(imain_window.data_display_label_sensor_pv1.label_text, text, MAX_DATA_DISP_SZ);
     imain_window.data_display_label_sensor_pv1.update_text = true;
     break;
   case 2:
-    strncpy(imain_window.data_display_label_sensor_pv2.label_text, text, MAX_SENSOR_DATA_DISP_SZ);
+    strncpy(imain_window.data_display_label_sensor_pv2.label_text, text, MAX_DATA_DISP_SZ);
     imain_window.data_display_label_sensor_pv2.update_text = true;
     break;
   case 3:
-    strncpy(imain_window.data_display_label_sensor_pv3.label_text, text, MAX_SENSOR_DATA_DISP_SZ);
+    strncpy(imain_window.data_display_label_sensor_pv3.label_text, text, MAX_DATA_DISP_SZ);
     imain_window.data_display_label_sensor_pv3.update_text = true;
     break;
   case 4:
-    strncpy(imain_window.data_display_label_sensor_pv4.label_text, text, MAX_SENSOR_DATA_DISP_SZ);
+    strncpy(imain_window.data_display_label_sensor_pv4.label_text, text, MAX_DATA_DISP_SZ);
     imain_window.data_display_label_sensor_pv4.update_text = true;
     break;
   case 5:
-    strncpy(imain_window.data_display_label_sensor_pv5.label_text, text, MAX_SENSOR_DATA_DISP_SZ);
+    strncpy(imain_window.data_display_label_sensor_pv5.label_text, text, MAX_DATA_DISP_SZ);
     imain_window.data_display_label_sensor_pv5.update_text = true;
     break;
   case 6:
-    strncpy(imain_window.data_display_label_sensor_pv6.label_text, text, MAX_SENSOR_DATA_DISP_SZ);
+    strncpy(imain_window.data_display_label_sensor_pv6.label_text, text, MAX_DATA_DISP_SZ);
     imain_window.data_display_label_sensor_pv6.update_text = true;
     break;
   case 7:
-    strncpy(imain_window.data_display_label_sensor_pv7.label_text, text, MAX_SENSOR_DATA_DISP_SZ);
+    strncpy(imain_window.data_display_label_sensor_pv7.label_text, text, MAX_DATA_DISP_SZ);
     imain_window.data_display_label_sensor_pv7.update_text = true;
     break;
   default:
@@ -1093,7 +1113,7 @@ int init_imain_window(void)
   Color_t text_color;
   Color_t text_highlight_color;
   Color_t background_color;
-  
+  char str_buf[MAX_DATA_DISP_SZ] = {0};
   // Set number of sensors for mass data update
   imain_window.num_sensors = param.num_sensors; // not used yet..
 
@@ -1111,7 +1131,7 @@ int init_imain_window(void)
   background_color.blue = 0xffff;
 
   // Set data label text foreground, highlight, and background color
-  for(unsigned int i = 0; i < param.num_sensors; i++) {
+  for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
     set_data_display_label_sensor_raw_fg_color(i, text_color.red, text_color.green, text_color.blue);
     set_data_display_label_sensor_raw_highlight_color(i, text_highlight_color.red, text_highlight_color.green, text_highlight_color.blue);
     set_data_display_label_sensor_raw_bg_color(i, background_color.red, background_color.green, background_color.blue);
@@ -1122,7 +1142,7 @@ int init_imain_window(void)
   }
   
   // Set the font family for each sensor data label
-  for(unsigned int i = 0; i < param.num_sensors; i++) {
+  for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
     char *dest = (char *)g_malloc0(MAX_FONT_FAMILY_LEN);
     if (NULL == dest) {
       g_printerr("init_imain_window(): 0737 Failed to allocate memory for destination %d\n", i);
@@ -1136,7 +1156,7 @@ int init_imain_window(void)
     set_data_display_label_sensor_raw_font_size(i, appearance_config.data_display_font_size);
     set_data_display_label_sensor_raw_font_weight(i, DEFAULT_DATA_DISP_FONT_WEIGHT);
   }
-  for(unsigned int i = 0; i < param.num_sensors; i++) {
+  for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
     char *dest = (char *)g_malloc0(MAX_FONT_FAMILY_LEN);
     if (NULL == dest) {
       g_printerr("init_imain_window(): 0738 Failed to allocate memory for destination %d\n", i);
@@ -1151,6 +1171,11 @@ int init_imain_window(void)
     set_data_display_label_sensor_pv_font_weight(i, DEFAULT_DATA_DISP_FONT_WEIGHT);
   }
   
+  // Set the channel labels text
+  for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
+    sprintf(str_buf, "%s %u", DEFAULT_CH_LABEL, i);
+    set_channel_label(i, (const char*)str_buf);
+  }
   
   return 0;
 }
