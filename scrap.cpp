@@ -295,3 +295,72 @@ value = config_file->get_config_value("param", "testraw0");
   param.sensor_pv[6] = std::stod(value);
   value = config_file->get_config_value("param", "testpv7");
   param.sensor_pv[7] = std::stod(value);
+
+
+
+gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw1);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw2);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw3);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw4);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw5);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw6);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_raw7);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_pv0);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_pv1);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_pv2);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_pv3);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_pv4);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_pv5);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_pv6);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, data_display_label_sensor_pv7);
+
+
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_raw0);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_raw1);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_raw2);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_raw3);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_raw4);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_raw5);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_raw6);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_raw7);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_pv0);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_pv1);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_pv2);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_pv3);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_pv4);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_pv5);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_pv6);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, drawing_area_sensor_pv7);
+
+
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button0);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero0);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero1);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero2);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero3);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero4);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero5);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero6);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero7);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span0);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span1);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span2);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span3);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span4);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span5);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span6);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span7);
+
+    /*for (int i = 0; i < 8; i++) {
+      char widget_name[64];
+      snprintf(widget_name, sizeof(widget_name), "channel_label%d", i);
+      //gtk_widget_class_bind_template_child_full(widget_class, widget_name, FALSE, offsetof(MainWindow, channel_label[i]));
+      bind_template_child(widget_class, widget_name, offsetof(MainWindow, channel_label) + i * sizeof(GtkWidget *));
+    }*/
+    /**/
+
+for (int i = 0; i < 8; i++) {
+      char widget_name[64];
+      snprintf(widget_name, sizeof(widget_name), "channel_label%d", i);
+      gtk_widget_class_bind_template_child_full(widget_class, widget_name, FALSE, offsetof(MainWindow, channel_label) + i * sizeof(GtkWidget *));
+    }

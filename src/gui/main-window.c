@@ -14,6 +14,7 @@
 #include "main-window.h"
 #include "sub-window.h"
 #include "attrib.h"
+#include "util.h"
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -35,6 +36,7 @@ typedef struct _MainWindow
   GtkWidget *col_header_sensor_raw;
   GtkWidget *col_header_sensor_pv;
 
+  // Channel labels
   GtkWidget *channel_label[8];
 
   // Text boxes for display data
@@ -46,24 +48,9 @@ typedef struct _MainWindow
   GtkWidget *drawing_area_sensor_pv[8];
   
   GtkWidget *button0; // bottom button
-
-  GtkWidget *button_zero0;
-  GtkWidget *button_zero1;
-  GtkWidget *button_zero2;
-  GtkWidget *button_zero3;
-  GtkWidget *button_zero4;
-  GtkWidget *button_zero5;
-  GtkWidget *button_zero6;
-  GtkWidget *button_zero7;
-
-  GtkWidget *button_span0;
-  GtkWidget *button_span1;
-  GtkWidget *button_span2;
-  GtkWidget *button_span3;
-  GtkWidget *button_span4;
-  GtkWidget *button_span5;
-  GtkWidget *button_span6;
-  GtkWidget *button_span7;
+  
+  GtkWidget *button_zero[8];
+  GtkWidget *button_span[8];
 
 } MainWindow;
 
@@ -72,23 +59,7 @@ typedef struct _MainWindowClass
   GtkApplicationWindowClass parent_class;
 } MainWindowClass;
 
-// Pango wants color in 16-bit uint, whereas Cairo wants doubles.
-void convert_color_to_double(Color_t color, double *red, double *green, double *blue) {
-  *red = color.red / 65535.0;
-  *green = color.green / 65535.0;
-  *blue = color.blue / 65535.0;
-}
 
-// Custom log handler to detect "Gtk-CRITICAL" errors and shut down the program
-// Because boy... I've caused many of those...
-void custom_log_handler(const gchar *log_domain, GLogLevelFlags log_level, const gchar *message, gpointer user_data)
-{
-  if (log_level & G_LOG_LEVEL_CRITICAL)
-  {
-    g_printerr("Critical error detected: %s\n", message);
-    exit(EXIT_FAILURE);
-  }
-}
 
 // Register the MainWindow type with the GObject type system.
 // This macro will actually take the string "main_window" and converts it to
@@ -102,15 +73,19 @@ G_DEFINE_TYPE(MainWindow, main_window, GTK_TYPE_APPLICATION_WINDOW)
 #define MAIN_WINDOW(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), MAIN_WINDOW_TYPE, MainWindow))
 
 
-/*static void bind_template_child(GtkWidgetClass *widget_class, const char *widget_name, size_t offset)
+
+
+// Custom log handler to detect "Gtk-CRITICAL" errors and shut down the program
+// Because boy... I've caused many of those...
+void custom_log_handler(const gchar *log_domain, GLogLevelFlags log_level,
+                        const gchar *message, gpointer user_data)
 {
-  GParamSpec *pspec = g_object_class_find_property(G_OBJECT_CLASS(widget_class), widget_name);
-  if (pspec) {
-    gtk_widget_class_bind_template_child_full(widget_class, widget_name, FALSE, offset);
-  } else {
-    g_warning("Property '%s' not found in class '%s'", widget_name, G_OBJECT_CLASS_NAME(widget_class));
+  if (log_level & G_LOG_LEVEL_CRITICAL)
+  {
+    g_printerr("Critical error detected: %s\n", message);
+    exit(EXIT_FAILURE);
   }
-}*/
+}
 
 // Draw function for the GtkDrawing areas
 static void draw_gtkdrawingarea_fill_color(GtkDrawingArea *area,
@@ -119,9 +94,9 @@ static void draw_gtkdrawingarea_fill_color(GtkDrawingArea *area,
   int             height, // unused
   gpointer        data)
 {
-  Color_t *color = (Color_t *)data;
+  Color16_t *color = (Color16_t *)data;
   double red, green, blue;
-  convert_color_to_double(*color, &red, &green, &blue);
+  color16_to_rgbd(*color, &red, &green, &blue);
 
   width = gtk_widget_get_width(GTK_WIDGET (area));
   height = gtk_widget_get_height(GTK_WIDGET (area));
@@ -135,6 +110,9 @@ static void draw_gtkdrawingarea_fill_color(GtkDrawingArea *area,
   cairo_fill (cr);
 }
 
+
+
+
 static void main_window_class_init(MainWindowClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
@@ -142,17 +120,13 @@ static void main_window_class_init(MainWindowClass *klass)
   char *contents;
   gsize length;
 
-  // Load the template from the file. Alternatively, you can compile the UI and
-  // store it as a GResource, but that's a bit more complicated. See the howto
-  // file I included in this project's root directory called
-  // compiled-ui-resources-howto.txt.
+  // Load the template from the file and bind tags with MainWindow private data.
   if (g_file_get_contents(PATH_TO_MAIN_WIN_RESOURCE, &contents, &length, &error)) {
     GBytes *template_bytes = g_bytes_new_take(contents, length);
     gtk_widget_class_set_template(widget_class, template_bytes);
     g_bytes_unref(template_bytes);
 
     /*Binding MainWindow struct members to the corresponding tag in .ui file*/
-    
     // bind tab stuff
     gtk_widget_class_bind_template_child(widget_class, MainWindow, notebook);
     gtk_widget_class_bind_template_child(widget_class, MainWindow, tab_label_page0);
@@ -163,61 +137,76 @@ static void main_window_class_init(MainWindowClass *klass)
     gtk_widget_class_bind_template_child(widget_class, MainWindow, col_header_sensor_pv);
 
     // bind ch labels
-    for(int i = 0; i < 8; i++) {
-      char widget_name[64];
+    for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
+      char widget_name[32];
       snprintf(widget_name, sizeof(widget_name), "channel_label%d", i);
-      gtk_widget_class_bind_template_child_full(widget_class, widget_name, FALSE, offsetof(MainWindow, channel_label) + i * sizeof(GtkWidget *));
+      gtk_widget_class_bind_template_child_full(widget_class,
+                                                widget_name,
+                                                FALSE,
+                                                offsetof(MainWindow, channel_label) + i * sizeof(GtkWidget *));
     }
     
     // bind sensor raw data display labels
-    for(int i = 0; i < 8; i++) {
+    for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
       char widget_name[64];
       snprintf(widget_name, sizeof(widget_name), "data_display_label_sensor_raw%d", i);
-      gtk_widget_class_bind_template_child_full(widget_class, widget_name, FALSE, offsetof(MainWindow, data_display_label_sensor_raw) + i * sizeof(GtkWidget *));
+      gtk_widget_class_bind_template_child_full(widget_class,
+                                                widget_name,
+                                                FALSE,
+                                                offsetof(MainWindow, data_display_label_sensor_raw) + i * sizeof(GtkWidget *));
     }
     
     // bind sensor pv data display labels
-    for(int i = 0; i < 8; i++) {
+    for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
       char widget_name[64];
       snprintf(widget_name, sizeof(widget_name), "data_display_label_sensor_pv%d", i);
-      gtk_widget_class_bind_template_child_full(widget_class, widget_name, FALSE, offsetof(MainWindow, data_display_label_sensor_pv) + i * sizeof(GtkWidget *));
+      gtk_widget_class_bind_template_child_full(widget_class,
+                                                widget_name,
+                                                FALSE,
+                                                offsetof(MainWindow, data_display_label_sensor_pv) + i * sizeof(GtkWidget *));
     }
 
     // bind sensor raw data display drawing area
-    for(int i = 0; i < 8; i++) {
-      char widget_name[64];
+    for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
+      char widget_name[32];
       snprintf(widget_name, sizeof(widget_name), "drawing_area_sensor_raw%d", i);
-      gtk_widget_class_bind_template_child_full(widget_class, widget_name, FALSE, offsetof(MainWindow, drawing_area_sensor_raw) + i * sizeof(GtkWidget *));
+      gtk_widget_class_bind_template_child_full(widget_class,
+                                                widget_name,
+                                                FALSE,
+                                                offsetof(MainWindow, drawing_area_sensor_raw) + i * sizeof(GtkWidget *));
     }
     
     // bind sensor pv data display drawing area
-    for(int i = 0; i < 8; i++) {
-      char widget_name[64];
+    for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
+      char widget_name[32];
       snprintf(widget_name, sizeof(widget_name), "drawing_area_sensor_pv%d", i);
       gtk_widget_class_bind_template_child_full(widget_class, widget_name, FALSE, offsetof(MainWindow, drawing_area_sensor_pv) + i * sizeof(GtkWidget *));
     }
 
+    // bind sensor zero buttons
+    for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
+      char widget_name[16];
+      snprintf(widget_name, sizeof(widget_name), "button_zero%d", i);
+      gtk_widget_class_bind_template_child_full(widget_class,
+                                                widget_name,
+                                                FALSE,
+                                                offsetof(MainWindow, button_zero) + i * sizeof(GtkWidget *));
+    }
+    // bind sensor span buttons
+    for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
+      char widget_name[16];
+      snprintf(widget_name, sizeof(widget_name), "button_span%d", i);
+      gtk_widget_class_bind_template_child_full(widget_class,
+                                                widget_name,
+                                                FALSE,
+                                                offsetof(MainWindow, button_span) + i * sizeof(GtkWidget *));
+    }
+    // bind the button with no purpose
     gtk_widget_class_bind_template_child(widget_class, MainWindow, button0);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero0);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero1);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero2);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero3);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero4);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero5);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero6);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_zero7);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span0);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span1);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span2);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span3);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span4);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span5);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span6);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, button_span7);
-
   } else {
     g_error("Failed to load MainWindow template: %s\n", error->message);
     g_error_free(error);
+    exit(EXIT_FAILURE);
   }
 }
 
@@ -226,10 +215,14 @@ static void main_window_init(MainWindow *self)
   gtk_widget_init_template(GTK_WIDGET(self));
 
   // Set the tab label text
-  GtkWidget *label_page0 = gtk_label_new("Ch 0-7");
-  GtkWidget *label_page1 = gtk_label_new("Ch 8-15");
-  gtk_notebook_set_tab_label(GTK_NOTEBOOK(self->notebook), gtk_notebook_get_nth_page(GTK_NOTEBOOK(self->notebook), 0), label_page0);
-  gtk_notebook_set_tab_label(GTK_NOTEBOOK(self->notebook), gtk_notebook_get_nth_page(GTK_NOTEBOOK(self->notebook), 1), label_page1);
+  GtkWidget *label_page0 = gtk_label_new(DEFAULT_LABEL_TAB0);
+  GtkWidget *label_page1 = gtk_label_new(DEFAULT_LABEL_TAB1);
+  gtk_notebook_set_tab_label(GTK_NOTEBOOK(self->notebook),
+                             gtk_notebook_get_nth_page(GTK_NOTEBOOK(self->notebook), 0),
+                             label_page0);
+  gtk_notebook_set_tab_label(GTK_NOTEBOOK(self->notebook),
+                             gtk_notebook_get_nth_page(GTK_NOTEBOOK(self->notebook), 1),
+                             label_page1);
 }
 
 static void main_window_destroy_cb(GtkWidget *widget, gpointer data)
@@ -241,6 +234,9 @@ static void main_window_destroy_cb(GtkWidget *widget, gpointer data)
     window_update_fn_source_id = 0;
   }
 }
+
+
+
 
 static void set_label_font_attribs(GtkLabel *label, Font_Attrib_t *attrib)
 {
@@ -268,7 +264,7 @@ static void set_label_font_attribs(GtkLabel *label, Font_Attrib_t *attrib)
   pango_font_description_free(p_font_desc);
 }
 
-static void set_label_color(GtkLabel *label, Color_t foreground, Color_t background)
+static void set_label_color(GtkLabel *label, Color16_t foreground, Color16_t background)
 {
   PangoAttrList *attr_list = pango_attr_list_new();
   PangoAttribute *attr = pango_attr_foreground_new(foreground.red, foreground.green, foreground.blue);
@@ -350,6 +346,9 @@ static gboolean update_main_window(MainWindow *self)
   //return FALSE;
 }
 
+
+
+
 static void button0_clicked_cb(GtkButton *button, MainWindow *self)
 {
   GtkWidget *sub_window;
@@ -367,86 +366,32 @@ static void button0_clicked_cb(GtkButton *button, MainWindow *self)
   gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw[0]), "Button0 was clicked!");
 }
 
-static void button_zero0_clicked_cb(GtkButton *button, MainWindow *self)
+static void button_zero_clicked_cb(GtkButton *button, MainWindow *self)
 {
-  imain_window.button_zero_0_pressed = true;
+  for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
+    if(self->button_zero[i] == GTK_WIDGET(button)) {
+      imain_window.button_zero_pressed[i] = true; // notify the window interface
+      return;
+    }
+  }
+  g_printerr("button_zero_clicked_cb(): Failed to get button index\n");
 }
 
-static void button_zero1_clicked_cb(GtkButton *button, MainWindow *self)
+static void button_span_clicked_cb(GtkButton *button, MainWindow *self)
 {
-  imain_window.button_zero_1_pressed = true;
+  for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
+    if(self->button_span[i] == GTK_WIDGET(button)) {
+      imain_window.button_span_pressed[i] = true; // notify the window interface
+      return;
+    }
+  }
+  g_printerr("button_span_clicked_cb(): Failed to get button index\n");
 }
 
-static void button_zero2_clicked_cb(GtkButton *button, MainWindow *self)
-{
-  imain_window.button_zero_2_pressed = true;
-}
 
-static void button_zero3_clicked_cb(GtkButton *button, MainWindow *self)
-{
-  imain_window.button_zero_3_pressed = true;
-}
 
-static void button_zero4_clicked_cb(GtkButton *button, MainWindow *self)
-{
-  imain_window.button_zero_4_pressed = true;
-}
 
-static void button_zero5_clicked_cb(GtkButton *button, MainWindow *self)
-{
-  imain_window.button_zero_5_pressed = true;
-}
-
-static void button_zero6_clicked_cb(GtkButton *button, MainWindow *self)
-{
-  imain_window.button_zero_6_pressed = true;
-}
-
-static void button_zero7_clicked_cb(GtkButton *button, MainWindow *self)
-{
-  imain_window.button_zero_7_pressed = true;
-}
-
-static void button_span0_clicked_cb(GtkButton *button, MainWindow *self)
-{
-  imain_window.button_span_0_pressed = true;
-}
-
-static void button_span1_clicked_cb(GtkButton *button, MainWindow *self)
-{
-  imain_window.button_span_1_pressed = true;
-}
-
-static void button_span2_clicked_cb(GtkButton *button, MainWindow *self)
-{
-  imain_window.button_span_2_pressed = true;
-}
-
-static void button_span3_clicked_cb(GtkButton *button, MainWindow *self)
-{
-  imain_window.button_span_3_pressed = true;
-}
-
-static void button_span4_clicked_cb(GtkButton *button, MainWindow *self)
-{
-  imain_window.button_span_4_pressed = true;
-}
-
-static void button_span5_clicked_cb(GtkButton *button, MainWindow *self)
-{
-  imain_window.button_span_5_pressed = true;
-}
-
-static void button_span6_clicked_cb(GtkButton *button, MainWindow *self)
-{
-  imain_window.button_span_6_pressed = true;
-}
-
-static void button_span7_clicked_cb(GtkButton *button, MainWindow *self)
-{
-  imain_window.button_span_7_pressed = true;
-}
-
+// TODO: See if this can be re-static'd
 // was named activate_cb and was static
 void activate_main_window_cb(GtkApplication *app, gpointer user_data)
 {
@@ -457,24 +402,16 @@ void activate_main_window_cb(GtkApplication *app, gpointer user_data)
   // code at the bottom of this file.
   g_object_set_data(G_OBJECT(window), "main-window-instance", window);
 
-  // Connect the button0 signal its the callback function
+  // Connect the button with no real purpose signal to its callback
   g_signal_connect(window->button0, "clicked", G_CALLBACK(button0_clicked_cb), window);
-  g_signal_connect(window->button_zero0, "clicked", G_CALLBACK(button_zero0_clicked_cb), window);
-  g_signal_connect(window->button_zero1, "clicked", G_CALLBACK(button_zero1_clicked_cb), window);
-  g_signal_connect(window->button_zero2, "clicked", G_CALLBACK(button_zero2_clicked_cb), window);
-  g_signal_connect(window->button_zero3, "clicked", G_CALLBACK(button_zero3_clicked_cb), window);
-  g_signal_connect(window->button_zero4, "clicked", G_CALLBACK(button_zero4_clicked_cb), window);
-  g_signal_connect(window->button_zero5, "clicked", G_CALLBACK(button_zero5_clicked_cb), window);
-  g_signal_connect(window->button_zero6, "clicked", G_CALLBACK(button_zero6_clicked_cb), window);
-  g_signal_connect(window->button_zero7, "clicked", G_CALLBACK(button_zero7_clicked_cb), window);
-  g_signal_connect(window->button_span0, "clicked", G_CALLBACK(button_span0_clicked_cb), window);
-  g_signal_connect(window->button_span1, "clicked", G_CALLBACK(button_span1_clicked_cb), window);
-  g_signal_connect(window->button_span2, "clicked", G_CALLBACK(button_span2_clicked_cb), window);
-  g_signal_connect(window->button_span3, "clicked", G_CALLBACK(button_span3_clicked_cb), window);
-  g_signal_connect(window->button_span4, "clicked", G_CALLBACK(button_span4_clicked_cb), window);
-  g_signal_connect(window->button_span5, "clicked", G_CALLBACK(button_span5_clicked_cb), window);
-  g_signal_connect(window->button_span6, "clicked", G_CALLBACK(button_span6_clicked_cb), window);
-  g_signal_connect(window->button_span7, "clicked", G_CALLBACK(button_span7_clicked_cb), window);
+
+  // Connect the zero and span buttons to their callbacks
+  for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
+    g_signal_connect(window->button_zero[i], "clicked", G_CALLBACK(button_zero_clicked_cb), window);
+  }
+  for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
+    g_signal_connect(window->button_span[i], "clicked", G_CALLBACK(button_span_clicked_cb), window);
+  }
 
   // Connect the destroy signal to detect when the window is closed
   g_signal_connect(window, "destroy", G_CALLBACK(main_window_destroy_cb), NULL);
@@ -483,9 +420,12 @@ void activate_main_window_cb(GtkApplication *app, gpointer user_data)
 
   // Add idle function to the main loop
   window_update_fn_source_id = g_idle_add((GSourceFunc)update_main_window, window);
+  // TODO: Try this to reduce cpu utilization:
   // Alternatively, you could use g_timeout_add() to update the window at a
   // regular interval. The function would be called every 1000 milliseconds.
-  //window_update_fn_source_id = g_timeout_add(1000, (GSourceFunc)update_main_window, window);
+  //window_update_fn_source_id = g_timeout_add(1000, 
+  //                                           (GSourceFunc)update_main_window,
+  //                                           window);
 
   // Set the drawing area function for the data display label cells for filling
   // the box with color
@@ -501,7 +441,9 @@ void activate_main_window_cb(GtkApplication *app, gpointer user_data)
                                                    (gpointer)&imain_window.data_display_label_sensor_pv[i].background_color,
                                                    NULL);
   }
+  
   // Set the custom log handler for the GTK log domain
+  // This isn't necessary but it helps with debugging.
   g_log_set_handler("Gtk", G_LOG_LEVEL_CRITICAL, custom_log_handler, NULL);
 }
 
@@ -552,3 +494,12 @@ const char *_get_main_window_gtklabel_text(GtkWidget *label)
   return gtk_label_get_text(GTK_LABEL(label));
 }
 */
+/*static void bind_template_child(GtkWidgetClass *widget_class, const char *widget_name, size_t offset)
+{
+  GParamSpec *pspec = g_object_class_find_property(G_OBJECT_CLASS(widget_class), widget_name);
+  if (pspec) {
+    gtk_widget_class_bind_template_child_full(widget_class, widget_name, FALSE, offset);
+  } else {
+    g_warning("Property '%s' not found in class '%s'", widget_name, G_OBJECT_CLASS_NAME(widget_class));
+  }
+}*/

@@ -8,6 +8,10 @@
 
 #include "config.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /// @brief Sensor parameter structure typedef
 typedef struct _Param_t {
   unsigned int num_sensors;
@@ -28,6 +32,16 @@ typedef struct _Param_t {
   double sensor_cal2_raw[MAX_SENSORS];
   double sensor_slope[MAX_SENSORS];
   double sensor_offset[MAX_SENSORS];
+  union {
+    struct {
+      uint32_t low_alarm :1;
+      uint32_t mid_alarm :1;
+      uint32_t hi_alarm  :1;
+      uint32_t fault     :1;
+      uint32_t unused    :28;
+    }bits;
+    uint32_t all_bits;
+  }channel_status[MAX_SENSORS];
 }Param_t;
 
 /// @brief Analog input structure typedef
@@ -45,5 +59,9 @@ typedef struct _Appearance_Config_t {
 }Appearance_Config_t;
 
 int init_param();
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

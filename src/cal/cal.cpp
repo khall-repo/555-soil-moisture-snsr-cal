@@ -60,7 +60,8 @@ int force_zero(int sensor_num, bool recalculate_slope)
   param.sensor_offset[sensor_num] = param.sensor_cal1_raw[sensor_num];
 
   if(recalculate_slope){
-    param.sensor_slope[sensor_num] = (param.sensor_cal2_raw[sensor_num] - param.sensor_cal1_raw[sensor_num])/(param.sensor_cal2_pv - param.sensor_cal1_pv);
+    //param.sensor_slope[sensor_num] = (param.sensor_cal2_raw[sensor_num] - param.sensor_cal1_raw[sensor_num])/(param.sensor_cal2_pv - param.sensor_cal1_pv);
+    do_span(sensor_num);
   }
 
   return 0;

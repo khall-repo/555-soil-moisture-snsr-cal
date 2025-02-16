@@ -14,11 +14,11 @@ typedef struct _Data_Display_Label_t
 {
   char label_text[MAX_DATA_DISP_SZ] = {0};
   bool update_text = false;
-  Color_t foreground_color = {0,0,0};
+  Color16_t foreground_color = {0,0,0};
   bool update_foreground_color = false;
-  Color_t background_color = {0,0,0};
+  Color16_t background_color = {0,0,0};
   bool update_background_color = false;
-  Color_t text_highlight_color = {0,0,0};
+  Color16_t text_highlight_color = {0,0,0};
   bool update_text_highlight_color = false;
   Font_Attrib_t font_attrib = {NULL,PANGO_WEIGHT_NORMAL,0};
 }Data_Display_Label_t;
@@ -32,36 +32,12 @@ typedef struct _IMainWindow
   Data_Display_Label_t channel_label[MAX_SENSORS];
 
   Data_Display_Label_t data_display_label_sensor_raw[MAX_SENSORS];
-  // Next 8 lines must be contiguous:
-  /*Data_Display_Label_t data_display_label_sensor_pv0;
-  Data_Display_Label_t data_display_label_sensor_pv1;
-  Data_Display_Label_t data_display_label_sensor_pv2;
-  Data_Display_Label_t data_display_label_sensor_pv3;
-  Data_Display_Label_t data_display_label_sensor_pv4;
-  Data_Display_Label_t data_display_label_sensor_pv5;
-  Data_Display_Label_t data_display_label_sensor_pv6;
-  Data_Display_Label_t data_display_label_sensor_pv7;*/
   Data_Display_Label_t data_display_label_sensor_pv[MAX_SENSORS];
   
   bool button0; // bottom button
 
-  bool button_zero_0_pressed; // first column of buttons
-  bool button_zero_1_pressed;
-  bool button_zero_2_pressed;
-  bool button_zero_3_pressed;
-  bool button_zero_4_pressed;
-  bool button_zero_5_pressed;
-  bool button_zero_6_pressed;
-  bool button_zero_7_pressed;
-
-  bool button_span_0_pressed; // second column of buttons
-  bool button_span_1_pressed;
-  bool button_span_2_pressed;
-  bool button_span_3_pressed;
-  bool button_span_4_pressed;
-  bool button_span_5_pressed;
-  bool button_span_6_pressed;
-  bool button_span_7_pressed;
+  bool button_zero_pressed[MAX_SENSORS];
+  bool button_span_pressed[MAX_SENSORS];
 
 } IMainWindow;
 

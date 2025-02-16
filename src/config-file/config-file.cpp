@@ -151,9 +151,17 @@ int Config_File::read_config_file(void)
 /// @brief Get a configuration value from a section
 /// @param section - the section to get the value from
 /// @param key - the key to get the value for
-/// @return the value for the key in the section
+/// @return the value for the key in the section or empty string if error
 std::string Config_File::get_config_value(std::string section, std::string key)
 {
+  /*std::string output_value = "";
+  
+  try {
+    output_value = config_section_map.at(key);
+  } catch (const std::out_of_range& oor) {
+    std::cerr << "Out of Range error: " << oor.what() << std::endl;
+  }
+  return output_value;*/
   return config_section_map[section][key];
 }
 

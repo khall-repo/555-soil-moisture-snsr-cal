@@ -16,7 +16,6 @@ Param_t param;
 Analog_Input_t analog_input[MAX_SENSORS];
 Appearance_Config_t appearance_config;
 
-
 /**
  * @brief Set raw and PV values with test values from the config file
  * @param none
@@ -24,7 +23,7 @@ Appearance_Config_t appearance_config;
  */
 int set_param_from_config_file(void)
 {
-  std::string value;
+  std::string value = "";
 
   if(NULL == config_file) {
     std::cerr << "Error: Config file not initialized" << '\n';
@@ -33,7 +32,6 @@ int set_param_from_config_file(void)
 
   value = config_file->get_config_value("param", "num_sensors");
   param.num_sensors = std::stoi(value);
-
   value = config_file->get_config_value("param", "sensor_min_scale");
   param.sensor_min_scale = std::stod(value);
   value = config_file->get_config_value("param", "sensor_full_scale");
@@ -56,29 +54,42 @@ int set_param_from_config_file(void)
   param.adc_num_samples = std::stoi(value);
 
   // Load calibration data
-  for (unsigned int sensor_num = 0; sensor_num < param.num_sensors; ++sensor_num) {
-    value = config_file->get_config_value("calibration", "sensor_offset_" + std::to_string(sensor_num));
+  for (unsigned int sensor_index = 0; sensor_index < param.num_sensors; ++sensor_index) {
+    value = config_file->get_config_value("calibration",
+                                          "sensor_offset_" + std::to_string(sensor_index));
     try{
-      param.sensor_offset[sensor_num] = std::stod(value);
+      param.sensor_offset[sensor_index] = std::stod(value);
     } catch (std::exception &e) {
       std::cerr << "Error: " << e.what() << '\n';
-      std::cerr << "Error reading sensor offset for sensor: " << sensor_num << '\n';
+      std::cerr << "Error reading sensor offset for sensor index: " << sensor_index << '\n';
       std::cerr << "Value: " << value << '\n';
       return -1;
     }
     
-    value = config_file->get_config_value("calibration", "sensor_slope_" + std::to_string(sensor_num));
+    value = config_file->get_config_value("calibration",
+                                          "sensor_cal2_raw_" + std::to_string(sensor_index));
     try{
-      param.sensor_slope[sensor_num] = std::stod(value);
+      param.sensor_cal2_raw[sensor_index] = std::stod(value);
     } catch (std::exception &e) {
       std::cerr << "Error: " << e.what() << '\n';
-      std::cerr << "Error reading sensor slope for sensor: " << sensor_num << '\n';
+      std::cerr << "Error reading cal2_raw for sensor index: " << sensor_index << '\n';
+      std::cerr << "Value: " << value << '\n';
+      return -1;
+    }
+    
+    value = config_file->get_config_value("calibration",
+                                          "sensor_slope_" + std::to_string(sensor_index));
+    try{
+      param.sensor_slope[sensor_index] = std::stod(value);
+    } catch (std::exception &e) {
+      std::cerr << "Error: " << e.what() << '\n';
+      std::cerr << "Error reading sensor slope for sensor index: " << sensor_index << '\n';
       std::cerr << "Value: " << value << '\n';
       return -1;
     }
   }
 
-  // Load appearance data
+  // Load appearance options
   value = config_file->get_config_value("appearance", "data_display_font_family");
   if (!is_font_family_valid(value.c_str())) {
     std::cerr << "Error: Invalid font family: " << value << '\n';
@@ -89,7 +100,8 @@ int set_param_from_config_file(void)
   if(MAX_FONT_SIZE < appearance_config.data_display_font_size) {
     appearance_config.data_display_font_size = DEFAULT_DATA_DISP_FONT_SIZE;
   }
-  // check value string length and copy to appearance_config.data_display_font_family if length is less than MAX_FONT_FAMILY_LEN
+  // check value string length and copy to appearance_config.data_display_font_family
+  // if length is less than MAX_FONT_FAMILY_LEN
   if (value.length() < MAX_FONT_FAMILY_LEN) {
     strncpy(appearance_config.data_display_font_family, value.c_str(), value.length());
   } else {
@@ -106,7 +118,7 @@ int set_param_from_config_file(void)
  */
 int init_param()
 {
-  // zero out the param structure
+  // zero out the param structure 
   param.num_sensors = 0;
   param.sensor_min_scale = 0.0;
   param.sensor_full_scale = 0.0;
@@ -137,7 +149,14 @@ int init_param()
 
   // zero out appearance config structure
   memset(&appearance_config, 0, sizeof(Appearance_Config_t));
-  strncpy(appearance_config.data_display_font_family, DEFAULT_DATA_DISP_FONT_FAMILY, std::strlen(DEFAULT_DATA_DISP_FONT_FAMILY)+1);
+  strncpy(appearance_config.data_display_font_family,
+          DEFAULT_DATA_DISP_FONT_FAMILY,
+          std::strlen(DEFAULT_DATA_DISP_FONT_FAMILY)+1);
+
+  // zero out channel status
+  for(int i = 0; i < MAX_SENSORS; i++) {
+    param.channel_status[i].all_bits = 0;
+  }
 
   if(0 != set_param_from_config_file()) {
     return -1;

@@ -15,12 +15,9 @@
 #include "gui.h"
 #include "control.h"
 
-#define MCP3008_PINBASE   100
-#define MCP3008_0_SPI_CHAN  0
-
 extern Param_t param; // Import from struct.cpp
 
-Config_File *config_file = NULL;
+Config_File *config_file = NULL; // TODO: move this to config-file.cpp
 
 /**
  * @brief Main program entry point
@@ -28,8 +25,8 @@ Config_File *config_file = NULL;
  */
 int main(int argc, char *argv[])
 {
-  (void)argc; // not used yet
-  (void)argv; // not used yet
+  (void)argc; // not used
+  (void)argv; // not used
   int status;
 
   // Read the config file
@@ -52,7 +49,7 @@ int main(int argc, char *argv[])
     std::cerr << "Failed to initialize MCP3008" << '\n';
     return -1;
   }
-  
+
   if(0 != timebase_start()) {
     std::cerr << "Failed to timebase" << '\n';
     return -1;
@@ -62,7 +59,7 @@ int main(int argc, char *argv[])
     std::cerr << "Failed to initialize imain-window" << '\n';
     return -1;
   }
-  
+
   status = run_gui_application(argc, argv);
   cleanup_imain_window();
   return status;

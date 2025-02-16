@@ -29,10 +29,6 @@ extern Analog_Input_t analog_input[MAX_SENSORS]; // Import from struct.c
 extern IMainWindow imain_window; // import from imain-window.cpp
 
 unsigned int seconds_count = 0;
-
-//ch label test
-//bool ch_label_test_done = false;
-
 timer_t timebase_timerid;
 
 enum Color_Test_State_e{
@@ -146,16 +142,6 @@ void color_test(void)
   }
 }
 
-/*void set_ch_label_test(void)
-{
-  char str[MAX_DATA_DISP_SZ] = {0};
-
-  for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
-    sprintf(str, "Test %u", i);
-    set_channel_label(i, (const char*)str);
-  }
-}*/
-
 /**
  * @brief Read and print raw values from all 8 channels of the MCP3008
  * @param none
@@ -183,15 +169,55 @@ void mcp3008_read_raw_mv_all(void)
 }
 
 /**
- * @brief Print all sensor raw values
- * @param none
- * @return none
+ * @brief Calculate millivolts from ADC value
+ * @param adc_val - ADC output value
+ * @return ADC output value converted to millivolts
  */
-void print_all_sensor_raw(void)
+double calc_mv(int adc_val)
 {
-  for (unsigned int channel = 0; channel < param.num_sensors; ++channel) {
-    std::cout << "Ch " << channel << ": " << param.sensor_raw[channel] << " mV" << '\n';
-  }
+  return VREF * (double)adc_val / ADC_MAX;
+}
+
+/**
+ * @brief Calculate filtered millivolts
+ * @param unfiltered_mv - Current unfiltered millivolts value
+ * @param last_filtered_mv - Last filtered millivolts value
+ * @return Filtered millivolt value
+ */
+double calc_filtered_mv(double unfiltered_mv, double last_filtered_mv)
+{
+  double jump;
+  double filtera;
+  jump = fabs(last_filtered_mv - unfiltered_mv); // calculate difference between filter in and out
+
+  if (jump > BIG_JUMP)  // set filter based on jump - for big jumps the filter is relaxed 
+    filtera = (double) param.ewma_filter / 8.0;
+
+  else if (jump > MID_JUMP)  // for middle jumps the filter is less relaxed than for big jumps
+    filtera = (double) param.ewma_filter / 4.0;
+
+  else if (jump > SMALL_JUMP) // for small jumps the filter is less relaxed than for middle jumps
+    filtera = (double) param.ewma_filter / 1.5;
+
+  else
+    filtera = (double) param.ewma_filter;
+
+  if (filtera < 1.0)    // dFilterA CANNOT BE LESS THAN 1 TO AVOID GETTING A NEGATIVE FILTER VALUE
+    filtera = 1.0;
+
+  filtera = (filtera - 1.0) / filtera; // get filter ready for use
+
+  return filtera * last_filtered_mv  + (1.0-filtera) * unfiltered_mv; // apply the EWMA filter
+}
+
+/**
+ * @brief Calculate PV
+ * @param sensor_index - Index of sensor to calculate PV for
+ * @return PV for sensor at sensor_index
+ */
+double calc_pv(unsigned int sensor_index)
+{
+  return (param.sensor_raw[sensor_index] - param.sensor_offset[sensor_index]) / param.sensor_slope[sensor_index];
 }
 
 /**
@@ -237,45 +263,19 @@ void update_pv_display(void)
 }
 
 /**
- * @brief Calculate millivolts from ADC value
- * @param adc_val - ADC output value
- * @return ADC output value converted to millivolts
+ * @brief Read and average ADC output values and update the analog input 
+ * structure
+ * @param none
+ * @return none 
  */
-double calc_mv(int adc_val)
-{
-  return VREF * (double)adc_val / ADC_MAX;
-}
-
-double calc_filtered_mv(double unfiltered_mv, double last_filtered_mv)
-{
-  double jump;
-  double filtera;
-  jump = fabs(last_filtered_mv - unfiltered_mv); // calculate difference between filter in and out
-
-  if (jump > BIG_JUMP)  // set filter based on jump - for big jumps the filter is relaxed 
-    filtera = (double) param.ewma_filter / 8.0;
-
-  else if (jump > MID_JUMP)  // for middle jumps the filter is less relaxed than for big jumps
-    filtera = (double) param.ewma_filter / 4.0;
-
-  else if (jump > SMALL_JUMP) // for small jumps the filter is less relaxed than for middle jumps
-    filtera = (double) param.ewma_filter / 1.5;
-
-  else
-    filtera = (double) param.ewma_filter;
-
-  if (filtera < 1.0)    // dFilterA CANNOT BE LESS THAN 1 TO AVOID GETTING A NEGATIVE FILTER VALUE
-    filtera = 1.0;
-
-  filtera = (filtera - 1.0) / filtera; // get filter ready for use
-
-  return filtera * last_filtered_mv  + (1.0-filtera) * unfiltered_mv; // apply the EWMA filter
-}
-
-double calc_pv(unsigned int sensor_num)
-{
-  return (param.sensor_raw[sensor_num] - param.sensor_offset[sensor_num]) / param.sensor_slope[sensor_num];
-}
+ void update_alarm_display(void)
+ {
+   for(unsigned int i = 0; i < param.num_sensors; i++) {
+     if(param.channel_status[i].bits.low_alarm) {
+       
+     }
+   }
+ }
 
 /**
  * @brief Read and average ADC output values and update the analog input 
@@ -324,38 +324,30 @@ void print_sensor_cal_values(unsigned int sensor_num)
 }
 
 /**
- * @brief Save calibration data to config file
- * @param sensor_num - the sensor number to save calibration data for
- * @return 0 if success, -1 if error
+ * @brief PV alarm handler
+ * @param none
+ * @return none
  */
-int save_calibration_data(unsigned int sensor_num)
-{
-  std::string section = "calibration";
-  std::string key;
-  std::string value;
-  /*for (unsigned int channel = 0; channel < param.num_sensors; ++channel) {
-    key = "sensor_offset_" + std::to_string(channel);
-    value = dtos(param.sensor_offset[channel], param.raw_disp_precision);
-    config_file->set_config_value(section, key, value);
-    key = "sensor_slope_" + std::to_string(channel);
-    value = dtos(param.sensor_slope[channel], param.raw_disp_precision);
-    config_file->set_config_value(section, key, value);
-  }*/
-  key = "sensor_offset_" + std::to_string(sensor_num);
-  value = dtos(param.sensor_offset[sensor_num], param.raw_disp_precision);
-  if(0 != config_file->set_config_value(section, key, value, false)) {
-    std::cerr << "Error setting config value: " << key << '\n';
-    return -1;
-  }
-  
-  key = "sensor_slope_" + std::to_string(sensor_num);
-  value = dtos(param.sensor_slope[sensor_num], param.raw_disp_precision);
-  if(0 != config_file->set_config_value(section, key, value, false)) {
-    std::cerr << "Error setting config value: " << key << '\n';
-    return -1;
-  }
-  return 0;
-}
+ void alarm_handler(void)
+ {
+   for(unsigned int i = 0; i < param.num_sensors; i++) {
+     if(param.low_alarm <= param.sensor_pv[i]) {
+       param.channel_status[i].bits.low_alarm = 1;
+     } else {
+       param.channel_status[i].bits.low_alarm = 0;
+     }
+     if(param.mid_alarm <= param.sensor_pv[i]) {
+       param.channel_status[i].bits.mid_alarm = 1;
+     } else {
+       param.channel_status[i].bits.mid_alarm = 0;
+     }
+     if(param.hi_alarm <= param.sensor_pv[i]) {
+       param.channel_status[i].bits.hi_alarm = 1;
+     } else {
+       param.channel_status[i].bits.hi_alarm = 0;
+     }
+   }
+ }
 
 /**
  * @brief Command handler for UI button presses
@@ -365,26 +357,29 @@ int save_calibration_data(unsigned int sensor_num)
 void cmd_handler(void)
 {
   bool save_cal = false;
-  unsigned int cal_sensor_num = 0;
+  unsigned int cal_sensor_index = 0;
 
   for(unsigned int channel = 0; channel < param.num_sensors; ++channel) {
 
     if(button_zero_pressed_ack(channel)) {
-      cal_sensor_num = channel;
-      force_zero(cal_sensor_num, true);
+      cal_sensor_index = channel;
+      force_zero(cal_sensor_index, true);
       save_cal = true;
+      print_cal_param(channel);
       break;
     } else if(button_span_pressed_ack(channel)) {
-      cal_sensor_num = channel;
-      force_span(cal_sensor_num);
+      cal_sensor_index = channel;
+      force_span(cal_sensor_index);
       save_cal = true;
       break;
     }
   }
 
   if(save_cal){
-    if(0 != save_calibration_data(cal_sensor_num)) {
+    if(0 != save_calibration_data(cal_sensor_index)) {
       std::cerr << "Error saving calibration data" << '\n';
+    } else {
+      print_stored_cal_param(cal_sensor_index);
     }
   }
 
@@ -416,7 +411,8 @@ void timebase_handler(int signum, siginfo_t *info, void *context)
     //print_all_sensor_raw();
 
     // Main window update
-    color_test();
+    alarm_handler();
+    update_alarm_display();
     update_sensor_raw_display();
     update_pv_display();
 

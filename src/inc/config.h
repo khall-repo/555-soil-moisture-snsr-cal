@@ -7,10 +7,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-/*#include <iostream>
-#include <fstream>
-#include <map>
-#include <string>*/
+#include <glib.h>
 
 // Path to window resource files. It's relative to the current working
 // directory. The bin should be ran from the project root directory.
@@ -44,6 +41,28 @@
 #define DEFAULT_DATA_DISP_FONT_FAMILY "LiberationMono"
 #define DEFAULT_DATA_DISP_FONT_SIZE 10
 #define DEFAULT_DATA_DISP_FONT_WEIGHT PANGO_WEIGHT_NORMAL
-#define DEFAULT_CH_LABEL "Channel"
+#define DEFAULT_LABEL_CH "Channel"
+#define DEFAULT_LABEL_TAB0 "Ch 0-7"
+#define DEFAULT_LABEL_TAB1 "Ch 8-15"
+
+#define DEFAULT_HI_ALARM_DCOLOR_R  (double)0.82 // deep red
+#define DEFAULT_HI_ALARM_DCOLOR_G  (double)0.0
+#define DEFAULT_HI_ALARM_DCOLOR_B  (double)0.0
+#define DEFAULT_MID_ALARM_DCOLOR_R (double)1.0 // orange
+#define DEFAULT_MID_ALARM_DCOLOR_G (double)0.7
+#define DEFAULT_MID_ALARM_DCOLOR_B (double)0
+#define DEFAULT_LO_ALARM_DCOLOR_R  (double)0.9  // yellow
+#define DEFAULT_LO_ALARM_DCOLOR_G  (double)0.9
+#define DEFAULT_LO_ALARM_DCOLOR_B  (double)0
+
+#define DEFAULT_HI_ALARM_COLOR16_R  (guint16)(DEFAULT_HI_ALARM_DCOLOR_R*65535)
+#define DEFAULT_HI_ALARM_COLOR16_G  (guint16)(DEFAULT_HI_ALARM_DCOLOR_G*65535)
+#define DEFAULT_HI_ALARM_COLOR16_B  (guint16)(DEFAULT_HI_ALARM_DCOLOR_B*65535)
+#define DEFAULT_MID_ALARM_COLOR16_R (guint16)(DEFAULT_MID_ALARM_DCOLOR_R*65535)
+#define DEFAULT_MID_ALARM_COLOR16_G (guint16)(DEFAULT_MID_ALARM_DCOLOR_G*65535)
+#define DEFAULT_MID_ALARM_COLOR16_B (guint16)(DEFAULT_MID_ALARM_DCOLOR_B*65535)
+#define DEFAULT_LO_ALARM_COLOR16_R  (guint16)(DEFAULT_LO_ALARM_DCOLOR_R*65535)
+#define DEFAULT_LO_ALARM_COLOR16_G  (guint16)(DEFAULT_LO_ALARM_DCOLOR_G*65535)
+#define DEFAULT_LO_ALARM_COLOR16_B  (guint16)(DEFAULT_LO_ALARM_DCOLOR_B*65535)
 
 #endif

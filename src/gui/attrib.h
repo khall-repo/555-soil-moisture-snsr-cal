@@ -1,12 +1,22 @@
 #ifndef ATTRIB_H
 #define ATTRIB_H
 
-typedef struct _Color_t
+
+#include <gtk/gtk.h> // needed for PangoWeight enum and guint
+
+typedef struct _Color16_t
 {
   guint16 red;
   guint16 green;
   guint16 blue;
-}Color_t;
+}Color16_t;
+
+typedef struct _Colord_t
+{
+  guint16 red;
+  guint16 green;
+  guint16 blue;
+}Colord_t;
 
 typedef struct _Font_Attrib_t
 {
