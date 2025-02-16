@@ -9,7 +9,7 @@ IMainWindow imain_window;
 
 const char *get_channel_label(unsigned int index)
 {
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window get_channel_label(): Bad index [%u]\n", index);
     return "\0";
   }
@@ -31,7 +31,7 @@ const char *get_col_header_sensor_pv(void)
 // get imain_window.data_display_label_sensor_raw[n].label_text
 const char *get_data_display_label_sensor_raw(unsigned int index)
 {
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window get_data_display_label_sensor_raw(): Bad index [%u]\n", index);
     return "\0";
   }
@@ -41,7 +41,7 @@ const char *get_data_display_label_sensor_raw(unsigned int index)
 // get imain_window.data_display_label_sensor_pv[n].label_text
 const char *get_data_display_label_sensor_pv(unsigned int index)
 {
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window get_data_display_label_sensor_pv(): Bad index [%u]\n", index);
     return "\0";
   }
@@ -53,7 +53,7 @@ const char *get_data_display_label_sensor_pv(unsigned int index)
 
 void set_channel_label(unsigned int index, const char *text)
 {
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window set_channel_label(): Bad index\n");
     return;
   }
@@ -64,7 +64,7 @@ void set_channel_label(unsigned int index, const char *text)
 // set imain_window.col_header_sensor_raw[n]
 void set_data_display_label_sensor_raw(unsigned int index, const char *text)
 {
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window set_data_display_label_sensor_raw(): Bad index [%u]\n", index);
     return;
   }
@@ -75,7 +75,7 @@ void set_data_display_label_sensor_raw(unsigned int index, const char *text)
 // set imain_window.data_display_label_sensor_pv[n] text
 void set_data_display_label_sensor_pv(unsigned int index, const char *text)
 {
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window set_data_display_label_sensor_pv(): Bad index [%u]\n", index);
     return;
   }
@@ -89,7 +89,7 @@ void set_data_display_label_sensor_pv(unsigned int index, const char *text)
 void set_data_display_label_sensor_raw_fg_color(unsigned int index, guint16 red,
                                                 guint16 green, guint16 blue)
 {
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window set_data_display_label_sensor_raw_fg_color(): Bad index [%u]\n", index);
     return;
   }
@@ -102,7 +102,7 @@ void set_data_display_label_sensor_raw_fg_color(unsigned int index, guint16 red,
 void set_data_display_label_sensor_raw_bg_color(unsigned int index, guint16 red,
                                                 guint16 green, guint16 blue)
 {
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window set_data_display_label_sensor_raw_bg_color(): Bad index [%u]\n", index);
     return;
   }
@@ -117,7 +117,7 @@ void set_data_display_label_sensor_raw_highlight_color(unsigned int index,
                                                        guint16 green,
                                                        guint16 blue)
 {
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window set_data_display_label_sensor_raw_highlight_color(): Bad index [%u]\n", index);
     return;
   }
@@ -130,7 +130,7 @@ void set_data_display_label_sensor_raw_highlight_color(unsigned int index,
 void set_data_display_label_sensor_pv_fg_color(unsigned int index, guint16 red,
                                                guint16 green, guint16 blue)
 {
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window set_data_display_label_sensor_pv_fg_color(): Bad index [%u]\n", index);
     return;
   }
@@ -143,7 +143,7 @@ void set_data_display_label_sensor_pv_fg_color(unsigned int index, guint16 red,
 void set_data_display_label_sensor_pv_bg_color(unsigned int index, guint16 red,
                                                guint16 green, guint16 blue)
 {
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window set_data_display_label_sensor_pv_bg_color(): Bad index [%u]\n", index);
     return;
   }
@@ -158,7 +158,7 @@ void set_data_display_label_sensor_pv_highlight_color(unsigned int index,
                                                       guint16 green,
                                                       guint16 blue)
 {
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window set_data_display_label_sensor_pv_highlight_color(): Bad index [%u]\n", index);
     return;
   }
@@ -174,63 +174,64 @@ void set_data_display_label_sensor_pv_highlight_color(unsigned int index,
 void set_data_display_label_sensor_raw_font_family(unsigned int index,
                                                    const char *font_family)
 {
-  // I've "arrayed" the display label structures, so this could be simplified
-  // to do away with the pointer arithmetic..
-  Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_raw[0].font_attrib + index * sizeof(Data_Display_Label_t));
-  if(NULL == font_family) {
+  if((NULL == font_family) || 
+     (NULL == imain_window.data_display_label_sensor_raw[index].font_attrib.font_family)) {
     return;
   }
-  strncpy((char*)p_font_attrib->font_family, font_family, MAX_FONT_FAMILY_LEN);
-  p_font_attrib->update_font_attrib = true;
+  strncpy((char*)imain_window.data_display_label_sensor_raw[index].font_attrib.font_family, font_family, MAX_FONT_FAMILY_LEN);
+  imain_window.data_display_label_sensor_raw[index].font_attrib.update_font_attrib = true;
 }
 
 void set_data_display_label_sensor_pv_font_family(unsigned int index,
                                                   const char *font_family)
 {
-  // I've "arrayed" the display label structures, so this could be simplified
-  // to do away with the pointer arithmetic..
-  Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_pv[0].font_attrib + index * sizeof(Data_Display_Label_t));
-  if(NULL == font_family) {
+  if((NULL == font_family) || 
+     (NULL == imain_window.data_display_label_sensor_pv[index].font_attrib.font_family)) {
     return;
   }
-  strncpy((char*)p_font_attrib->font_family, font_family, MAX_FONT_FAMILY_LEN);
-  p_font_attrib->update_font_attrib = true;
+  if(imain_window.num_sensors <= index) {
+    return;
+  }
+  strncpy((char*)imain_window.data_display_label_sensor_pv[index].font_attrib.font_family, font_family, MAX_FONT_FAMILY_LEN);
+  imain_window.data_display_label_sensor_pv[index].font_attrib.update_font_attrib = true;
 }
 
 void set_data_display_label_sensor_raw_font_size(unsigned int index, int size)
 {
-  // I've "arrayed" the display label structures, so this could be simplified
-  // to do away with the pointer arithmetic..
-  Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_raw[0].font_attrib + index * sizeof(Data_Display_Label_t));
-  p_font_attrib->size = size;
-  p_font_attrib->update_font_attrib = true;
+  if(imain_window.num_sensors <= index) {
+    return;
+  }
+  imain_window.data_display_label_sensor_raw[index].font_attrib.size = size;
+  imain_window.data_display_label_sensor_raw[index].font_attrib.update_font_attrib = true;
 }
 
 void set_data_display_label_sensor_pv_font_size(unsigned int index, gint size)
 {
-  // I've "arrayed" the display label structures, so this could be simplified
-  // to do away with the pointer arithmetic..
-  Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_pv[0].font_attrib + index * sizeof(Data_Display_Label_t));
-  p_font_attrib->size = size;
-  p_font_attrib->update_font_attrib = true;
+  if(imain_window.num_sensors <= index) {
+    return;
+  }
+  imain_window.data_display_label_sensor_pv[index].font_attrib.size = size;
+  imain_window.data_display_label_sensor_pv[index].font_attrib.update_font_attrib = true;
 }
 
 void set_data_display_label_sensor_raw_font_weight(unsigned int index,
                                                    PangoWeight pango_weight)
 {
-  // I've "arrayed" the display label structures, so this could be simplified
-  // to do away with the pointer arithmetic..
-  Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_raw[0].font_attrib + index * sizeof(Data_Display_Label_t));
-  p_font_attrib->weight = pango_weight;
-  p_font_attrib->update_font_attrib = true;
+  if(imain_window.num_sensors <= index) {
+    return;
+  }
+  imain_window.data_display_label_sensor_raw[index].font_attrib.weight = pango_weight;
+  imain_window.data_display_label_sensor_raw[index].font_attrib.update_font_attrib = true;
 }
 
 void set_data_display_label_sensor_pv_font_weight(unsigned int index,
                                                   PangoWeight pango_weight)
 {
-  Font_Attrib_t *p_font_attrib = (Font_Attrib_t *)((char *)&imain_window.data_display_label_sensor_pv[0].font_attrib + index * sizeof(Data_Display_Label_t));
-  p_font_attrib->weight = pango_weight;
-  p_font_attrib->update_font_attrib = true;
+  if(imain_window.num_sensors <= index) {
+    return;
+  }
+  imain_window.data_display_label_sensor_pv[index].font_attrib.weight = pango_weight;
+  imain_window.data_display_label_sensor_pv[index].font_attrib.update_font_attrib = true;
 }
 
 
@@ -240,7 +241,7 @@ void set_data_display_label_sensor_pv_font_weight(unsigned int index,
 bool get_update_text_raw_ack(unsigned int index)
 {
   bool state = false;
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window get_update_text_raw_ack(): Bad index [%u]\n", index);
     return false;
   }
@@ -253,7 +254,7 @@ bool get_update_text_raw_ack(unsigned int index)
 bool get_update_text_pv_ack(unsigned int index)
 {
   bool state = false;
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window get_update_text_pv_ack(): Bad index [%u]\n", index);
     return false;
   }
@@ -268,7 +269,7 @@ bool get_update_text_pv_ack(unsigned int index)
 bool get_update_foreground_color_raw_ack(unsigned int index)
 {
   bool state = false;
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window get_update_foreground_color_raw_ack(): Bad index [%u]\n", index);
     return false;
   }
@@ -280,7 +281,7 @@ bool get_update_foreground_color_raw_ack(unsigned int index)
 bool get_update_background_color_raw_ack(unsigned int index)
 {
   bool state = false;
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window get_update_background_color_raw_ack(): Bad index [%u]\n", index);
     return false;
   }
@@ -292,7 +293,7 @@ bool get_update_background_color_raw_ack(unsigned int index)
 bool get_update_highlight_color_raw_ack(unsigned int index)
 {
   bool state = false;
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window get_update_highlight_color_raw_ack(): Bad index [%u]\n", index);
     return false;
   }
@@ -304,7 +305,7 @@ bool get_update_highlight_color_raw_ack(unsigned int index)
 bool get_update_foreground_color_pv_ack(unsigned int index)
 {
   bool state = false;
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window get_update_foreground_color_pv_ack(): Bad index [%u]\n", index);
     return false;
   }
@@ -316,7 +317,7 @@ bool get_update_foreground_color_pv_ack(unsigned int index)
 bool get_update_background_color_pv_ack(unsigned int index)
 {
   bool state = false;
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window get_update_background_color_pv_ack(): Bad index [%u]\n", index);
     return false;
   }
@@ -328,7 +329,7 @@ bool get_update_background_color_pv_ack(unsigned int index)
 bool get_update_highlight_color_pv_ack(unsigned int index)
 {
   bool state = false;
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window get_update_highlight_color_pv_ack(): Bad index [%u]\n", index);
     return false;
   }
@@ -340,30 +341,24 @@ bool get_update_highlight_color_pv_ack(unsigned int index)
 bool get_update_font_attrib_raw_ack(unsigned int index)
 {
   bool state;
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window get_update_font_attrib_raw_ack(): Bad index [%u]\n", index);
     return false;
   }
-  // I've "arrayed" the display label structures, so this could be simplified
-  // to do away with the pointer arithmetic..
-  bool *p_update_font_attrib = (bool *)&imain_window.data_display_label_sensor_raw[0].font_attrib.update_font_attrib + index * sizeof(Data_Display_Label_t);
-  state = *p_update_font_attrib;
-  *p_update_font_attrib = false;
+  state = imain_window.data_display_label_sensor_raw[index].font_attrib.update_font_attrib;
+  imain_window.data_display_label_sensor_raw[index].font_attrib.update_font_attrib = false;  
   return state;
 }
 
 bool get_update_font_attrib_pv_ack(unsigned int index)
 {
   bool state;
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window get_update_font_attrib_pv_ack(): Bad index [%u]\n", index);
     return false;
   }
-  // I've "arrayed" the display label structures, so this could be simplified
-  // to do away with the pointer arithmetic..
-  bool *p_update_font_attrib = (bool *)&imain_window.data_display_label_sensor_pv[0].font_attrib.update_font_attrib + index * sizeof(Data_Display_Label_t);
-  state = *p_update_font_attrib;
-  *p_update_font_attrib = false;
+  state = imain_window.data_display_label_sensor_pv[index].font_attrib.update_font_attrib;
+  imain_window.data_display_label_sensor_pv[index].font_attrib.update_font_attrib = false;  
   return state;
 }
 
@@ -373,7 +368,7 @@ bool get_update_font_attrib_pv_ack(unsigned int index)
 // get imain_window.button_zero_pressed[n]
 bool button_zero_pressed(unsigned int index)
 {
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window button_zero_pressed(): Bad index [%u]\n", index);
     return false;
   }
@@ -384,7 +379,7 @@ bool button_zero_pressed(unsigned int index)
 // get imain_window.button_span_pressed[n]
 bool button_span_pressed(unsigned int index)
 {
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window button_span_pressed(): Bad index [%u]\n", index);
     return false;
   }
@@ -396,7 +391,7 @@ bool button_span_pressed(unsigned int index)
 bool button_zero_pressed_ack(unsigned int index)
 {
   bool state = false;
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window button_zero_pressed(): Bad index [%u]\n", index);
     return false;
   }
@@ -409,7 +404,7 @@ bool button_zero_pressed_ack(unsigned int index)
 bool button_span_pressed_ack(unsigned int index)
 {
   bool state = false;
-  if (MAX_SENSORS <= index) {
+  if (imain_window.num_sensors <= index) {
     g_printerr("imain-window button_span_pressed(): Bad index [%u]\n", index);
     return false;
   }
@@ -462,10 +457,7 @@ int init_imain_window(unsigned int num_sensor_ch)
     }
     memcpy(dest, (const void*)&appearance_config.data_display_font_family[0], MAX_FONT_FAMILY_LEN);
     
-    // I've "arrayed" the display label structures, so this could be simplified
-    // to do away with the pointer arithmetic..
-    char **font_family_ptr = (char **)((char *)&imain_window.data_display_label_sensor_raw[0].font_attrib.font_family + i * sizeof(Data_Display_Label_t));
-    *font_family_ptr = dest;
+    imain_window.data_display_label_sensor_raw[i].font_attrib.font_family = dest;
 
     set_data_display_label_sensor_raw_font_size(i, appearance_config.data_display_font_size);
     set_data_display_label_sensor_raw_font_weight(i, DEFAULT_DATA_DISP_FONT_WEIGHT);
@@ -478,13 +470,10 @@ int init_imain_window(unsigned int num_sensor_ch)
     }
     memcpy(dest, (const void*)&appearance_config.data_display_font_family[0], MAX_FONT_FAMILY_LEN);
 
-    // I've "arrayed" the display label structures, so this could be simplified
-    // to do away with the pointer arithmetic..
-    char **font_family_ptr = (char **)((char *)&imain_window.data_display_label_sensor_pv[0].font_attrib.font_family + i * sizeof(Data_Display_Label_t));
-    *font_family_ptr = dest;
-
+    imain_window.data_display_label_sensor_pv[i].font_attrib.font_family = dest;
+    
     set_data_display_label_sensor_pv_font_size(i, appearance_config.data_display_font_size);
-    set_data_display_label_sensor_pv_font_weight(i, DEFAULT_DATA_DISP_FONT_WEIGHT);
+    set_data_display_label_sensor_pv_font_weight(i, PANGO_WEIGHT_BOLD);
   }
   
   // Set the channel labels text
@@ -498,20 +487,12 @@ int init_imain_window(unsigned int num_sensor_ch)
 
 void cleanup_imain_window(void)
 {
-  // I've "arrayed" the display label structures, so this could be simplified
-  // to do away with the pointer arithmetic..
   for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
-    char **font_family_ptr = (char **)((char *)&imain_window.data_display_label_sensor_raw[0].font_attrib.font_family + i * sizeof(Data_Display_Label_t));
-    if (*font_family_ptr != NULL) {
-      g_free(*font_family_ptr);
-      *font_family_ptr = NULL;
+    if(NULL != imain_window.data_display_label_sensor_raw[i].font_attrib.font_family) {
+      g_free((void*)imain_window.data_display_label_sensor_raw[i].font_attrib.font_family);
     }
-  }
-  for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
-    char **font_family_ptr = (char **)((char *)&imain_window.data_display_label_sensor_pv[0].font_attrib.font_family + i * sizeof(Data_Display_Label_t));
-    if (*font_family_ptr != NULL) {
-      g_free(*font_family_ptr);
-      *font_family_ptr = NULL;
+    if(NULL != imain_window.data_display_label_sensor_pv[i].font_attrib.font_family) {
+      g_free((void*)imain_window.data_display_label_sensor_pv[i].font_attrib.font_family);
     }
   }
   g_print("imain-window cleanup\r\n");

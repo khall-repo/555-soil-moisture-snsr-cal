@@ -95,18 +95,20 @@ int set_param_from_config_file(void)
     std::cerr << "Error: Invalid font family: " << value << '\n';
     return -1;
   }
-  value = config_file->get_config_value("appearance", "data_display_font_size");
-  appearance_config.data_display_font_size = std::stoi(value);
-  if(MAX_FONT_SIZE < appearance_config.data_display_font_size) {
-    appearance_config.data_display_font_size = DEFAULT_DATA_DISP_FONT_SIZE;
-  }
   // check value string length and copy to appearance_config.data_display_font_family
   // if length is less than MAX_FONT_FAMILY_LEN
   if (value.length() < MAX_FONT_FAMILY_LEN) {
+    memset(&appearance_config.data_display_font_family[0], 0, sizeof(appearance_config.data_display_font_family));
     strncpy(appearance_config.data_display_font_family, value.c_str(), value.length());
   } else {
     std::cerr << "Error: Font family string too long: " << value << '\n';
     return -1;
+  }
+
+  value = config_file->get_config_value("appearance", "data_display_font_size");
+  appearance_config.data_display_font_size = std::stoi(value);
+  if(MAX_FONT_SIZE < appearance_config.data_display_font_size) {
+    appearance_config.data_display_font_size = DEFAULT_DATA_DISP_FONT_SIZE;
   }
   return 0;
 }

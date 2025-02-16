@@ -29,6 +29,7 @@ extern Analog_Input_t analog_input[MAX_SENSORS]; // Import from struct.c
 extern IMainWindow imain_window; // import from imain-window.cpp
 
 unsigned int seconds_count = 0;
+bool one_sec_toggle = false;
 timer_t timebase_timerid;
 
 enum Color_Test_State_e{
@@ -272,7 +273,7 @@ void update_pv_display(void)
  {
    for(unsigned int i = 0; i < param.num_sensors; i++) {
      if(param.channel_status[i].bits.low_alarm) {
-       
+       // text color white
      }
    }
  }
@@ -424,6 +425,7 @@ void timebase_handler(int signum, siginfo_t *info, void *context)
     }*/
 
     ++seconds_count;
+    one_sec_toggle ^= 1;
     count = 0;
   }
   ++count;
