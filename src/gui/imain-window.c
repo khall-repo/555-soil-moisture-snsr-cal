@@ -473,7 +473,7 @@ int init_imain_window(unsigned int num_sensor_ch)
     imain_window.data_display_label_sensor_pv[i].font_attrib.font_family = dest;
     
     set_data_display_label_sensor_pv_font_size(i, appearance_config.data_display_font_size);
-    set_data_display_label_sensor_pv_font_weight(i, PANGO_WEIGHT_BOLD);
+    set_data_display_label_sensor_pv_font_weight(i, DEFAULT_DATA_DISP_FONT_WEIGHT);
   }
   
   // Set the channel labels text
@@ -495,7 +495,6 @@ void cleanup_imain_window(void)
       g_free((void*)imain_window.data_display_label_sensor_pv[i].font_attrib.font_family);
     }
   }
-  g_print("imain-window cleanup\r\n");
 }
 /**
   End of file

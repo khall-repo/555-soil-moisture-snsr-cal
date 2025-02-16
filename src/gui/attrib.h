@@ -4,6 +4,9 @@
 
 #include <gtk/gtk.h> // needed for PangoWeight enum and guint
 
+/// @brief Color structure used throughout the program for UI elements
+/// @par I can barely see in more than 16-bit color, so this is already way
+/// more color than I can even differentiate.
 typedef struct _Color16_t
 {
   guint16 red;
@@ -11,17 +14,11 @@ typedef struct _Color16_t
   guint16 blue;
 }Color16_t;
 
-typedef struct _Colord_t
-{
-  guint16 red;
-  guint16 green;
-  guint16 blue;
-}Colord_t;
-
+/// @brief Font attribute structure
 typedef struct _Font_Attrib_t
 {
-  const char* font_family; // $ fc-list [to get a list of font names on system]
-  PangoWeight weight;
+  const char* font_family; /// $ fc-list [to get a list of font names on system]
+  PangoWeight weight;      /// normal, bold, etc.
   int size;
   bool update_font_attrib = false;
 }Font_Attrib_t;

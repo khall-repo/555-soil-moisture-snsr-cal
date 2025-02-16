@@ -228,15 +228,6 @@ double calc_pv(unsigned int sensor_index)
  */
 void update_sensor_raw_display(void)
 {
-  /*set_data_display_label_sensor_raw0(dtos(param.sensor_raw[0], param.raw_disp_precision).c_str());
-  set_data_display_label_sensor_raw1(dtos(param.sensor_raw[1], param.raw_disp_precision).c_str());
-  set_data_display_label_sensor_raw2(dtos(param.sensor_raw[2], param.raw_disp_precision).c_str());
-  set_data_display_label_sensor_raw3(dtos(param.sensor_raw[3], param.raw_disp_precision).c_str());
-  set_data_display_label_sensor_raw4(dtos(param.sensor_raw[4], param.raw_disp_precision).c_str());
-  set_data_display_label_sensor_raw5(dtos(param.sensor_raw[5], param.raw_disp_precision).c_str());
-  set_data_display_label_sensor_raw6(dtos(param.sensor_raw[6], param.raw_disp_precision).c_str());
-  set_data_display_label_sensor_raw7(dtos(param.sensor_raw[7], param.raw_disp_precision).c_str());*/
-
   for(unsigned int channel = 0; channel < param.num_sensors; ++channel) {
     set_data_display_label_sensor_raw(channel, dtos(param.sensor_raw[channel], param.raw_disp_precision).c_str());
   }
@@ -249,17 +240,153 @@ void update_sensor_raw_display(void)
  */
 void update_pv_display(void)
 {
-  /*set_data_display_label_sensor_pv0(dtos(param.sensor_pv[0], param.pv_disp_precision).c_str());
-  set_data_display_label_sensor_pv1(dtos(param.sensor_pv[1], param.pv_disp_precision).c_str());
-  set_data_display_label_sensor_pv2(dtos(param.sensor_pv[2], param.pv_disp_precision).c_str());
-  set_data_display_label_sensor_pv3(dtos(param.sensor_pv[3], param.pv_disp_precision).c_str());
-  set_data_display_label_sensor_pv4(dtos(param.sensor_pv[4], param.pv_disp_precision).c_str());
-  set_data_display_label_sensor_pv5(dtos(param.sensor_pv[5], param.pv_disp_precision).c_str());
-  set_data_display_label_sensor_pv6(dtos(param.sensor_pv[6], param.pv_disp_precision).c_str());
-  set_data_display_label_sensor_pv7(dtos(param.sensor_pv[7], param.pv_disp_precision).c_str());*/
-
   for(unsigned int channel = 0; channel < param.num_sensors; ++channel) {
     set_data_display_label_sensor_pv(channel, dtos(param.sensor_pv[channel], param.pv_disp_precision).c_str());
+  }
+}
+
+/**
+ * @brief Set channel alarm display
+ * @param ch - Channel to set alarm display for
+ * @param alarm - Alarm_e alarm state to set display to
+ * @return none 
+ */
+void set_ch_alarm_display(unsigned int ch, Alarm_e alarm)
+{
+  switch(alarm) {
+  case ALARM_NONE:
+    // text color black
+    set_data_display_label_sensor_raw_fg_color(ch, DEFAULT_NO_ALARM_FG_COLOR16_R,
+                                               DEFAULT_NO_ALARM_FG_COLOR16_G,
+                                               DEFAULT_NO_ALARM_FG_COLOR16_B);
+    set_data_display_label_sensor_pv_fg_color(ch, DEFAULT_NO_ALARM_FG_COLOR16_R,
+                                              DEFAULT_NO_ALARM_FG_COLOR16_G,
+                                              DEFAULT_NO_ALARM_FG_COLOR16_B);
+    // highlight color white
+    set_data_display_label_sensor_raw_highlight_color(ch, DEFAULT_NO_ALARM_BG_COLOR16_R,
+                                                      DEFAULT_NO_ALARM_BG_COLOR16_G,
+                                                      DEFAULT_NO_ALARM_BG_COLOR16_B);
+    set_data_display_label_sensor_pv_highlight_color(ch, DEFAULT_NO_ALARM_BG_COLOR16_R,
+                                                     DEFAULT_NO_ALARM_BG_COLOR16_G,
+                                                     DEFAULT_NO_ALARM_BG_COLOR16_B);
+    // bg color white
+    set_data_display_label_sensor_raw_bg_color(ch, DEFAULT_NO_ALARM_BG_COLOR16_R,
+                                               DEFAULT_NO_ALARM_BG_COLOR16_G,
+                                               DEFAULT_NO_ALARM_BG_COLOR16_B);
+    set_data_display_label_sensor_pv_bg_color(ch, DEFAULT_NO_ALARM_BG_COLOR16_R,
+                                              DEFAULT_NO_ALARM_BG_COLOR16_G,
+                                              DEFAULT_NO_ALARM_BG_COLOR16_B);
+    // font weight normal
+    set_data_display_label_sensor_raw_font_weight(ch, PANGO_WEIGHT_NORMAL);
+    set_data_display_label_sensor_pv_font_weight(ch, PANGO_WEIGHT_NORMAL);
+    break;
+  case ALARM_LOW:
+    // text color black
+    set_data_display_label_sensor_raw_fg_color(ch, DEFAULT_LO_ALARM_FG_COLOR16_R,
+                                               DEFAULT_LO_ALARM_FG_COLOR16_G,
+                                               DEFAULT_LO_ALARM_FG_COLOR16_B);
+    set_data_display_label_sensor_pv_fg_color(ch, DEFAULT_LO_ALARM_FG_COLOR16_R,
+                                              DEFAULT_LO_ALARM_FG_COLOR16_G,
+                                              DEFAULT_LO_ALARM_FG_COLOR16_B);
+    // highlight color yel
+    set_data_display_label_sensor_raw_highlight_color(ch, DEFAULT_LO_ALARM_BG_COLOR16_R,
+                                                      DEFAULT_LO_ALARM_BG_COLOR16_G,
+                                                      DEFAULT_LO_ALARM_BG_COLOR16_B);
+    set_data_display_label_sensor_pv_highlight_color(ch, DEFAULT_LO_ALARM_BG_COLOR16_R,
+                                                     DEFAULT_LO_ALARM_BG_COLOR16_G,
+                                                     DEFAULT_LO_ALARM_BG_COLOR16_B);
+    // bg color yel
+    set_data_display_label_sensor_raw_bg_color(ch, DEFAULT_LO_ALARM_BG_COLOR16_R,
+                                               DEFAULT_LO_ALARM_BG_COLOR16_G,
+                                               DEFAULT_LO_ALARM_BG_COLOR16_B);
+    set_data_display_label_sensor_pv_bg_color(ch, DEFAULT_LO_ALARM_BG_COLOR16_R,
+                                              DEFAULT_LO_ALARM_BG_COLOR16_G,
+                                              DEFAULT_LO_ALARM_BG_COLOR16_B);
+    // font weight bold
+    set_data_display_label_sensor_raw_font_weight(ch, PANGO_WEIGHT_BOLD);
+    set_data_display_label_sensor_pv_font_weight(ch, PANGO_WEIGHT_BOLD);
+    break;
+  case ALARM_MID:
+    // text color black
+    set_data_display_label_sensor_raw_fg_color(ch, DEFAULT_MID_ALARM_FG_COLOR16_R,
+                                               DEFAULT_MID_ALARM_FG_COLOR16_G,
+                                               DEFAULT_MID_ALARM_FG_COLOR16_B);
+    set_data_display_label_sensor_pv_fg_color(ch, DEFAULT_MID_ALARM_FG_COLOR16_R,
+                                              DEFAULT_MID_ALARM_FG_COLOR16_G,
+                                              DEFAULT_MID_ALARM_FG_COLOR16_B);
+    // highlight color orange
+    set_data_display_label_sensor_raw_highlight_color(ch, DEFAULT_MID_ALARM_BG_COLOR16_R,
+                                                      DEFAULT_MID_ALARM_BG_COLOR16_G,
+                                                      DEFAULT_MID_ALARM_BG_COLOR16_B);
+    set_data_display_label_sensor_pv_highlight_color(ch, DEFAULT_MID_ALARM_BG_COLOR16_R,
+                                                     DEFAULT_MID_ALARM_BG_COLOR16_G,
+                                                     DEFAULT_MID_ALARM_BG_COLOR16_B);
+    // bg color orange
+    set_data_display_label_sensor_raw_bg_color(ch, DEFAULT_MID_ALARM_BG_COLOR16_R,
+                                               DEFAULT_MID_ALARM_BG_COLOR16_G,
+                                               DEFAULT_MID_ALARM_BG_COLOR16_B);
+    set_data_display_label_sensor_pv_bg_color(ch, DEFAULT_MID_ALARM_BG_COLOR16_R,
+                                              DEFAULT_MID_ALARM_BG_COLOR16_G,
+                                              DEFAULT_MID_ALARM_BG_COLOR16_B);
+    // font weight bold
+    set_data_display_label_sensor_raw_font_weight(ch, PANGO_WEIGHT_BOLD);
+    set_data_display_label_sensor_pv_font_weight(ch, PANGO_WEIGHT_BOLD);
+    break;
+  case ALARM_HI:
+    // text color white
+    set_data_display_label_sensor_raw_fg_color(ch, DEFAULT_HI_ALARM_FG_COLOR16_R,
+                                               DEFAULT_HI_ALARM_FG_COLOR16_G,
+                                               DEFAULT_HI_ALARM_FG_COLOR16_B);
+    set_data_display_label_sensor_pv_fg_color(ch, DEFAULT_HI_ALARM_FG_COLOR16_R,
+                                              DEFAULT_HI_ALARM_FG_COLOR16_G,
+                                              DEFAULT_HI_ALARM_FG_COLOR16_B);
+    // highlight color red
+    set_data_display_label_sensor_raw_highlight_color(ch, DEFAULT_HI_ALARM_BG_COLOR16_R,
+                                                      DEFAULT_HI_ALARM_BG_COLOR16_G,
+                                                      DEFAULT_HI_ALARM_BG_COLOR16_B);
+    set_data_display_label_sensor_pv_highlight_color(ch, DEFAULT_HI_ALARM_BG_COLOR16_R,
+                                                     DEFAULT_HI_ALARM_BG_COLOR16_G,
+                                                     DEFAULT_HI_ALARM_BG_COLOR16_B);
+    // bg color red
+    set_data_display_label_sensor_raw_bg_color(ch, DEFAULT_HI_ALARM_BG_COLOR16_R,
+                                               DEFAULT_HI_ALARM_BG_COLOR16_G,
+                                               DEFAULT_HI_ALARM_BG_COLOR16_B);
+    set_data_display_label_sensor_pv_bg_color(ch, DEFAULT_HI_ALARM_BG_COLOR16_R,
+                                              DEFAULT_HI_ALARM_BG_COLOR16_G,
+                                              DEFAULT_HI_ALARM_BG_COLOR16_B);
+    // font weight bold
+    set_data_display_label_sensor_raw_font_weight(ch, PANGO_WEIGHT_BOLD);
+    set_data_display_label_sensor_pv_font_weight(ch, PANGO_WEIGHT_BOLD);
+    break;
+  case ALARM_FAULT: // we haven't decided what fault conditions are yet..
+    // text color white
+    set_data_display_label_sensor_raw_fg_color(ch, DEFAULT_FLT_ALARM_FG_COLOR16_R,
+                                               DEFAULT_FLT_ALARM_FG_COLOR16_G,
+                                               DEFAULT_FLT_ALARM_FG_COLOR16_B);
+    set_data_display_label_sensor_pv_fg_color(ch, DEFAULT_FLT_ALARM_FG_COLOR16_R,
+                                              DEFAULT_FLT_ALARM_FG_COLOR16_G,
+                                              DEFAULT_FLT_ALARM_FG_COLOR16_B);
+    // highlight color red
+    set_data_display_label_sensor_raw_highlight_color(ch, DEFAULT_FLT_ALARM_BG_COLOR16_R,
+                                                      DEFAULT_FLT_ALARM_BG_COLOR16_G,
+                                                      DEFAULT_FLT_ALARM_BG_COLOR16_B);
+    set_data_display_label_sensor_pv_highlight_color(ch, DEFAULT_FLT_ALARM_BG_COLOR16_R,
+                                                     DEFAULT_FLT_ALARM_BG_COLOR16_G,
+                                                     DEFAULT_FLT_ALARM_BG_COLOR16_B);
+    // bg color red
+    set_data_display_label_sensor_raw_bg_color(ch, DEFAULT_FLT_ALARM_BG_COLOR16_R,
+                                               DEFAULT_FLT_ALARM_BG_COLOR16_G,
+                                               DEFAULT_FLT_ALARM_BG_COLOR16_B);
+    set_data_display_label_sensor_pv_bg_color(ch, DEFAULT_FLT_ALARM_BG_COLOR16_R,
+                                              DEFAULT_FLT_ALARM_BG_COLOR16_G,
+                                              DEFAULT_FLT_ALARM_BG_COLOR16_B);
+    // font weight bold
+    set_data_display_label_sensor_raw_font_weight(ch, PANGO_WEIGHT_BOLD);
+    set_data_display_label_sensor_pv_font_weight(ch, PANGO_WEIGHT_BOLD);
+    break;
+  default:
+    std::cerr << "set_ch_alarm_display(): default case entered. alarm value: " << alarm << "\n";
+    break;
   }
 }
 
@@ -269,14 +396,22 @@ void update_pv_display(void)
  * @param none
  * @return none 
  */
- void update_alarm_display(void)
- {
-   for(unsigned int i = 0; i < param.num_sensors; i++) {
-     if(param.channel_status[i].bits.low_alarm) {
-       // text color white
-     }
-   }
- }
+void update_alarm_display(void)
+{
+  for(unsigned int i = 0; i < param.num_sensors; i++) {
+    if(param.channel_status[i].bits.fault) {
+      set_ch_alarm_display(i, ALARM_FAULT);
+    } else if(param.channel_status[i].bits.hi_alarm) {
+      set_ch_alarm_display(i, ALARM_HI);
+    } else if(param.channel_status[i].bits.mid_alarm) {
+      set_ch_alarm_display(i, ALARM_MID);
+    } else if(param.channel_status[i].bits.low_alarm) {
+      set_ch_alarm_display(i, ALARM_LOW);
+    } else {
+      set_ch_alarm_display(i, ALARM_NONE);
+    }
+  }
+}
 
 /**
  * @brief Read and average ADC output values and update the analog input 
@@ -366,7 +501,6 @@ void cmd_handler(void)
       cal_sensor_index = channel;
       force_zero(cal_sensor_index, true);
       save_cal = true;
-      print_cal_param(channel);
       break;
     } else if(button_span_pressed_ack(channel)) {
       cal_sensor_index = channel;
@@ -379,8 +513,6 @@ void cmd_handler(void)
   if(save_cal){
     if(0 != save_calibration_data(cal_sensor_index)) {
       std::cerr << "Error saving calibration data" << '\n';
-    } else {
-      print_stored_cal_param(cal_sensor_index);
     }
   }
 
@@ -417,12 +549,6 @@ void timebase_handler(int signum, siginfo_t *info, void *context)
     update_sensor_raw_display();
     update_pv_display();
 
-    /*if(5 == seconds_count) {
-      if(!ch_label_test_done) {
-        set_ch_label_test();
-        ch_label_test_done = true;
-      }
-    }*/
 
     ++seconds_count;
     one_sec_toggle ^= 1;

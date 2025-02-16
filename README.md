@@ -67,6 +67,9 @@ forward. I got the sensor raw data display labels and all font attributes now
 "arrayed" in both the main-window and imain-window code. So much more work to
 go in this particular task..
 
+02-16-2025
+Alarms work, alarm color change works, and un-arraying done.
+
 ## Fresh Pi
 # Libraries needed to run ./bin/main are WiringPi and GTK4.
 

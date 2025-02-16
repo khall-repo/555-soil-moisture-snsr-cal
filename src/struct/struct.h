@@ -58,6 +58,14 @@ typedef struct _Appearance_Config_t {
   int data_display_font_size;
 }Appearance_Config_t;
 
+typedef enum _Alarm_e {
+  ALARM_NONE,
+  ALARM_LOW,
+  ALARM_MID,
+  ALARM_HI,
+  ALARM_FAULT
+}Alarm_e;
+
 int init_param();
 
 #ifdef __cplusplus
