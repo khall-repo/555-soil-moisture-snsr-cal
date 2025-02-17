@@ -515,7 +515,6 @@ void cmd_handler(void)
       std::cerr << "Error saving calibration data" << '\n';
     }
   }
-
 }
 
 #pragma GCC diagnostic push

@@ -15,7 +15,7 @@
           <object class="GtkBox" id="tab_content1">
             <property name="orientation">vertical</property>
             <child><!-- here -->
-              <object class="GtkGrid" id="main_grid"> <!--Window grid-->
+              <object class="GtkGrid" id="main_grid0"> <!--Window grid tab0-->
                 <property name="margin-start">12</property>
                 <property name="margin-end">12</property>
                 <property name="margin-top">12</property>
@@ -116,7 +116,7 @@
                 <!-- *************************** Column 1 ********************************* -->
                 <!-- Leftmost column - Row 0, Col 1 - col_header_sensor_raw -->
                 <child>
-                  <object class="GtkLabel" id="col_header_sensor_raw">
+                  <object class="GtkLabel" id="col_header_sensor_raw0"> <!--TODO: rename to col_header_sensor_raw0-->
                     <property name="label">Sensor Raw</property>
                     <property name="hexpand">true</property> 
                     <property name="vexpand">false</property>
@@ -337,7 +337,7 @@
                 <!-- *************************** Column 2 ********************************* -->
                 <!-- Row 0, Col 2 - col_header_sensor_pv -->
                 <child>
-                  <object class="GtkLabel" id="col_header_sensor_pv">
+                  <object class="GtkLabel" id="col_header_sensor_pv0"> <!--TODO: rename to col_header_sensor_pv0-->
                     <property name="label">Sensor PV</property>
                     <property name="hexpand">true</property> 
                     <property name="vexpand">false</property>
@@ -711,7 +711,7 @@
                     <layout>
                       <property name="row">9</property>
                       <property name="column">0</property>
-                      <property name="column-span">4</property>
+                      <property name="column-span">5</property>
                     </layout>
                   </object>
                 </child>
@@ -719,6 +719,7 @@
             </child> <!-- closes child containing main_grid -->
           </object> <!--closes GtkBox tab_content1-->
         </child>
+<!-- ******************************* Page1 *********************************************************************************** -->
         <child>
           <object class="GtkLabel" id="tab_label_page1">
             <property name="label">Ch 8-15</property>
@@ -726,8 +727,708 @@
           <object class="GtkBox" id="tab_content2">
             <property name="orientation">vertical</property>
             <child>
-              <!-- Add your widgets for Tab 2 here -->
-            </child>
+              <object class="GtkGrid" id="main_grid1"> <!--Window grid-->
+                <property name="margin-start">12</property>
+                <property name="margin-end">12</property>
+                <property name="margin-top">12</property>
+                <property name="margin-bottom">12</property>
+                <property name="row-spacing">12</property>
+                <property name="column-spacing">12</property>
+                <!-- ********************** Channel Row Labels **************************** -->
+                <!-- *************************** Column 0 ********************************* -->
+                <child>
+                  <object class="GtkLabel" id="channel_label8">
+                    <property name="label">Channel 8</property>
+                    <property name="hexpand">true</property> 
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">1</property>
+                        <property name="column">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="channel_label9">
+                    <property name="label">Channel 9</property>
+                    <property name="hexpand">true</property> 
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">2</property>
+                        <property name="column">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="channel_label10">
+                    <property name="label">Channel 10</property>
+                    <property name="hexpand">true</property> 
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">3</property>
+                        <property name="column">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="channel_label11">
+                    <property name="label">Channel 11</property>
+                    <property name="hexpand">true</property> 
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">4</property>
+                        <property name="column">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="channel_label12">
+                    <property name="label">Channel 12</property>
+                    <property name="hexpand">true</property> 
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">5</property>
+                        <property name="column">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="channel_label13">
+                    <property name="label">Channel 13</property>
+                    <property name="hexpand">true</property> 
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">6</property>
+                        <property name="column">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="channel_label14">
+                    <property name="label">Channel 14</property>
+                    <property name="hexpand">true</property> 
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">7</property>
+                        <property name="column">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="channel_label15">
+                    <property name="label">Channel 15</property>
+                    <property name="hexpand">true</property> 
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">8</property>
+                        <property name="column">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <!-- ********************** Data Display Labels *************************** -->
+                <!-- *************************** Column 1 ********************************* -->
+                <!-- Leftmost column - Row 0, Col 1 - col_header_sensor_raw -->
+                <child>
+                  <object class="GtkLabel" id="col_header_sensor_raw1">
+                    <property name="label">Sensor Raw</property>
+                    <property name="hexpand">true</property> 
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">0</property>
+                        <property name="column">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <!-- Leftmost column - Row 1, Col 1 - data_display_label_sensor_raw8 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_raw8"> 
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">1</property>
+                        <property name="column">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="label_frame16">
+                    <layout>
+                        <property name="row">1</property>
+                        <property name="column">1</property>
+                    </layout>
+                    <child>
+                      <object class="GtkLabel" id="data_display_label_sensor_raw8">
+                        <property name="label">data_display_label_sensor_raw8</property>
+                        <property name="hexpand">true</property> 
+                        <property name="vexpand">false</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- Leftmost column - Row 2, Col 1 - data_display_label_sensor_raw9 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_raw9"> <!--Color box around the label-->
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">2</property>
+                        <property name="column">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="label_frame17">
+                    <layout>
+                        <property name="row">2</property>
+                        <property name="column">1</property>
+                    </layout>
+                    <child>
+                      <object class="GtkLabel" id="data_display_label_sensor_raw9">
+                        <property name="label">data_display_label_sensor_raw9</property>
+                        <property name="hexpand">true</property> 
+                        <property name="vexpand">false</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- Leftmost column - Row 3, Col 1 - data_display_label_sensor_raw10 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_raw10">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">3</property>
+                        <property name="column">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="label_frame18">
+                    <layout>
+                        <property name="row">3</property>
+                        <property name="column">1</property>
+                    </layout>
+                    <child>
+                      <object class="GtkLabel" id="data_display_label_sensor_raw10">
+                        <property name="label">data_display_label_sensor_raw10</property>
+                        <property name="hexpand">true</property> 
+                        <property name="vexpand">false</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- Leftmost column - Row 4, Col 1 - data_display_label_sensor_raw11 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_raw11">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">4</property>
+                        <property name="column">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="label_frame19">
+                    <layout>
+                        <property name="row">4</property>
+                        <property name="column">1</property>
+                    </layout>
+                    <child>
+                      <object class="GtkLabel" id="data_display_label_sensor_raw11">
+                        <property name="label">data_display_label_sensor_raw11</property>
+                        <property name="hexpand">true</property> 
+                        <property name="vexpand">false</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- Leftmost column - Row 5, Col 1 - data_display_label_sensor_raw12 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_raw12">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">5</property>
+                        <property name="column">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="label_frame20">
+                    <layout>
+                        <property name="row">5</property>
+                        <property name="column">1</property>
+                    </layout>
+                    <child>
+                      <object class="GtkLabel" id="data_display_label_sensor_raw12">
+                        <property name="label">data_display_label_sensor_raw12</property>
+                        <property name="hexpand">true</property> 
+                        <property name="vexpand">false</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- Leftmost column - Row 6, Col 1 - data_display_label_sensor_raw13 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_raw13">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">6</property>
+                        <property name="column">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="label_frame21">
+                    <layout>
+                        <property name="row">6</property>
+                        <property name="column">1</property>
+                    </layout>
+                    <child>
+                      <object class="GtkLabel" id="data_display_label_sensor_raw13">
+                        <property name="label">data_display_label_sensor_raw13</property>
+                        <property name="hexpand">true</property> 
+                        <property name="vexpand">false</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- Leftmost column - Row 7, Col 1 - data_display_label_sensor_raw14 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_raw14">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">7</property>
+                        <property name="column">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="label_frame22">
+                    <layout>
+                        <property name="row">7</property>
+                        <property name="column">1</property>
+                    </layout>
+                    <child>
+                      <object class="GtkLabel" id="data_display_label_sensor_raw14">
+                        <property name="label">data_display_label_sensor_raw14</property>
+                        <property name="hexpand">true</property> 
+                        <property name="vexpand">false</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- Leftmost column - Row 8, Col 1 - data_display_label_sensor_raw15 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_raw15">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">8</property>
+                        <property name="column">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="label_frame23">
+                    <layout>
+                        <property name="row">8</property>
+                        <property name="column">1</property>
+                    </layout>
+                    <child>
+                      <object class="GtkLabel" id="data_display_label_sensor_raw15">
+                        <property name="label">data_display_label_sensor_raw15</property>
+                        <property name="hexpand">true</property> 
+                        <property name="vexpand">false</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- *************************** Column 2 ********************************* -->
+                <!-- Row 0, Col 2 - col_header_sensor_pv -->
+                <child>
+                  <object class="GtkLabel" id="col_header_sensor_pv1">
+                    <property name="label">Sensor PV</property>
+                    <property name="hexpand">true</property> 
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">0</property>
+                        <property name="column">2</property>
+                    </layout>
+                  </object>
+                </child>
+                <!-- Row 1, Col 2 - data_display_label_sensor_pv8 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_pv8">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">1</property>
+                        <property name="column">2</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="label_frame24">
+                    <layout>
+                        <property name="row">1</property>
+                        <property name="column">2</property>
+                    </layout>
+                    <child>
+                      <object class="GtkLabel" id="data_display_label_sensor_pv8">
+                        <property name="label">data_display_label_sensor_pv8</property>
+                        <property name="hexpand">true</property> 
+                        <property name="vexpand">false</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- Row 2, Col 2 - data_display_label_sensor_pv9 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_pv9">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">2</property>
+                        <property name="column">2</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="label_frame25">
+                    <layout>
+                        <property name="row">2</property>
+                        <property name="column">2</property>
+                    </layout>
+                    <child>
+                      <object class="GtkLabel" id="data_display_label_sensor_pv9">
+                        <property name="label">data_display_label_sensor_pv9</property>
+                        <property name="hexpand">true</property> 
+                        <property name="vexpand">false</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- Row 3, Col 2 - data_display_label_sensor_pv10 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_pv10">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">3</property>
+                        <property name="column">2</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="label_frame26">
+                    <layout>
+                        <property name="row">3</property>
+                        <property name="column">2</property>
+                    </layout>
+                    <child>
+                      <object class="GtkLabel" id="data_display_label_sensor_pv10">
+                        <property name="label">data_display_label_sensor_pv10</property>
+                        <property name="hexpand">true</property> 
+                        <property name="vexpand">false</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- Row 4, Col 2 - data_display_label_sensor_pv11 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_pv11">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">4</property>
+                        <property name="column">2</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="label_frame27">
+                    <layout>
+                        <property name="row">4</property>
+                        <property name="column">2</property>
+                    </layout>
+                    <child>
+                      <object class="GtkLabel" id="data_display_label_sensor_pv11">
+                        <property name="label">data_display_label_sensor_pv11</property>
+                        <property name="hexpand">true</property> 
+                        <property name="vexpand">false</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- Row 5, Col 2 - data_display_label_sensor_pv12 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_pv12">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">5</property>
+                        <property name="column">2</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="label_frame28">
+                    <layout>
+                        <property name="row">5</property>
+                        <property name="column">2</property>
+                    </layout>
+                    <child>
+                      <object class="GtkLabel" id="data_display_label_sensor_pv12">
+                        <property name="label">data_display_label_sensor_pv12</property>
+                        <property name="hexpand">true</property> 
+                        <property name="vexpand">false</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- Row 6, Col 2 - data_display_label_sensor_pv13 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_pv13">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">6</property>
+                        <property name="column">2</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="label_frame29">
+                    <layout>
+                        <property name="row">6</property>
+                        <property name="column">2</property>
+                    </layout>
+                    <child>
+                      <object class="GtkLabel" id="data_display_label_sensor_pv13">
+                        <property name="label">data_display_label_sensor_pv13</property>
+                        <property name="hexpand">true</property> 
+                        <property name="vexpand">false</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- Row 7, Col 2 - data_display_label_sensor_pv14 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_pv14">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">7</property>
+                        <property name="column">2</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="label_frame30">
+                    <layout>
+                        <property name="row">7</property>
+                        <property name="column">2</property>
+                    </layout>
+                    <child>
+                      <object class="GtkLabel" id="data_display_label_sensor_pv14">
+                        <property name="label">data_display_label_sensor_pv14</property>
+                        <property name="hexpand">true</property> 
+                        <property name="vexpand">false</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- Row 8, Col 2 - data_display_label_sensor_pv15 -->
+                <child>
+                  <object class="GtkDrawingArea" id="drawing_area_sensor_pv15">
+                    <property name="hexpand">false</property>
+                    <property name="vexpand">false</property>
+                    <layout>
+                        <property name="row">8</property>
+                        <property name="column">2</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="label_frame31">
+                    <layout>
+                        <property name="row">8</property>
+                        <property name="column">2</property>
+                    </layout>
+                    <child>
+                      <object class="GtkLabel" id="data_display_label_sensor_pv15">
+                        <property name="label">data_display_label_sensor_pv15</property>
+                        <property name="hexpand">true</property> 
+                        <property name="vexpand">false</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- *************************** Buttons ********************************** -->        
+                <!-- *************************** Column 3 ********************************* -->
+                <child>
+                  <object class="GtkButton" id="button_zero8">
+                    <property name="label">Zero</property>
+                    <layout>
+                      <property name="row">1</property>
+                      <property name="column">3</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_zero9">
+                    <property name="label">Zero</property>
+                    <layout>
+                      <property name="row">2</property>
+                      <property name="column">3</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_zero10">
+                    <property name="label">Zero</property>
+                    <layout>
+                      <property name="row">3</property>
+                      <property name="column">3</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_zero11">
+                    <property name="label">Zero</property>
+                    <layout>
+                      <property name="row">4</property>
+                      <property name="column">3</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_zero12">
+                    <property name="label">Zero</property>
+                    <layout>
+                      <property name="row">5</property>
+                      <property name="column">3</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_zero13">
+                    <property name="label">Zero</property>
+                    <layout>
+                      <property name="row">6</property>
+                      <property name="column">3</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_zero14">
+                    <property name="label">Zero</property>
+                    <layout>
+                      <property name="row">7</property>
+                      <property name="column">3</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_zero15">
+                    <property name="label">Zero</property>
+                    <layout>
+                      <property name="row">8</property>
+                      <property name="column">3</property>
+                    </layout>
+                  </object>
+                </child>
+                <!-- *************************** Column 4 ********************************* -->
+                <child>
+                  <object class="GtkButton" id="button_span8">
+                    <property name="label">Span</property>
+                    <layout>
+                      <property name="row">1</property>
+                      <property name="column">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_span9">
+                    <property name="label">Span</property>
+                    <layout>
+                      <property name="row">2</property>
+                      <property name="column">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_span10">
+                    <property name="label">Span</property>
+                    <layout>
+                      <property name="row">3</property>
+                      <property name="column">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_span11">
+                    <property name="label">Span</property>
+                    <layout>
+                      <property name="row">4</property>
+                      <property name="column">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_span12">
+                    <property name="label">Span</property>
+                    <layout>
+                      <property name="row">5</property>
+                      <property name="column">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_span13">
+                    <property name="label">Span</property>
+                    <layout>
+                      <property name="row">6</property>
+                      <property name="column">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_span14">
+                    <property name="label">Span</property>
+                    <layout>
+                      <property name="row">7</property>
+                      <property name="column">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_span15">
+                    <property name="label">Span</property>
+                    <layout>
+                      <property name="row">8</property>
+                      <property name="column">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <!-- Bottom button - button1 -->
+                <child>
+                  <object class="GtkButton" id="button1">
+                    <property name="label">Click Me</property>
+                    <property name="hexpand">true</property> 
+                    <property name="vexpand">true</property>
+                    <layout>
+                      <property name="row">9</property>
+                      <property name="column">0</property>
+                      <property name="column-span">5</property>
+                    </layout>
+                  </object>
+                </child>
+              </object> <!--closes main_grid-->
+            </child> <!-- closes child containing main_grid -->
           </object>  <!--closes GtkBox tab_content2-->
         </child>
       </object>

@@ -33,24 +33,27 @@ typedef struct _MainWindow
   GtkWidget *tab_label_page1;
 
   // Column labels
-  GtkWidget *col_header_sensor_raw;
-  GtkWidget *col_header_sensor_pv;
+  GtkWidget *col_header_sensor_raw0; // TODO: array these
+  GtkWidget *col_header_sensor_pv0;
+  GtkWidget *col_header_sensor_raw1;
+  GtkWidget *col_header_sensor_pv1;
 
   // Channel labels
-  GtkWidget *channel_label[8];
+  GtkWidget *channel_label[MAX_SENSORS];
 
   // Text boxes for display data
-  GtkWidget *data_display_label_sensor_raw[8];
-  GtkWidget *data_display_label_sensor_pv[8];
+  GtkWidget *data_display_label_sensor_raw[MAX_SENSORS];
+  GtkWidget *data_display_label_sensor_pv[MAX_SENSORS];
 
   // Drawing areas for display data
-  GtkWidget *drawing_area_sensor_raw[8];
-  GtkWidget *drawing_area_sensor_pv[8];
+  GtkWidget *drawing_area_sensor_raw[MAX_SENSORS];
+  GtkWidget *drawing_area_sensor_pv[MAX_SENSORS];
   
   GtkWidget *button0; // bottom button
+  GtkWidget *button1; // bottom button
   
-  GtkWidget *button_zero[8];
-  GtkWidget *button_span[8];
+  GtkWidget *button_zero[MAX_SENSORS];
+  GtkWidget *button_span[MAX_SENSORS];
 
 } MainWindow;
 
@@ -133,8 +136,10 @@ static void main_window_class_init(MainWindowClass *klass)
     gtk_widget_class_bind_template_child(widget_class, MainWindow, tab_label_page1);
 
     // bind col header labels
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, col_header_sensor_raw);
-    gtk_widget_class_bind_template_child(widget_class, MainWindow, col_header_sensor_pv);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, col_header_sensor_raw0);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, col_header_sensor_pv0);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, col_header_sensor_raw1);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, col_header_sensor_pv1);
 
     // bind ch labels
     for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
@@ -201,8 +206,9 @@ static void main_window_class_init(MainWindowClass *klass)
                                                 FALSE,
                                                 offsetof(MainWindow, button_span) + i * sizeof(GtkWidget *));
     }
-    // bind the button with no purpose
+    // bind the buttons with no purpose
     gtk_widget_class_bind_template_child(widget_class, MainWindow, button0);
+    gtk_widget_class_bind_template_child(widget_class, MainWindow, button1);
   } else {
     g_error("Failed to load MainWindow template: %s\n", error->message);
     g_error_free(error);
@@ -366,6 +372,11 @@ static void button0_clicked_cb(GtkButton *button, MainWindow *self)
   gtk_label_set_text(GTK_LABEL(self->data_display_label_sensor_raw[0]), "Button0 was clicked!");
 }
 
+static void button1_clicked_cb(GtkButton *button, MainWindow *self)
+{
+  // useless button at the moment
+}
+
 static void button_zero_clicked_cb(GtkButton *button, MainWindow *self)
 {
   for(unsigned int i = 0; i < imain_window.num_sensors; i++) {
@@ -402,8 +413,9 @@ void activate_main_window_cb(GtkApplication *app, gpointer user_data)
   // code at the bottom of this file.
   g_object_set_data(G_OBJECT(window), "main-window-instance", window);
 
-  // Connect the button with no real purpose signal to its callback
+  // Connect the buttons with no real purpose signal to their callbacks
   g_signal_connect(window->button0, "clicked", G_CALLBACK(button0_clicked_cb), window);
+  g_signal_connect(window->button1, "clicked", G_CALLBACK(button1_clicked_cb), window);
 
   // Connect the zero and span buttons to their callbacks
   for(unsigned int i = 0; i < imain_window.num_sensors; i++) {

@@ -1,3 +1,9 @@
+/**
+ * @file imain-window.c
+ * @brief Main Window interface
+ * @par (C) 2025 Keith Hall
+ * Programmer interacts with the Main Window through this interface code
+ */
 #include <cstdint>
 #include <cstring>
 #include "struct.h" // for num of sensors
@@ -16,17 +22,31 @@ const char *get_channel_label(unsigned int index)
   return (const char *)imain_window.channel_label[index].label_text;
 }
 
-// get imain_window.col_header_sensor_raw.label_text
-const char *get_col_header_sensor_raw(void)
+// get imain_window.col_header_sensor_raw0.label_text
+const char *get_col_header_sensor_raw0(void)
 {
-  return (const char *)imain_window.col_header_sensor_raw.label_text;
+  return (const char *)imain_window.col_header_sensor_raw0.label_text;
 }
 
-// get imain_window.col_header_sensor_pv.label_text
-const char *get_col_header_sensor_pv(void)
+// get imain_window.col_header_sensor_pv0.label_text
+const char *get_col_header_sensor_pv0(void)
 {
-  return (const char *)imain_window.col_header_sensor_pv.label_text;
+  return (const char *)imain_window.col_header_sensor_pv0.label_text;
 }
+
+// get imain_window.col_header_sensor_raw1.label_text
+const char *get_col_header_sensor_raw1(void)
+{
+  return (const char *)imain_window.col_header_sensor_raw1.label_text;
+}
+
+// get imain_window.col_header_sensor_pv1.label_text
+const char *get_col_header_sensor_pv1(void)
+{
+  return (const char *)imain_window.col_header_sensor_pv1.label_text;
+}
+
+
 
 // get imain_window.data_display_label_sensor_raw[n].label_text
 const char *get_data_display_label_sensor_raw(unsigned int index)
@@ -61,7 +81,7 @@ void set_channel_label(unsigned int index, const char *text)
   imain_window.channel_label[index].update_text = true;
 }
 
-// set imain_window.col_header_sensor_raw[n]
+// set imain_window.data_display_label_sensor_raw[n] text
 void set_data_display_label_sensor_raw(unsigned int index, const char *text)
 {
   if (imain_window.num_sensors <= index) {

@@ -7,6 +7,12 @@
 #include "attrib.h"
 
 //#define MAX_CH_LABEL_STR_SZ     32u
+/**
+ * @file imain-window.h
+ * @brief Main Window interface header
+ * @par (C) 2025 Keith Hall
+ * Programmer interacts with the Main Window through this interface code
+ */
 #define MAX_COL_HEADER_STR_SZ   32u
 #define MAX_DATA_DISP_SZ 32u
 
@@ -26,8 +32,10 @@ typedef struct _Data_Display_Label_t
 typedef struct _IMainWindow
 {
   unsigned int num_sensors = 0;
-  Data_Display_Label_t col_header_sensor_raw;
-  Data_Display_Label_t col_header_sensor_pv;
+  Data_Display_Label_t col_header_sensor_raw0;
+  Data_Display_Label_t col_header_sensor_pv0;
+  Data_Display_Label_t col_header_sensor_raw1;
+  Data_Display_Label_t col_header_sensor_pv1;
   
   Data_Display_Label_t channel_label[MAX_SENSORS];
 

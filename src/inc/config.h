@@ -17,7 +17,7 @@
 #define MAX_CONFIG_SECTIONS 64u
 #define CONFIG_INI_FILE_PATH "config.ini"
 
-#define MAX_SENSORS 8
+#define MAX_SENSORS 16
 #define TEST_CAL_RAW_VALUES_FILE_PATH     "test-cal-raw-values.txt"
 #define TEST_READING_RAW_VALUES_FILE_PATH "test-reading-raw-values.txt"
 

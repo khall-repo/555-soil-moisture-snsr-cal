@@ -68,7 +68,10 @@ forward. I got the sensor raw data display labels and all font attributes now
 go in this particular task..
 
 02-16-2025
-Alarms work, alarm color change works, and un-arraying done.
+Alarms work, alarm color change works, and arraying done.
+
+02-17-2025
+Added channels 8-15.
 
 ## Fresh Pi
 # Libraries needed to run ./bin/main are WiringPi and GTK4.
